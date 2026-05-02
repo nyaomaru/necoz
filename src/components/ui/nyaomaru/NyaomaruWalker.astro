@@ -1,0 +1,102 @@
+<div
+  class="nyaomaru-walker"
+  aria-hidden="true"
+  data-nyaomaru-walker
+  data-sprite-variant="default"
+>
+  <div class="nyaomaru-walker__stack">
+    <img
+      class="nyaomaru-walker__sprite nyaomaru-walker__sprite--default"
+      src="/assets/icons/nyaomaru.svg"
+      alt="Nyaomaru"
+    />
+    <img
+      class="nyaomaru-walker__sprite nyaomaru-walker__sprite--fish"
+      src="/assets/icons/nyaomaru_fish.svg"
+      alt="Nyaomaru with fish"
+    />
+    <img
+      class="nyaomaru-walker__sprite nyaomaru-walker__sprite--love"
+      src="/assets/icons/nyaomaru_fish_love.svg"
+      alt="Nyaomaru with fish and love"
+    />
+  </div>
+</div>
+
+<script>
+  import { setupNyaomaruWalker } from "~/lib/nyaomaru/walker-controller";
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupNyaomaruWalker, {
+      once: true,
+    });
+  } else {
+    setupNyaomaruWalker();
+  }
+</script>
+
+<style>
+  .nyaomaru-walker {
+    --nyaomaru-size: calc(var(--block-grid-cell) * 2.2);
+    position: fixed;
+    left: 1rem;
+    top: -3.375rem;
+    z-index: var(--layer-walker-behind-content);
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .nyaomaru-walker__stack {
+    position: relative;
+    display: block;
+    width: max-content;
+    line-height: 0;
+  }
+
+  .nyaomaru-walker__sprite {
+    display: block;
+    width: var(--nyaomaru-size);
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  .nyaomaru-walker__sprite--fish,
+  .nyaomaru-walker__sprite--love {
+    --nyaomaru-size: calc(var(--block-grid-cell) * 3);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    max-width: none;
+    opacity: 0;
+  }
+
+  .nyaomaru-walker[data-sprite-variant="fish"]
+    .nyaomaru-walker__sprite--default,
+  .nyaomaru-walker[data-sprite-variant="love"]
+    .nyaomaru-walker__sprite--default {
+    opacity: 0;
+  }
+
+  .nyaomaru-walker[data-sprite-variant="fish"] .nyaomaru-walker__sprite--fish {
+    opacity: 1;
+  }
+
+  .nyaomaru-walker[data-sprite-variant="love"] .nyaomaru-walker__sprite--love {
+    opacity: 1;
+  }
+
+  @media (--necoz-phone) {
+    .nyaomaru-walker {
+      --nyaomaru-size: calc(100vw / 13);
+      top: calc(var(--nyaomaru-size) * -0.9);
+    }
+
+    .nyaomaru-walker__sprite--fish,
+    .nyaomaru-walker__sprite--love {
+      transform: scale(1.4);
+      transform-origin: left bottom;
+    }
+  }
+</style>

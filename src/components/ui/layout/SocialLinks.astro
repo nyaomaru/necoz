@@ -1,0 +1,22 @@
+---
+import { SOCIAL_LINKS } from "~/lib/site-links";
+---
+
+{
+  SOCIAL_LINKS.map((link) => (
+    <a
+      class="icon-link"
+      href={link.href}
+      aria-label={link.ariaLabel}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src={link.iconSrc}
+        alt={link.iconAlt}
+        width={link.width}
+        class={link.className}
+      />
+    </a>
+  ))
+}

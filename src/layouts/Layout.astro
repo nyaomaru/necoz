@@ -1,0 +1,57 @@
+---
+import "@fontsource/source-sans-3/300.css";
+import "@fontsource/source-sans-3/400.css";
+import "@fontsource/source-sans-3/500.css";
+import "@fontsource/source-sans-3/600.css";
+import "@fontsource/source-sans-3/700.css";
+import "@fontsource/space-grotesk/400.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/600.css";
+import "~/styles/global.css";
+import VirtualScroll from "~/components/ui/scroll/VirtualScroll.astro";
+
+type Props = {
+  /** Page description used for the document meta description. */
+  description?: string;
+  /** Page title used for the document title. */
+  title?: string;
+  /** Whether to use the animated virtual scroll controller. */
+  virtualScroll?: boolean;
+};
+
+const {
+  description = "Necoz B.V. is a small software development studio. We focus on well-designed systems, clean architecture, and software that scales without losing clarity.",
+  title = "Necoz B.V.",
+  virtualScroll = true,
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en" class:list={[virtualScroll && "virtual-scroll-root"]}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body
+    class:list={[virtualScroll ? "virtual-scroll-body" : "native-scroll-body"]}
+  >
+    {
+      virtualScroll ? (
+        <VirtualScroll>
+          <slot />
+        </VirtualScroll>
+      ) : (
+        <slot />
+      )
+    }
+    <style is:global>
+      body.native-scroll-body {
+        min-height: 100vh;
+      }
+    </style>
+  </body>
+</html>

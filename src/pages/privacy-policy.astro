@@ -1,0 +1,219 @@
+---
+import Footer from "~/components/ui/layout/Footer.astro";
+import Header from "~/components/ui/layout/Header.astro";
+import Text from "~/components/ui/text/Text";
+import Layout from "~/layouts/Layout.astro";
+---
+
+<Layout
+  title="Privacy Policy | Necoz B.V."
+  description="Privacy Policy for Necoz B.V."
+  virtualScroll={false}
+>
+  <Header homeHref="/" />
+  <main class="policy-page" id="top">
+    <article class="policy-document">
+      <Text as="h1" className="policy-title">Privacy Policy</Text>
+      <Text as="p" className="policy-updated">Last updated: April 30, 2026</Text
+      >
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Overview</Text>
+        <Text className="policy-copy">
+          Necoz B.V. respects your privacy. This policy explains what
+          information we may collect through this website, how we use it, and
+          the choices available to you.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Information We Collect</Text>
+        <Text className="policy-copy">
+          We do not intentionally collect personal information through this
+          website unless you choose to contact us. If you email us, we may
+          receive your name, email address, company details, and any information
+          included in your message.
+        </Text>
+        <Text className="policy-copy">
+          Basic technical information, such as browser type, device information,
+          IP address, pages visited, and access times, may be processed by our
+          hosting and infrastructure providers to deliver and secure the
+          website.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">How We Use Information</Text>
+        <Text className="policy-copy">
+          We use information to respond to inquiries, communicate about
+          potential or existing work, maintain and protect the website, and
+          comply with legal obligations.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Sharing Information</Text>
+        <Text className="policy-copy">
+          We do not sell personal information. We may share information with
+          service providers who help operate the website or support our
+          business, when required by law, or when necessary to protect our
+          rights, users, or services.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Cookies And Analytics</Text>
+        <Text className="policy-copy">
+          This website does not intentionally use marketing cookies or tracking
+          analytics. Third-party services linked from this website may use their
+          own cookies or similar technologies under their own privacy policies.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Retention And Security</Text>
+        <Text className="policy-copy">
+          We keep personal information only as long as reasonably necessary for
+          the purposes described in this policy. We use reasonable technical and
+          organizational measures to protect information, but no method of
+          transmission or storage is completely secure.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Your Choices</Text>
+        <Text className="policy-copy">
+          You may contact us to request access to, correction of, or deletion of
+          personal information you have provided to us, subject to applicable
+          legal and business requirements.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Third-Party Links</Text>
+        <Text className="policy-copy">
+          This website may link to third-party websites, including portfolio and
+          social profile pages. We are not responsible for the privacy practices
+          or content of those third-party websites.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Children's Privacy</Text>
+        <Text className="policy-copy">
+          This website is not directed to children, and we do not knowingly
+          collect personal information from children.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Changes To This Policy</Text>
+        <Text className="policy-copy">
+          We may update this policy from time to time. The updated version will
+          be posted on this page with a revised update date.
+        </Text>
+      </section>
+
+      <section class="policy-section">
+        <Text as="h2" className="policy-heading">Contact</Text>
+        <Text className="policy-copy">
+          If you have questions about this policy, contact Necoz B.V. at
+          nyaonyao0725@gmail.com.
+        </Text>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .policy-page {
+    --policy-title-size: 3rem;
+    --policy-heading-size: 1.75rem;
+    --policy-copy-size: 1.125rem;
+    --policy-line-height: 1.6;
+    min-height: 100vh;
+    padding: 7rem max(1.5rem, calc(var(--block-grid-cell) * 2)) 9rem;
+    color: var(--main);
+  }
+
+  .policy-document {
+    width: min(100%, 52rem);
+    margin-inline: auto;
+  }
+
+  .policy-back,
+  .policy-title,
+  .policy-updated,
+  .policy-heading,
+  .policy-copy {
+    --necoz-basic-text-line-height: var(--policy-line-height);
+    --necoz-basic-text-transform-x: 1;
+  }
+
+  .policy-back {
+    --necoz-basic-text-size: 1rem;
+    display: inline-block;
+    margin-bottom: 3rem;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .policy-title {
+    --necoz-basic-text-size: var(--policy-title-size);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .policy-updated {
+    --necoz-basic-text-size: 1rem;
+    margin: 1rem 0 0;
+  }
+
+  .policy-section {
+    margin-top: 3rem;
+  }
+
+  @media (--necoz-stage-wide) {
+    .policy-section {
+      padding-block: 1rem;
+    }
+  }
+
+  .policy-heading {
+    --necoz-basic-text-size: var(--policy-heading-size);
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .policy-copy {
+    --necoz-basic-text-size: var(--policy-copy-size);
+    margin: 1rem 0 0;
+  }
+
+  @media (--necoz-content-compact) {
+    .policy-page {
+      --policy-title-size: 2.5rem;
+      --policy-heading-size: 1.5rem;
+      --policy-copy-size: 1rem;
+      padding-block: 5rem 7rem;
+    }
+  }
+
+  @media (--necoz-phone) {
+    .policy-page {
+      --policy-title-size: 2rem;
+      --policy-heading-size: 1.25rem;
+      padding: 1.5rem 1.5rem 8rem;
+    }
+
+    .policy-back {
+      margin-bottom: 2rem;
+    }
+
+    .policy-section {
+      margin-top: 2.25rem;
+    }
+  }
+</style>

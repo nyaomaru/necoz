@@ -1,0 +1,56 @@
+---
+type Props = {
+  /** HTML tag used for the block-shape wrapper. */
+  as?: "div" | "span";
+  /** Additional class names applied to the wrapper. */
+  class?: string;
+  /** Total number of cells to render in the block shape. */
+  columns: number;
+  /** Number of leading cells rendered as empty cells. */
+  emptyCount?: number;
+};
+
+const {
+  as: Tag = "div",
+  class: className,
+  columns,
+  emptyCount = 0,
+  ...attrs
+} = Astro.props as Props;
+
+const cells = Array.from({ length: columns }, (_, index) => index < emptyCount);
+---
+
+{
+  Tag === "span" ? (
+    <span
+      class:list={["block-shape", className]}
+      style={`--block-shape-columns: ${columns};`}
+      {...attrs}
+    >
+      {cells.map((isEmpty) => (
+        <span
+          class:list={[
+            "block-shape__cell",
+            isEmpty && "block-shape__cell--empty",
+          ]}
+        />
+      ))}
+    </span>
+  ) : (
+    <div
+      class:list={["block-shape", className]}
+      style={`--block-shape-columns: ${columns};`}
+      {...attrs}
+    >
+      {cells.map((isEmpty) => (
+        <span
+          class:list={[
+            "block-shape__cell",
+            isEmpty && "block-shape__cell--empty",
+          ]}
+        />
+      ))}
+    </div>
+  )
+}

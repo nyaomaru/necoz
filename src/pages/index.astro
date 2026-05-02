@@ -1,0 +1,35 @@
+---
+import ContactSection from "~/components/home/ContactSection.astro";
+import HeroIntro from "~/components/home/HeroIntro.astro";
+import StudioSection from "~/components/home/StudioSection.astro";
+import WorkSection from "~/components/home/WorkSection.astro";
+import Footer from "~/components/ui/layout/Footer.astro";
+import Header from "~/components/ui/layout/Header.astro";
+import NyaomaruWalker from "~/components/ui/nyaomaru/NyaomaruWalker.astro";
+import Layout from "~/layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="pixel-page">
+    <main id="top">
+      <Header />
+      <HeroIntro />
+      <WorkSection />
+      <StudioSection />
+      <ContactSection />
+      <NyaomaruWalker />
+    </main>
+    <Footer />
+  </div>
+</Layout>
+
+<style>
+  .pixel-page {
+    position: relative;
+    overflow-x: clip;
+  }
+
+  main {
+    position: relative;
+  }
+</style>

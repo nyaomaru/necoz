@@ -1,0 +1,29 @@
+---
+type Props = {
+  /** Additional class names applied to the section root. */
+  class?: string;
+  /** Additional HTML attributes forwarded to the section root. */
+  [key: string]: unknown;
+};
+
+const { class: className, ...attrs } = Astro.props as Props;
+---
+
+<section class:list={["scene-shell", className]} {...attrs}>
+  <slot />
+</section>
+
+<style>
+  .scene-shell {
+    position: relative;
+    margin: 0 auto;
+    padding: var(--scene-shell-padding-block-start) 0
+      var(--scene-shell-padding-block-end);
+  }
+
+  @media (--necoz-phone) {
+    .scene-shell {
+      padding: 0;
+    }
+  }
+</style>

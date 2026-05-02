@@ -1,0 +1,141 @@
+.necoz-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  --necoz-button-tile-pixel: 0.1875rem;
+  --necoz-button-step-1: var(--necoz-button-tile-pixel);
+  --necoz-button-step-2: calc(var(--necoz-button-step-1) * 2);
+  --necoz-button-step-3: calc(var(--necoz-button-step-1) * 3);
+  --necoz-button-step-4: calc(var(--necoz-button-step-1) * 4);
+  --necoz-button-step-6: calc(var(--necoz-button-step-1) * 6);
+  --necoz-button-color: var(--main);
+  --necoz-button-fill: var(--bg);
+  --necoz-button-layer-shell: -2;
+  --necoz-button-layer-fill: -1;
+  --necoz-button-layer-content: 1;
+  --necoz-button-shell-shape: polygon(
+    var(--necoz-button-step-3) 0,
+    calc(100% - var(--necoz-button-step-3)) 0,
+    calc(100% - var(--necoz-button-step-3)) var(--necoz-button-step-1),
+    calc(100% - var(--necoz-button-step-2)) var(--necoz-button-step-1),
+    calc(100% - var(--necoz-button-step-2)) var(--necoz-button-step-2),
+    calc(100% - var(--necoz-button-step-1)) var(--necoz-button-step-2),
+    calc(100% - var(--necoz-button-step-1)) calc(100% - var(--necoz-button-step-2)),
+    calc(100% - var(--necoz-button-step-2)) calc(100% - var(--necoz-button-step-2)),
+    calc(100% - var(--necoz-button-step-2)) calc(100% - var(--necoz-button-step-1)),
+    calc(100% - var(--necoz-button-step-3)) calc(100% - var(--necoz-button-step-1)),
+    calc(100% - var(--necoz-button-step-3)) 100%,
+    var(--necoz-button-step-3) 100%,
+    var(--necoz-button-step-3) calc(100% - var(--necoz-button-step-1)),
+    var(--necoz-button-step-2) calc(100% - var(--necoz-button-step-1)),
+    var(--necoz-button-step-2) calc(100% - var(--necoz-button-step-2)),
+    var(--necoz-button-step-1) calc(100% - var(--necoz-button-step-2)),
+    var(--necoz-button-step-1) var(--necoz-button-step-2),
+    var(--necoz-button-step-2) var(--necoz-button-step-2),
+    var(--necoz-button-step-2) var(--necoz-button-step-1),
+    var(--necoz-button-step-3) var(--necoz-button-step-1)
+  );
+  --necoz-button-fill-shape: polygon(
+    var(--necoz-button-step-2) 0,
+    calc(100% - var(--necoz-button-step-2)) 0,
+    calc(100% - var(--necoz-button-step-2)) var(--necoz-button-step-1),
+    calc(100% - var(--necoz-button-step-1)) var(--necoz-button-step-1),
+    calc(100% - var(--necoz-button-step-1)) calc(100% - var(--necoz-button-step-1)),
+    calc(100% - var(--necoz-button-step-2)) calc(100% - var(--necoz-button-step-1)),
+    calc(100% - var(--necoz-button-step-2)) 100%,
+    var(--necoz-button-step-2) 100%,
+    var(--necoz-button-step-2) calc(100% - var(--necoz-button-step-1)),
+    var(--necoz-button-step-1) calc(100% - var(--necoz-button-step-1)),
+    var(--necoz-button-step-1) var(--necoz-button-step-1),
+    var(--necoz-button-step-2) var(--necoz-button-step-1)
+  );
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0;
+  gap: 1rem;
+  padding: 0 2.25rem 0 2.5rem;
+  background-color: transparent;
+  color: var(--main);
+  white-space: nowrap;
+  transition:
+    color 0.15s ease,
+    filter 0.15s ease;
+  cursor: pointer;
+  letter-spacing: 0.125rem;
+  text-decoration: none;
+}
+
+.necoz-button::before,
+.necoz-button::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.necoz-button::before {
+  inset: 0;
+  z-index: var(--necoz-button-layer-shell);
+  background-color: var(--necoz-button-color);
+  clip-path: var(--necoz-button-shell-shape);
+}
+
+.necoz-button::after {
+  inset: var(--necoz-button-step-1);
+  z-index: var(--necoz-button-layer-fill);
+  background-color: var(--necoz-button-fill);
+  clip-path: var(--necoz-button-fill-shape);
+}
+
+.necoz-button > * {
+  position: relative;
+  z-index: var(--necoz-button-layer-content);
+}
+
+.necoz-button .necoz-basic-text {
+  display: inline-block;
+  transform: none;
+}
+
+.necoz-button--secondary {
+  color: var(--main);
+  --necoz-button-fill: var(--bg);
+}
+
+.necoz-button--secondary:hover {
+  color: var(--bg);
+  --necoz-button-fill: var(--necoz-button-color);
+}
+
+.necoz-button--primary {
+  color: var(--bg);
+  --necoz-button-fill: var(--necoz-button-color);
+}
+
+.necoz-button--primary:hover {
+  color: var(--bg);
+  filter: brightness(0.92);
+}
+
+.necoz-button svg {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.necoz-button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--main);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (--necoz-phone) {
+  .necoz-button {
+    padding: 0.25rem 1.25rem 0 1.5rem;
+  }
+}

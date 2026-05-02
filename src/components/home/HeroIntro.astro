@@ -1,0 +1,300 @@
+---
+import BackgroundBlockStack from "~/components/ui/block/BackgroundBlockStack.astro";
+import SceneSection from "~/components/ui/layout/SceneSection.astro";
+import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
+import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
+import Text from "~/components/ui/text/Text";
+
+const desktopBlockOneSegments = [
+  {
+    class: "block-one__segment",
+    columns: 9,
+    attributes: { "data-nyaomaru-block-1": true },
+  },
+  {
+    class: "block-one__segment",
+    columns: 11,
+    attributes: { "data-nyaomaru-block-2": true },
+  },
+  {
+    class: "block-one__segment",
+    columns: 11,
+    attributes: { "data-nyaomaru-block-3": true },
+  },
+  {
+    class: "block-one__segment",
+    columns: 6,
+    attributes: { "data-nyaomaru-block-4": true },
+  },
+];
+
+const mobileBlockOneSegments = [
+  {
+    class: "block-one__segment",
+    columns: 5,
+    attributes: { "data-nyaomaru-block-1": true },
+  },
+  {
+    class: "block-one__segment",
+    columns: 6,
+    attributes: { "data-nyaomaru-block-2": true },
+  },
+  {
+    class: "block-one__segment",
+    columns: 6,
+    attributes: { "data-nyaomaru-block-3": true },
+  },
+  {
+    class: "block-one__segment",
+    columns: 2,
+    attributes: { "data-nyaomaru-block-4": true },
+  },
+];
+
+const desktopBlockTwoSegments = [
+  { class: "block-two__segment", columns: 10 },
+  { class: "block-two__segment", columns: 12 },
+  { class: "block-two__segment", columns: 12 },
+  { class: "block-two__segment", columns: 6 },
+];
+
+const mobileBlockTwoSegmentWidths = [6.5, 8.5, 8.5, 3.5];
+---
+
+<SceneSection class="hero-section">
+  <SceneBackground
+    class="hero-background"
+    zIndex="var(--layer-scene-background)"
+  >
+    <img
+      class="sprite sprite-anchor"
+      src="/assets/icons/nyaomaru.svg"
+      alt="Nyaomaru"
+      data-nyaomaru-start
+    />
+    <BackgroundBlockStack
+      class="block-one block-one--desktop"
+      align="start"
+      segments={desktopBlockOneSegments}
+    />
+    <BackgroundBlockStack
+      class="block-one block-one--mobile"
+      align="start"
+      segments={mobileBlockOneSegments}
+    />
+    <BackgroundBlockStack
+      class="block-two block-two--desktop"
+      align="end"
+      segments={desktopBlockTwoSegments}
+    />
+    <div class="block-two block-two--mobile" aria-hidden="true">
+      {
+        mobileBlockTwoSegmentWidths.map((columns, index) => (
+          <div
+            class:list={[
+              "block-two__mobile-segment",
+              `block-two__mobile-segment--${index + 1}`,
+            ]}
+            style={`--block-two-mobile-columns: ${columns};`}
+            {...(index === 0
+              ? {
+                  "data-nyaomaru-mobile-target": true,
+                  "data-work-mobile-clamp-target": true,
+                }
+              : {})}
+          />
+        ))
+      }
+      <div
+        class="block-two__mobile-stack"
+        data-work-scene-phase="hidden"
+        data-work-scene-display
+        data-work-mobile-origin
+      >
+        <img
+          class="icon-work block-two__mobile-work"
+          src="/assets/icons/work.svg"
+          alt="Work icon"
+        />
+        <img
+          class="icon-plumbing block-two__mobile-plumbing"
+          src="/assets/icons/plumbing.svg"
+          alt="Plumbing icon"
+        />
+      </div>
+    </div>
+  </SceneBackground>
+
+  <SectionIntro
+    titleSrc="/assets/texts/hello.svg"
+    titleAlt="Hello"
+    sceneIntroMinHeight="30rem"
+    leadAs="p"
+  >
+    <Text
+      as="span"
+      className="section-intro__lead-content hero-copy necoz-section-copy-mobile"
+    >
+      We&apos;re a small software development studio called Necoz. <br />
+      We focus on well-designed systems, clean architecture, <br />
+      and software that scales without losing clarity.
+    </Text>
+  </SectionIntro>
+</SceneSection>
+
+<style>
+  :global(.hero-section) {
+    --hero-layer-mobile-block: var(--layer-scene-background-raised);
+    --hero-layer-mobile-plumbing: var(--layer-scene-background-raised);
+    --hero-layer-mobile-stack: var(--layer-scene-copy);
+    --hero-layer-mobile-target: var(--layer-scene-copy-emphasis);
+    --hero-layer-mobile-work: var(--layer-scene-background);
+  }
+
+  .sprite {
+    --nyaomaru-size: 3.5rem;
+    position: absolute;
+    left: 0;
+    bottom: 14rem;
+    width: var(--nyaomaru-size);
+    image-rendering: pixelated;
+  }
+
+  .sprite-anchor {
+    opacity: 0;
+  }
+
+  .block-one--mobile {
+    left: 0;
+    bottom: 10rem;
+    display: none;
+  }
+
+  .block-one--desktop {
+    left: 0;
+    bottom: 11rem;
+  }
+
+  .block-two--mobile {
+    display: none;
+  }
+
+  .block-two--desktop {
+    right: 0;
+    bottom: 4rem;
+  }
+
+  .block-two__mobile-segment {
+    width: calc(var(--block-grid-cell) * var(--block-two-mobile-columns));
+    box-sizing: border-box;
+    display: block;
+    height: var(--block-grid-cell);
+    border: var(--block-grid-stroke-width) solid var(--block);
+    background: var(--block);
+    position: relative;
+    z-index: var(--hero-layer-mobile-block);
+  }
+
+  .block-two__mobile-segment + .block-two__mobile-segment {
+    margin-top: calc(-1 * var(--block-grid-stroke-width));
+  }
+
+  @media (--necoz-stage-wide) {
+    .block-one--desktop {
+      bottom: 12rem;
+    }
+
+    .block-two--desktop {
+      bottom: 3rem;
+    }
+  }
+
+  .block-two__mobile-stack {
+    display: none;
+  }
+
+  @media (--necoz-phone) {
+    :global(.hero-section) {
+      --hero-mobile-block: var(--necoz-14-grid-cell);
+    }
+
+    .sprite {
+      --nyaomaru-size: var(--necoz-14-grid-cell);
+    }
+
+    .block-one--desktop {
+      display: none;
+    }
+
+    .block-two--desktop {
+      display: none;
+    }
+
+    .block-one--mobile {
+      --block-grid-cell: var(--necoz-14-grid-cell);
+      display: flex;
+    }
+
+    .block-two--mobile {
+      --block-grid-cell: var(--necoz-14-grid-cell);
+      display: flex;
+      position: absolute;
+      right: 0;
+      bottom: -8rem;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .block-two__mobile-stack {
+      position: absolute;
+      right: calc(var(--block-grid-cell) * 0.8);
+      bottom: calc(100% - var(--block-grid-cell) * 0.08);
+      display: block;
+      width: calc(var(--block-grid-cell) * 1.2);
+      line-height: 0;
+      z-index: var(--hero-layer-mobile-stack);
+    }
+
+    .block-two__mobile-segment--1 {
+      z-index: var(--hero-layer-mobile-target);
+    }
+
+    .block-two__mobile-stack .icon-plumbing {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .block-two__mobile-stack .icon-work {
+      display: block;
+      height: auto;
+    }
+
+    .block-two__mobile-plumbing {
+      position: relative;
+      z-index: var(--hero-layer-mobile-plumbing);
+    }
+
+    .block-two__mobile-work {
+      position: absolute;
+      left: 22%;
+      bottom: calc(var(--block-grid-cell) * 0.04);
+      z-index: var(--hero-layer-mobile-work);
+      opacity: 0;
+      transform: translate(
+        var(--work-translate-x, 0px),
+        var(--work-translate-y, 0px)
+      );
+      transition: opacity 0.2s linear;
+      width: 71%;
+    }
+
+    .block-two__mobile-stack[data-work-scene-phase="hidden"] .icon-work {
+      opacity: 0;
+    }
+
+    .block-two__mobile-stack[data-work-scene-phase="reveal"] .icon-work {
+      opacity: 1;
+    }
+  }
+</style>

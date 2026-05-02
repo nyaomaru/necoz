@@ -1,0 +1,345 @@
+---
+import BlockShape from "~/components/ui/block/BlockShape.astro";
+import SceneSection from "~/components/ui/layout/SceneSection.astro";
+import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
+import SocialLinks from "~/components/ui/layout/SocialLinks.astro";
+import MailDialogTrigger from "~/components/ui/mail/mail-dialog-trigger";
+import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
+import Text from "~/components/ui/text/Text";
+
+const desktopBlockSevenRows = [
+  {
+    class: "block-seven__segment block-seven-1",
+    columns: 27,
+    emptyCount: 13,
+    attributes: {
+      "data-nyaomaru-contact-step": 1,
+      "data-studio-walker-step": 1,
+    },
+  },
+  {
+    class: "block-seven__segment",
+    columns: 27,
+    emptyCount: 10,
+    attributes: { "data-nyaomaru-contact-step": 2 },
+  },
+  {
+    class: "block-seven__segment",
+    columns: 30,
+    emptyCount: 10,
+    attributes: {
+      "data-nyaomaru-contact-step": 3,
+      "data-studio-walker-step": 3,
+    },
+  },
+  {
+    class: "block-seven__segment",
+    columns: 30,
+    emptyCount: 17,
+    attributes: {
+      "data-nyaomaru-contact-step": 4,
+      "data-studio-walker-step": 4,
+    },
+  },
+];
+
+const mobileBlockSevenRows = [
+  {
+    class: "block-seven__segment block-seven-1",
+    columns: 6,
+    emptyCount: 0,
+    attributes: {
+      "data-nyaomaru-contact-step": 1,
+      "data-studio-walker-step": 1,
+    },
+  },
+  {
+    class: "block-seven__segment",
+    columns: 8,
+    emptyCount: 0,
+    attributes: { "data-nyaomaru-contact-step": 2 },
+  },
+  {
+    class: "block-seven__segment",
+    columns: 8,
+    emptyCount: 0,
+    attributes: {
+      "data-nyaomaru-contact-step": 3,
+      "data-studio-walker-step": 3,
+    },
+  },
+  {
+    class: "block-seven__segment",
+    columns: 2,
+    emptyCount: 0,
+    attributes: {
+      "data-nyaomaru-contact-step": 4,
+      "data-studio-walker-step": 4,
+    },
+  },
+];
+---
+
+<SceneSection
+  id="contact"
+  class="contact-section"
+  data-nyaomaru-contact-scene
+>
+  <SceneBackground zIndex="var(--layer-scene-background)">
+    <div class="block block-seven block-seven--desktop">
+      <div class="block-seven__anchor necoz-scene-anchor">
+        <BlockShape
+          class={desktopBlockSevenRows[0].class}
+          columns={desktopBlockSevenRows[0].columns}
+          emptyCount={desktopBlockSevenRows[0].emptyCount}
+          {...desktopBlockSevenRows[0].attributes}
+        />
+        <img
+          class="icon-heart"
+          src="/assets/icons/heart.svg"
+          alt="Heart icon"
+          data-nyaomaru-contact-heart
+        />
+        <img
+          class="icon-manya"
+          src="/assets/icons/manya.svg"
+          alt="Manya icon"
+          data-nyaomaru-contact-manya
+        />
+      </div>
+      {
+        desktopBlockSevenRows
+          .slice(1)
+          .map((row) => (
+            <BlockShape
+              class={row.class}
+              columns={row.columns}
+              emptyCount={row.emptyCount}
+              {...row.attributes}
+            />
+          ))
+      }
+    </div>
+    <div class="block block-seven block-seven--mobile">
+      <div class="block-seven__anchor necoz-scene-anchor">
+        <BlockShape
+          class={mobileBlockSevenRows[0].class}
+          columns={mobileBlockSevenRows[0].columns}
+          emptyCount={mobileBlockSevenRows[0].emptyCount}
+          {...mobileBlockSevenRows[0].attributes}
+        />
+        <img
+          class="icon-heart"
+          src="/assets/icons/heart.svg"
+          alt="Heart icon"
+          data-nyaomaru-contact-heart
+        />
+        <img
+          class="icon-manya"
+          src="/assets/icons/manya.svg"
+          alt="Manya icon"
+          data-nyaomaru-contact-manya
+        />
+      </div>
+      {
+        mobileBlockSevenRows
+          .slice(1)
+          .map((row) => (
+            <BlockShape
+              class={row.class}
+              columns={row.columns}
+              emptyCount={row.emptyCount}
+              {...row.attributes}
+            />
+          ))
+      }
+    </div>
+  </SceneBackground>
+
+  <SectionIntro
+    titleSrc="/assets/texts/contact.svg"
+    titleAlt="Contact"
+    sectionTitleOffset="12rem"
+    descriptionMarginTop="16rem"
+    leadContentWidth="min(100%, 40rem)"
+    leadContentMarginTop="0"
+    mobileDescriptionMarginTop="0"
+    mobileLeadContentMarginTop="2rem"
+    mobileLeadContentWidth="calc(100vw - var(--necoz-14-grid-cell) * 1.5 - 7rem)"
+    mobileTitleImageWidth="12rem"
+    titleLayered={true}
+  >
+    <div class="section-intro__lead-content contact-copy necoz-section-copy-mobile">
+      <Text as="p" className="section-text">Feel free to reach out.</Text>
+      <div class="contact-links">
+        <MailDialogTrigger client:load />
+        <SocialLinks />
+      </div>
+    </div>
+  </SectionIntro>
+</SceneSection>
+
+<style>
+  :global(.contact-section) {
+    --contact-layer-heart: var(--layer-scene-background);
+    --contact-layer-manya: var(--layer-scene-background-raised);
+    --contact-manya-size: 5rem;
+    min-height: var(--contact-scene-shell-min-height, 52rem);
+  }
+
+  .block-seven {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    left: 0;
+    top: var(--contact-block-seven-top, 6rem);
+  }
+
+  .block-seven--mobile {
+    display: none;
+  }
+
+  .block-seven > * + * {
+    margin-top: calc(-1 * var(--block-grid-stroke-width));
+  }
+
+  .icon-heart {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: var(--contact-layer-heart);
+    height: auto;
+    opacity: var(--contact-heart-opacity, 0);
+    transform: translate(
+      var(--contact-heart-translate-x, 0px),
+      var(--contact-heart-translate-y, 0px)
+    );
+  }
+
+  .icon-manya {
+    position: absolute;
+    right: calc(var(--block-grid-cell) * 3);
+    bottom: calc(100%);
+    z-index: var(--contact-layer-manya);
+    width: var(--contact-manya-size);
+    height: auto;
+  }
+
+  .contact-copy {
+    width: min(100%, 40rem);
+  }
+
+  .section-text {
+    max-width: 40rem;
+    margin: 0;
+    color: var(--main);
+  }
+
+  .contact-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  :global(.icon-link) {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 51.25rem) {
+    .contact-links :global(.mail-dialog-trigger__icon),
+    .contact-links :global(.icon-link img) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  @media (max-width: 32.5rem) {
+    .contact-links :global(.mail-dialog-trigger__icon),
+    .contact-links :global(.icon-link img) {
+      width: 1.0625rem;
+      height: 1.0625rem;
+    }
+  }
+
+  @media (--necoz-stage-compact) {
+    :global(.contact-section) {
+      --contact-scene-shell-min-height: 48rem;
+      --contact-manya-size: 5rem;
+    }
+  }
+
+  @media (--necoz-stage-wide) {
+    :global(.contact-section) {
+      --contact-block-seven-top: 5rem;
+      --contact-scene-shell-min-height: 62rem;
+    }
+  }
+
+  @media (--necoz-desktop-compact) {
+    :global(.contact-section) {
+      --contact-scene-shell-min-height: 42rem;
+      --contact-manya-size: 4rem;
+    }
+  }
+
+  @media (--necoz-content-compact) {
+    :global(.contact-section) {
+      --contact-scene-shell-min-height: 34rem;
+      --contact-manya-size: 4rem;
+    }
+  }
+
+  @media (--necoz-content-narrow) {
+    :global(.contact-section) {
+      --contact-scene-shell-min-height: 28rem;
+      --contact-manya-size: 3rem;
+    }
+  }
+
+  @media (--necoz-phone) {
+    :global(.contact-section) {
+      min-height: 18rem;
+      height: 18rem;
+    }
+
+    .block-seven.block-seven--desktop {
+      display: none;
+    }
+
+    .block-seven.block-seven--mobile {
+      --block-grid-cell: var(--necoz-14-grid-cell);
+      display: flex;
+      left: auto;
+      right: 0;
+      top: 0;
+      align-items: flex-end;
+    }
+
+    .block-seven--mobile .icon-heart {
+      width: calc(var(--block-grid-cell) * 0.3);
+    }
+
+    .block-seven--mobile .icon-manya {
+      right: calc(var(--block-grid-cell) * 0.9);
+      width: calc(var(--block-grid-cell) * 1);
+    }
+    .contact-links :global(.icon-link .social-link--x) {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    .contact-links :global(.icon-link .social-link--github) {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+
+    .contact-links {
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+  }
+</style>

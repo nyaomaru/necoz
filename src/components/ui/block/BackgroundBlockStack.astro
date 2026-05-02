@@ -1,0 +1,95 @@
+---
+import BlockShape from "~/components/ui/block/BlockShape.astro";
+
+type SegmentAttributes = Record<string, string | number | boolean | undefined>;
+
+type BackgroundBlockSegment = {
+  /** Additional class names applied to the block segment. */
+  class?: string;
+  /** Total number of cells rendered for the segment. */
+  columns: number;
+  /** Number of leading empty cells rendered for the segment. */
+  emptyCount?: number;
+  /** Extra HTML attributes forwarded to the segment wrapper. */
+  attributes?: SegmentAttributes;
+};
+
+type Props = {
+  /** Alignment used for the stacked segment column. */
+  align?: "start" | "end";
+  /** Additional class names applied to the stack wrapper. */
+  class?: string;
+  /** CSS positioning mode for the wrapper. */
+  position?: "absolute" | "relative";
+  /** Segments rendered inside the stack. */
+  segments: BackgroundBlockSegment[];
+  /** Inline style string used for per-instance placement. */
+  style?: string;
+};
+
+const {
+  align = "start",
+  class: className,
+  position = "absolute",
+  segments,
+  style,
+  ...attrs
+} = Astro.props as Props;
+---
+
+<div
+  class:list={[
+    "background-block-stack",
+    `background-block-stack--${align}`,
+    `background-block-stack--${position}`,
+    className,
+  ]}
+  style={style}
+  {...attrs}
+>
+  {
+    segments.map((segment) => (
+      <BlockShape
+        class:list={["background-block-stack__segment", segment.class]}
+        columns={segment.columns}
+        emptyCount={segment.emptyCount}
+        {...(segment.attributes ?? {})}
+      />
+    ))
+  }
+  <slot />
+</div>
+
+<style>
+  .background-block-stack {
+    --background-block-stack-layer-leading-segment: var(--layer-scene-accent);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .background-block-stack--start {
+    align-items: flex-start;
+  }
+
+  .background-block-stack--end {
+    align-items: flex-end;
+  }
+
+  .background-block-stack--absolute {
+    position: absolute;
+  }
+
+  .background-block-stack--relative {
+    position: relative;
+  }
+
+  .background-block-stack__segment + .background-block-stack__segment {
+    margin-top: calc(-1 * var(--block-grid-stroke-width));
+  }
+
+  /* The first block segment is rendered above the content slot to ensure it remains visible when segments overlap. */
+  .first-block {
+    position: relative;
+    z-index: var(--background-block-stack-layer-leading-segment);
+  }
+</style>
