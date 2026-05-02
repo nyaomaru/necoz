@@ -1,0 +1,73 @@
+import { clamp } from '~/lib/math';
+
+const KEYBOARD_SCROLL_STEP = 40;
+const PAGE_SCROLL_RATIO = 0.9;
+
+export const isEditableTarget = (target: EventTarget | null) =>
+  target instanceof HTMLElement &&
+  Boolean(target.closest('input, textarea, select, button, [contenteditable="true"]'));
+
+export const getKeyboardScrollTarget = ({
+  event,
+  targetVirtualScrollY,
+  virtualScrollRange,
+}: {
+  event: KeyboardEvent;
+  targetVirtualScrollY: number;
+  virtualScrollRange: number;
+}) => {
+  switch (event.key) {
+    case 'ArrowDown':
+      return targetVirtualScrollY + KEYBOARD_SCROLL_STEP;
+    case 'ArrowUp':
+      return targetVirtualScrollY - KEYBOARD_SCROLL_STEP;
+    case 'PageDown':
+      return targetVirtualScrollY + window.innerHeight * PAGE_SCROLL_RATIO;
+    case 'PageUp':
+      return targetVirtualScrollY - window.innerHeight * PAGE_SCROLL_RATIO;
+    case 'Home':
+      return 0;
+    case 'End':
+      return virtualScrollRange;
+    case ' ':
+      return (
+        targetVirtualScrollY + window.innerHeight * PAGE_SCROLL_RATIO * (event.shiftKey ? -1 : 1)
+      );
+    default:
+      return null;
+  }
+};
+
+export const getHashTargetVirtualScrollY = ({
+  anchor,
+  baseScrollRange,
+  currentVisualScrollY,
+  scrollRangeMultiplier,
+}: {
+  anchor: HTMLAnchorElement;
+  baseScrollRange: number;
+  currentVisualScrollY: number;
+  scrollRangeMultiplier: number;
+}) => {
+  const hash = anchor.getAttribute('href');
+
+  if (!hash || hash === '#') {
+    return null;
+  }
+
+  const target = document.querySelector<HTMLElement>(hash);
+
+  if (!target) {
+    return null;
+  }
+
+  const targetVisualScrollY = clamp(
+    currentVisualScrollY + target.getBoundingClientRect().top,
+    0,
+    baseScrollRange,
+  );
+
+  return scrollRangeMultiplier <= 0
+    ? targetVisualScrollY
+    : targetVisualScrollY * scrollRangeMultiplier;
+};

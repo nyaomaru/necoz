@@ -1,0 +1,406 @@
+---
+import BackgroundBlockStack from "~/components/ui/block/BackgroundBlockStack.astro";
+import BlockShape from "~/components/ui/block/BlockShape.astro";
+import SceneSection from "~/components/ui/layout/SceneSection.astro";
+import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
+import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
+import Text from "~/components/ui/text/Text";
+---
+
+<SceneSection id="studio" class="studio-section" data-nyaomaru-studio-scene>
+  <SceneBackground>
+    <div class="block-five block-five--desktop">
+      <div class="block-five__anchor necoz-scene-anchor">
+        <BlockShape
+          class="block-five__segment block-five-1"
+          columns={13}
+          data-nyaomaru-studio-step="1"
+        />
+        <img
+          class="icon-desk"
+          src="/assets/icons/desk.svg"
+          alt="Desk icon"
+          data-nyaomaru-studio-desk
+        />
+      </div>
+      <BackgroundBlockStack
+        class="block-five__stack"
+        align="end"
+        position="relative"
+        segments={[
+          {
+            class: "block-five__segment",
+            columns: 16,
+            attributes: { "data-nyaomaru-studio-step": 2 },
+          },
+          {
+            class: "block-five__segment",
+            columns: 20,
+            attributes: { "data-nyaomaru-studio-step": 3 },
+          },
+          {
+            class: "block-five__segment",
+            columns: 23,
+            attributes: { "data-nyaomaru-studio-step": 4 },
+          },
+          { class: "block-five__segment", columns: 23 },
+          { class: "block-five__segment", columns: 9 },
+        ]}
+      />
+    </div>
+    <div class="block-four block-four--mobile">
+      <div class="block-four__anchor necoz-scene-anchor">
+        <BlockShape
+          class="block-four__segment block-four-1"
+          columns={5}
+          data-nyaomaru-studio-step="1"
+        />
+        <img
+          class="icon-desk"
+          src="/assets/icons/desk.svg"
+          alt="Desk icon"
+          data-nyaomaru-studio-desk
+        />
+      </div>
+      <BackgroundBlockStack
+        class="block-four__stack"
+        align="end"
+        position="relative"
+        segments={[
+          {
+            class: "block-four__segment",
+            columns: 7,
+            attributes: { "data-nyaomaru-studio-step": 2 },
+          },
+          {
+            class: "block-four__segment",
+            columns: 7,
+            attributes: { "data-nyaomaru-studio-step": 3 },
+          },
+          {
+            class: "block-four__segment",
+            columns: 3,
+            attributes: { "data-nyaomaru-studio-step": 4 },
+          },
+        ]}
+      />
+    </div>
+    <BackgroundBlockStack
+      class="block-six block-six--desktop"
+      align="start"
+      segments={[
+        {
+          class: "block-six__segment",
+          columns: 12,
+          attributes: {
+            "data-nyaomaru-studio-block-six": true,
+            "data-studio-walker-block-six-step": 1,
+          },
+        },
+        {
+          class: "block-six__segment",
+          columns: 12,
+          attributes: { "data-studio-walker-block-six-step": 2 },
+        },
+        {
+          class: "block-six__segment",
+          columns: 14,
+          attributes: { "data-studio-walker-block-six-step": 3 },
+        },
+        { class: "block-six__segment", columns: 14 },
+        { class: "block-six__segment", columns: 5 },
+      ]}
+    >
+      <div class="icon-question-stack">
+        <img
+          class="icon-poop"
+          src="/assets/icons/poop.svg"
+          alt="Poop icon"
+          data-nyaomaru-studio-poop
+        />
+        <img
+          class="icon-question-mark"
+          src="/assets/icons/question_mark.svg"
+          alt="Question mark icon"
+          data-nyaomaru-studio-question-mark
+        />
+      </div>
+    </BackgroundBlockStack>
+    <BackgroundBlockStack
+      class="block-five block-five--mobile"
+      align="start"
+      segments={[
+        {
+          class: "block-five__segment",
+          columns: 5,
+          attributes: {
+            "data-nyaomaru-studio-block-five": true,
+            "data-studio-walker-block-five-step": 1,
+          },
+        },
+        { class: "block-five__segment", columns: 6 },
+        {
+          class: "block-five__segment",
+          columns: 6,
+          attributes: { "data-studio-walker-block-five-step": 3 },
+        },
+        { class: "block-five__segment", columns: 2 },
+      ]}
+    >
+      <div class="icon-question-stack">
+        <img
+          class="icon-poop"
+          src="/assets/icons/poop.svg"
+          alt="Poop icon"
+          data-nyaomaru-studio-poop
+        />
+        <img
+          class="icon-question-mark"
+          src="/assets/icons/question_mark.svg"
+          alt="Question mark icon"
+          data-nyaomaru-studio-question-mark
+        />
+      </div>
+    </BackgroundBlockStack>
+  </SceneBackground>
+
+  <SectionIntro
+    titleSrc="/assets/texts/studio.svg"
+    titleAlt="Studio"
+    sectionTitleOffset="18rem"
+    descriptionMarginTop="14.5rem"
+  >
+    <div class="studio-copy necoz-section-copy-mobile">
+      <Text as="p" className="section-text__line">Necoz B.V.</Text>
+      <Text as="p" className="section-text__line"
+        >Based in Amsterdam, the Netherlands.</Text
+      >
+      <Text as="p" className="section-text__line">KVK : &nbsp;97930946</Text>
+    </div>
+  </SectionIntro>
+</SceneSection>
+
+<style>
+  :global(.studio-section) {
+    --studio-layer-question-mark: var(--layer-scene-background-raised);
+    --studio-layer-poop: var(--layer-scene-background);
+    --studio-block-five-bottom: 24rem;
+    --studio-block-six-bottom: 2rem;
+    --studio-copy-margin-top: 8rem;
+    --studio-question-stack-offset: 8rem;
+  }
+
+  .studio-copy {
+    --necoz-basic-text-size: var(--section-intro-text-size, 2rem);
+    margin-top: var(--studio-copy-margin-top);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-text__line {
+    margin: 0;
+  }
+
+  .section-text__line + .section-text__line {
+    margin-top: 0.5rem;
+  }
+
+  .block-six {
+    position: absolute;
+    left: 0;
+    bottom: var(--studio-block-six-bottom);
+  }
+
+  .block-six--mobile {
+    display: none;
+  }
+
+  .icon-question-stack {
+    position: absolute;
+    left: calc(var(--block-grid-cell) * 3);
+    bottom: calc(100% + var(--studio-question-stack-offset));
+    width: calc(var(--block-grid-cell) * 1.5);
+    line-height: 0;
+  }
+
+  .icon-question-mark {
+    position: relative;
+    z-index: var(--studio-layer-question-mark);
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .icon-poop {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - var(--block-grid-cell) * 0.2);
+    z-index: var(--studio-layer-poop);
+    display: block;
+    width: calc(var(--block-grid-cell) * 1.25);
+    height: auto;
+    opacity: var(--studio-poop-opacity, 0);
+    transform: translate(
+      calc(-50% + var(--studio-poop-translate-x, 0px)),
+      var(--studio-poop-translate-y, 0px)
+    );
+  }
+
+  .block-five {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    right: 0;
+    bottom: var(--studio-block-five-bottom);
+  }
+
+  .block-five--mobile {
+    display: none;
+  }
+
+  .block-four--mobile {
+    display: none;
+  }
+
+  .block-four__anchor,
+  .block-five__anchor {
+    align-self: flex-end;
+    margin-left: auto;
+  }
+
+  .block-four__stack {
+    align-self: flex-end;
+    margin-top: calc(-1 * var(--block-grid-stroke-width));
+  }
+
+  .block-five__stack {
+    align-self: flex-end;
+    margin-top: calc(-1 * var(--block-grid-stroke-width));
+  }
+
+  .icon-desk {
+    position: absolute;
+    right: calc(var(--block-grid-cell) * 3);
+    bottom: calc(100% - 0.5rem);
+    width: calc(var(--block-grid-cell) * 3);
+    height: auto;
+  }
+
+  @media (--necoz-stage-wide) {
+    :global(.studio-section) {
+      --studio-block-five-bottom: 25rem;
+      --studio-block-six-bottom: 1rem;
+    }
+  }
+
+  @media (--necoz-stage-compact) {
+    :global(.studio-section) {
+      --studio-block-five-bottom: 22rem;
+      --studio-block-six-bottom: 1.9rem;
+      --studio-copy-margin-top: 7.2rem;
+      --studio-question-stack-offset: 7.2rem;
+    }
+  }
+
+  @media (--necoz-desktop-compact) {
+    :global(.studio-section) {
+      --studio-block-five-bottom: 19rem;
+      --studio-block-six-bottom: 1.6rem;
+      --studio-copy-margin-top: 6.2rem;
+      --studio-question-stack-offset: 6.2rem;
+    }
+  }
+
+  @media (--necoz-content-compact) {
+    :global(.studio-section) {
+      --studio-block-five-bottom: 16rem;
+      --studio-block-six-bottom: 1.2rem;
+      --studio-copy-margin-top: 5rem;
+      --studio-question-stack-offset: 5rem;
+    }
+  }
+
+  @media (--necoz-content-narrow) {
+    :global(.studio-section) {
+      --studio-block-five-bottom: 12rem;
+      --studio-block-six-bottom: 1rem;
+      --studio-copy-margin-top: 3.5rem;
+      --studio-question-stack-offset: 3.5rem;
+    }
+
+    .studio-copy {
+      --necoz-basic-text-transform-x: 1.25;
+    }
+  }
+
+  @media (--necoz-phone) {
+    :global(.studio-section) :global(.section-container) {
+      margin-top: 7.5rem;
+    }
+
+    :global(.studio-section) :global(.description--offset) {
+      margin-top: 0;
+    }
+
+    :global(.studio-section) :global(.section-title__image) {
+      width: 11.5rem;
+    }
+
+    .block-five.block-five--desktop,
+    .block-six.block-six--desktop {
+      display: none;
+    }
+
+    .block-four.block-four--mobile,
+    .block-five.block-five--mobile {
+      --block-grid-cell: var(--necoz-14-grid-cell);
+      display: flex;
+    }
+
+    .block-four.block-four--mobile {
+      position: absolute;
+      flex-direction: column;
+      align-items: flex-end;
+      right: 0;
+      bottom: 14rem;
+    }
+
+    .block-five.block-five--mobile {
+      position: absolute;
+      flex-direction: column;
+      align-items: flex-start;
+      left: 0;
+      right: auto;
+      bottom: 4.5rem;
+    }
+
+    .block-four--mobile .icon-desk {
+      right: calc(var(--block-grid-cell) * 1.3);
+      bottom: calc(100% - 0.125rem);
+      width: calc(var(--block-grid-cell) * 1.65);
+    }
+
+    .block-five--mobile .icon-question-stack {
+      left: calc(var(--block-grid-cell) * 0.8);
+      bottom: calc(100% + var(--block-grid-cell) * 1.8);
+      width: calc(var(--block-grid-cell) * 1.1);
+    }
+
+    .icon-poop {
+      width: calc(var(--block-grid-cell) * 0.8);
+    }
+
+    .studio-copy {
+      --necoz-basic-text-size: var(--section-copy-mobile-size);
+      --necoz-basic-text-line-height: var(--section-copy-mobile-line-height);
+      --necoz-basic-text-transform-x: var(--section-copy-mobile-transform-x);
+      width: calc(100vw - var(--necoz-14-grid-cell) * 1.5 - 10rem);
+      margin-top: 2rem;
+      margin-bottom: 0;
+    }
+
+    .section-text__line + .section-text__line {
+      margin-top: 0;
+    }
+  }
+</style>

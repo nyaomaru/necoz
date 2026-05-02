@@ -1,0 +1,191 @@
+---
+import SocialLinks from "~/components/ui/layout/SocialLinks.astro";
+import MailDialogTrigger from "~/components/ui/mail/mail-dialog-trigger";
+import { PORTFOLIO_URL } from "~/lib/site-links";
+import { MEDIA_QUERIES } from "~/styles/breakpoints.mjs";
+
+type Props = {
+  /** Destination used by the Necoz logo link. */
+  homeHref?: string;
+};
+
+const { homeHref = "#top" } = Astro.props as Props;
+---
+
+<header class="stage-header">
+  <picture class="header-clouds" aria-hidden="true">
+    <source
+      srcset="/assets/backgrounds/smartphone_header.svg"
+      media={MEDIA_QUERIES.phone}
+    />
+    <img src="/assets/backgrounds/header.svg" alt="Necoz header background" />
+  </picture>
+  <div class="header-overlay">
+    <h1 class="brand">
+      <a href={homeHref} aria-label="Necoz home">
+        <img src="/assets/necoz_logo.svg" alt="Necoz" />
+      </a>
+    </h1>
+    <div class="links">
+      <a
+        class="portfolio-link"
+        href={PORTFOLIO_URL}
+        aria-label="Go to portfolio section"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="/assets/texts/portfolio.svg" alt="Portfolio" />
+      </a>
+      <MailDialogTrigger client:load />
+      <SocialLinks />
+    </div>
+  </div>
+</header>
+
+<style>
+  .stage-header {
+    position: relative;
+    z-index: var(--layer-site-chrome);
+    margin: 0 auto;
+  }
+
+  .header-clouds {
+    display: block;
+    width: 100%;
+  }
+
+  .header-clouds img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .header-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    pointer-events: none;
+    margin: 5rem 5rem;
+  }
+
+  .header-overlay :global(a),
+  .header-overlay :global(button) {
+    pointer-events: auto;
+  }
+
+  .brand {
+    margin: 0;
+    line-height: 0;
+  }
+
+  .brand img {
+    width: 14rem;
+    height: auto;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .portfolio-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  :global(.icon-link) {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .portfolio-link:hover {
+    opacity: 1;
+  }
+
+  :global(.icon-link:hover) {
+    opacity: 1;
+  }
+
+  @media (--necoz-stage-compact) {
+    .header-overlay {
+      margin: 4rem 4rem;
+    }
+  }
+
+  @media (--necoz-desktop-compact) {
+    .header-overlay {
+      margin: 2.5rem 2.5rem;
+    }
+  }
+
+  @media (max-width: 51.25rem) {
+    .header-overlay {
+      margin: 1.5rem 1.5rem;
+    }
+
+    .brand img {
+      width: 8.5rem;
+    }
+
+    .portfolio-link img {
+      width: 6rem;
+    }
+
+    .header-overlay :global(.mail-dialog-trigger__icon),
+    :global(.icon-link img) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  @media (max-width: 32.5rem) {
+    .header-overlay {
+      margin: 1.5rem 1.5rem;
+    }
+
+    .brand img {
+      width: 6.5rem;
+    }
+
+    .portfolio-link img {
+      width: 4rem;
+    }
+
+    .links {
+      gap: 0.5625rem;
+      margin-right: 0.5rem;
+    }
+
+    .header-overlay :global(.mail-dialog-trigger__icon),
+    :global(.icon-link img) {
+      width: 1.0625rem;
+      height: 1.0625rem;
+    }
+  }
+
+  @media (--necoz-phone) {
+    .header-overlay {
+      margin: 1.5rem 1.5rem;
+    }
+
+    :global(.icon-link .social-link--x) {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    :global(.icon-link .social-link--github) {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+
+    .portfolio-link {
+      margin-right: 0.25rem;
+      min-height: 0;
+    }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+type Props = {
+  /** Additional class names applied to the background layer. */
+  class?: string;
+  /** Optional z-index for layered section backgrounds. */
+  zIndex?: string;
+};
+
+const { class: className, zIndex, ...attrs } = Astro.props as Props;
+---
+
+<div
+  class:list={["scene-background", className]}
+  style={zIndex ? `--scene-background-z-index: ${zIndex};` : undefined}
+  aria-hidden="true"
+  {...attrs}
+>
+  <slot />
+</div>
+
+<style>
+  .scene-background {
+    position: absolute;
+    inset: 0;
+    z-index: var(--scene-background-z-index, auto);
+    pointer-events: none;
+  }
+</style>

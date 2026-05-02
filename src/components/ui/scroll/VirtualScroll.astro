@@ -1,0 +1,71 @@
+<div data-virtual-scroll-content>
+  <slot />
+</div>
+<div class="virtual-scrollbar" data-virtual-scrollbar aria-hidden="true">
+  <div class="virtual-scrollbar__track" data-virtual-scrollbar-track>
+    <div class="virtual-scrollbar__thumb" data-virtual-scrollbar-thumb></div>
+  </div>
+</div>
+
+<script>
+  import { setupVirtualScroll } from "./virtual-scroll-controller";
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupVirtualScroll, {
+      once: true,
+    });
+  } else {
+    setupVirtualScroll();
+  }
+</script>
+
+<style is:global>
+  html.virtual-scroll-root,
+  html.virtual-scroll-root body {
+    height: 100%;
+    overflow: hidden;
+    scroll-behavior: auto;
+  }
+
+  body.virtual-scroll-body {
+    min-height: 100vh;
+  }
+
+  .virtual-scroll-body [data-virtual-scroll-content] {
+    position: relative;
+    top: 0;
+    will-change: top;
+  }
+
+  .virtual-scrollbar {
+    position: fixed;
+    top: 0.75rem;
+    right: 0.625rem;
+    bottom: 0.75rem;
+    z-index: var(--layer-virtual-scrollbar);
+    width: 0.625rem;
+  }
+
+  .virtual-scrollbar__track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: rgba(83, 83, 86, 0.14);
+  }
+
+  .virtual-scrollbar__thumb {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border-radius: 999px;
+    background: var(--main);
+    opacity: 0.82;
+    cursor: grab;
+    will-change: transform;
+  }
+
+  .virtual-scrollbar__thumb:active {
+    cursor: grabbing;
+  }
+</style>

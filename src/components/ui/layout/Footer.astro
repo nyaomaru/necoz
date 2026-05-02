@@ -1,0 +1,194 @@
+---
+import Text from "~/components/ui/text/Text";
+---
+
+<footer class="footer" data-nyaomaru-contact-footer>
+  <img
+    class="goal-fish"
+    src="/assets/icons/fish.svg"
+    alt="Fish icon"
+    aria-hidden="true"
+    data-nyaomaru-goal-fish
+  />
+  <img
+    class="goal-flag"
+    src="/assets/icons/flag.svg"
+    alt="Goal flag"
+    aria-hidden="true"
+    data-nyaomaru-goal-flag
+  />
+  <img
+    class="goal-fish-bone"
+    src="/assets/icons/fish_bone.svg"
+    alt="Fish bone icon"
+    aria-hidden="true"
+    data-nyaomaru-goal-fish-bone
+  />
+  <div class="footer-content">
+    <Text as="p" className="footer-copy"
+      >© 2026 Necoz B.V. All rights reserved.</Text
+    >
+    <Text as="a" href="/privacy-policy/" className="footer-link"
+      >Privacy Policy</Text
+    >
+  </div>
+</footer>
+
+<style>
+  .footer {
+    --necoz-basic-text-size: 1.25rem;
+    --necoz-basic-text-line-height: 1.4;
+    --necoz-basic-text-transform-x: 1.5;
+    --footer-layer-shell: var(--layer-scene-background-raised);
+    --footer-layer-fish-bone: var(--layer-scene-copy);
+    position: relative;
+    z-index: var(--footer-layer-shell);
+    width: min(calc(100% - 2rem), var(--max-width));
+    padding-block: 5rem 10rem;
+    background-image: url("/assets/backgrounds/footer.svg");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .goal-flag {
+    position: absolute;
+    right: calc(var(--block-grid-cell) * 3.5);
+    bottom: calc(100% - 0.125rem);
+    pointer-events: none;
+  }
+
+  .goal-fish {
+    position: absolute;
+    right: calc(var(--block-grid-cell) * 8.5);
+    bottom: calc(100% + var(--block-grid-cell) * 8);
+    pointer-events: none;
+  }
+
+  .goal-fish-bone {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: var(--footer-layer-fish-bone);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(
+      var(--goal-fish-bone-x, 0px),
+      var(--goal-fish-bone-y, 0px)
+    );
+  }
+
+  .footer-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer :global(.footer-copy) {
+    margin: 0;
+    margin-right: 10rem;
+  }
+
+  .footer :global(.footer-link) {
+    white-space: nowrap;
+  }
+
+  .footer :global(.footer-link:hover),
+  .footer :global(.footer-link:focus-visible) {
+    text-decoration: underline;
+  }
+
+  @media (--necoz-stage-compact) {
+    .footer {
+      --footer-goal-cell: var(--necoz-14-grid-cell);
+      --necoz-basic-text-size: 1.125rem;
+      padding-block: 3rem 6rem;
+    }
+
+    .goal-flag {
+      right: calc(var(--footer-goal-cell) * 1);
+      bottom: calc(100% - 0.75rem);
+      width: calc(var(--footer-goal-cell) * 5);
+    }
+
+    .goal-fish {
+      right: calc(var(--footer-goal-cell) * 3.1);
+      bottom: calc(100% + var(--footer-goal-cell) * 3.4);
+      width: calc(var(--footer-goal-cell) * 0.5);
+    }
+
+    .goal-fish-bone {
+      width: calc(var(--block-grid-cell) * 2);
+    }
+  }
+
+  @media (--necoz-content-compact) {
+    .footer {
+      --necoz-basic-text-size: 1rem;
+      padding-block: 2rem 4rem;
+    }
+  }
+
+  @media (--necoz-content-narrow) {
+    .footer {
+      --necoz-basic-text-size: 1rem;
+      padding-block: 1.5rem 3rem;
+    }
+  }
+
+  @media (max-width: 35rem) {
+    .footer {
+      --necoz-basic-text-size: 1rem;
+      padding-block: 1rem 2rem;
+    }
+  }
+
+  @media (--necoz-phone) {
+    .footer {
+      --necoz-basic-text-size: 0.75rem;
+      --necoz-basic-text-line-height: 1.2;
+      --necoz-basic-text-transform-x: 1.2;
+      width: 100%;
+      max-width: 100%;
+      margin-inline: auto;
+      background-image: url("/assets/backgrounds/smartphone_footer.svg");
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding-block: 1.825rem 3.5rem;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    .footer :global(.footer-copy) {
+      display: inline-block;
+      margin-right: 0;
+      transform-origin: center center;
+    }
+
+    .footer :global(.footer-link) {
+      display: inline-block;
+      transform-origin: center center;
+    }
+
+    .goal-flag {
+      width: calc(var(--footer-goal-cell) * 5.5);
+    }
+
+    .goal-fish {
+      width: calc(var(--footer-goal-cell) * 0.75);
+    }
+  }
+</style>

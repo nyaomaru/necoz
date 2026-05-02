@@ -1,0 +1,523 @@
+---
+import type { HTMLTag } from "astro/types";
+import BlockShape from "~/components/ui/block/BlockShape.astro";
+
+type Props = {
+  /** Optional top margin applied to the description row via a CSS variable. */
+  descriptionMarginTop?: string;
+  /** HTML tag used for the lead wrapper element. */
+  leadAs?: HTMLTag;
+  /** Optional desktop width applied to the lead content root. */
+  leadContentWidth?: string;
+  /** Optional desktop top margin applied to the lead content root. */
+  leadContentMarginTop?: string;
+  /** Optional mobile-only top margin applied to the description row. */
+  mobileDescriptionMarginTop?: string;
+  /** Optional mobile-only top margin applied to the lead content root. */
+  mobileLeadContentMarginTop?: string;
+  /** Optional mobile-only width applied to the lead content root. */
+  mobileLeadContentWidth?: string;
+  /** Optional mobile-only top margin applied to the section container. */
+  mobileSectionContainerMarginTop?: string;
+  /** Optional mobile-only width applied to the title image. */
+  mobileTitleImageWidth?: string;
+  /** Optional minimum height for the intro scene container. */
+  sceneIntroMinHeight?: string;
+  /** Optional vertical offset applied to the section title. */
+  sectionTitleOffset?: string;
+  /** Optional horizontal offset applied to the section title. */
+  sectionTitleOffsetX?: string;
+  /** Accessible alt text for the title image. */
+  titleAlt: string;
+  /** Optional max width constraint for the title image. */
+  titleImageMaxWidth?: string;
+  /** Whether the title should establish a local stacking context. */
+  titleLayered?: boolean;
+  /** Image source for the section title artwork. */
+  titleSrc: string;
+};
+
+const titleImageBaseWidths: Record<string, string> = {
+  "/assets/texts/contact.svg": "28.25rem",
+  "/assets/texts/hello.svg": "18.75rem",
+  "/assets/texts/studio.svg": "24.125rem",
+  "/assets/texts/what_we_do.svg": "37.5rem",
+};
+
+const responsiveScales = {
+  contentCompact: 0.74,
+  contentNarrow: 0.64,
+  desktopCompact: 0.84,
+  stageCompact: 0.94,
+};
+
+const verticalSpacingScales = {
+  contentCompact: 0.68,
+  contentNarrow: 0.64,
+  desktopCompact: 0.78,
+  stageCompact: 0.9,
+};
+
+const scaleCssLength = (value: string | undefined, scale: number) => {
+  const match = value?.match(/^(-?\d*\.?\d+)([a-z%]+)$/i);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const [, numberValue, unit] = match;
+  const scaledValue = Number.parseFloat(numberValue) * scale;
+
+  return `${Number.parseFloat(scaledValue.toFixed(4))}${unit}`;
+};
+
+const responsiveVarEntries = (
+  name: string,
+  value: string | undefined,
+  scales = responsiveScales,
+) =>
+  Object.entries(scales)
+    .map(([breakpointName, scale]) => {
+      const scaledValue = scaleCssLength(value, scale);
+
+      return scaledValue && `--${name}-${breakpointName}: ${scaledValue}`;
+    })
+    .filter(Boolean);
+
+const {
+  descriptionMarginTop,
+  leadAs: LeadTag = "div",
+  leadContentMarginTop,
+  leadContentWidth,
+  mobileDescriptionMarginTop,
+  mobileLeadContentMarginTop,
+  mobileLeadContentWidth,
+  mobileSectionContainerMarginTop,
+  mobileTitleImageWidth,
+  sceneIntroMinHeight,
+  sectionTitleOffset,
+  sectionTitleOffsetX,
+  titleAlt,
+  titleImageMaxWidth,
+  titleLayered = false,
+  titleSrc,
+} = Astro.props as Props;
+
+const titleImageBaseWidth = titleImageBaseWidths[titleSrc];
+
+const sceneIntroStyle = [
+  sceneIntroMinHeight && `--scene-intro-min-height: ${sceneIntroMinHeight}`,
+  sceneIntroMinHeight &&
+    `--scene-intro-min-height-base: ${sceneIntroMinHeight}`,
+  ...responsiveVarEntries("scene-intro-min-height", sceneIntroMinHeight),
+  sectionTitleOffset && `--section-title-offset: ${sectionTitleOffset}`,
+  ...responsiveVarEntries("section-title-offset", sectionTitleOffset),
+  sectionTitleOffsetX && `--section-title-offset-x: ${sectionTitleOffsetX}`,
+  ...responsiveVarEntries("section-title-offset-x", sectionTitleOffsetX),
+  descriptionMarginTop && `--description-margin-top: ${descriptionMarginTop}`,
+  ...responsiveVarEntries(
+    "description-margin-top",
+    descriptionMarginTop,
+    verticalSpacingScales,
+  ),
+  leadContentMarginTop && `--lead-content-margin-top: ${leadContentMarginTop}`,
+  ...responsiveVarEntries("lead-content-margin-top", leadContentMarginTop),
+  leadContentWidth && `--lead-content-width: ${leadContentWidth}`,
+  mobileDescriptionMarginTop &&
+    `--mobile-description-margin-top: ${mobileDescriptionMarginTop}`,
+  mobileLeadContentMarginTop &&
+    `--mobile-lead-content-margin-top: ${mobileLeadContentMarginTop}`,
+  mobileLeadContentWidth &&
+    `--mobile-lead-content-width: ${mobileLeadContentWidth}`,
+  mobileSectionContainerMarginTop &&
+    `--mobile-section-container-margin-top: ${mobileSectionContainerMarginTop}`,
+  mobileTitleImageWidth &&
+    `--mobile-section-title-image-width: ${mobileTitleImageWidth}`,
+  titleImageBaseWidth &&
+    `--section-title-image-base-width: ${titleImageBaseWidth}`,
+  ...responsiveVarEntries("section-title-image-width", titleImageBaseWidth),
+  titleImageMaxWidth &&
+    `--section-title-image-max-width: ${titleImageMaxWidth}`,
+]
+  .filter(Boolean)
+  .join("; ");
+---
+
+<div
+  class:list={[
+    "scene-intro",
+    sceneIntroMinHeight && "scene-intro--fixed-height",
+  ]}
+  style={sceneIntroStyle || undefined}
+>
+  <div class="section-container">
+    <h2
+      class:list={[
+        "section-title",
+        titleLayered && "section-title--layered",
+        (sectionTitleOffset || sectionTitleOffsetX) && "section-title--offset",
+      ]}
+    >
+      <BlockShape class="section-title__spacer" columns={7} emptyCount={7} />
+      <img
+        class:list={[
+          "section-title__image",
+          titleImageMaxWidth && "section-title__image--constrained",
+        ]}
+        src={titleSrc}
+        alt={titleAlt}
+      />
+    </h2>
+    <div
+      class:list={[
+        "description",
+        descriptionMarginTop && "description--offset",
+      ]}
+    >
+      <BlockShape as="span" class="lead__spacer" columns={7} emptyCount={7} />
+      <LeadTag class="lead">
+        <slot />
+      </LeadTag>
+    </div>
+  </div>
+</div>
+
+<style>
+  .scene-intro {
+    --description-margin-top-responsive: var(--description-margin-top);
+    --lead-content-margin-top-responsive: var(--lead-content-margin-top, 4rem);
+    --section-container-margin-top: 4rem;
+    --section-intro-layer-accent: var(--layer-scene-accent);
+    --section-intro-layer-asset: var(--layer-scene-background-raised);
+    --section-intro-layer-copy: var(--layer-scene-copy);
+    --section-title-image-responsive-width: var(
+      --section-title-image-base-width,
+      100vw
+    );
+    --section-title-offset-responsive: var(--section-title-offset, 0rem);
+    --section-title-offset-x-responsive: var(--section-title-offset-x, 0rem);
+    --section-intro-text-size: 2rem;
+    --section-intro-lead-available-width: calc(
+      100vw - (var(--block-grid-cell) * 8) - 1rem
+    );
+    --section-intro-lead-max-width: calc(
+      var(--section-intro-lead-available-width) / 1.4
+    );
+    --scene-intro-responsive-min-height: var(--scene-intro-min-height, auto);
+    position: relative;
+    z-index: var(--section-intro-layer-copy);
+    display: flex;
+    min-height: var(
+      --scene-intro-min-height-mobile,
+      var(--scene-intro-responsive-min-height)
+    );
+  }
+
+  .section-container {
+    margin-top: var(--section-container-margin-top);
+  }
+
+  .section-title {
+    position: relative;
+    z-index: var(--section-intro-layer-copy);
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .section-title--layered {
+    position: relative;
+    z-index: var(--section-intro-layer-accent);
+  }
+
+  .section-title--offset {
+    transform: translate(
+      var(--section-title-offset-x-responsive),
+      var(--section-title-offset-responsive)
+    );
+  }
+
+  .section-title__spacer {
+    flex: none;
+  }
+
+  .section-title__image {
+    display: block;
+    width: min(100%, var(--section-title-image-responsive-width));
+    height: auto;
+  }
+
+  .section-title--layered .section-title__image {
+    position: relative;
+    z-index: var(--section-intro-layer-asset);
+  }
+
+  .section-title__image--constrained {
+    position: relative;
+    z-index: var(--section-intro-layer-asset);
+    width: min(
+      100%,
+      var(--section-title-image-max-width),
+      var(--section-title-image-responsive-width)
+    );
+    height: auto;
+  }
+
+  .description {
+    position: relative;
+    z-index: var(--section-intro-layer-copy);
+    display: flex;
+  }
+
+  .description--offset {
+    margin-top: var(--description-margin-top-responsive);
+  }
+
+  .lead {
+    display: flex;
+    align-items: flex-start;
+    gap: calc(var(--block-grid-cell) * 1);
+    margin: 0;
+    color: var(--main);
+  }
+
+  .lead__spacer {
+    flex: none;
+  }
+
+  .lead > :global(*) {
+    min-width: 0;
+    max-width: var(--section-intro-lead-max-width);
+    overflow-wrap: break-word;
+  }
+
+  .lead > :global(.section-intro__lead-content) {
+    --necoz-basic-text-size: var(--section-intro-text-size);
+    display: block;
+    width: min(
+      var(--lead-content-width, 70rem),
+      var(--section-intro-lead-max-width)
+    );
+    margin-top: var(--lead-content-margin-top-responsive);
+  }
+
+  @media (--necoz-stage-compact) {
+    .scene-intro {
+      --description-margin-top-responsive: var(
+        --description-margin-top-stageCompact,
+        var(--description-margin-top)
+      );
+      --lead-content-margin-top-responsive: var(
+        --lead-content-margin-top-stageCompact,
+        var(--lead-content-margin-top, 4rem)
+      );
+      --section-container-margin-top: 3.75rem;
+      --section-title-image-responsive-width: var(
+        --section-title-image-width-stageCompact,
+        var(--section-title-image-base-width, 100vw)
+      );
+      --section-title-offset-responsive: var(
+        --section-title-offset-stageCompact,
+        var(--section-title-offset, 0rem)
+      );
+      --section-title-offset-x-responsive: var(
+        --section-title-offset-x-stageCompact,
+        var(--section-title-offset-x, 0rem)
+      );
+      --section-intro-text-size: 1.875rem;
+    }
+
+    .scene-intro--fixed-height {
+      --scene-intro-responsive-min-height: var(
+        --scene-intro-min-height-stageCompact,
+        var(--scene-intro-min-height, auto)
+      );
+    }
+  }
+
+  @media (--necoz-desktop-compact) {
+    .scene-intro {
+      --description-margin-top-responsive: var(
+        --description-margin-top-desktopCompact,
+        var(--description-margin-top)
+      );
+      --lead-content-margin-top-responsive: var(
+        --lead-content-margin-top-desktopCompact,
+        var(--lead-content-margin-top, 4rem)
+      );
+      --section-container-margin-top: 3.25rem;
+      --section-title-image-responsive-width: var(
+        --section-title-image-width-desktopCompact,
+        var(--section-title-image-base-width, 100vw)
+      );
+      --section-title-offset-responsive: var(
+        --section-title-offset-desktopCompact,
+        var(--section-title-offset, 0rem)
+      );
+      --section-title-offset-x-responsive: var(
+        --section-title-offset-x-desktopCompact,
+        var(--section-title-offset-x, 0rem)
+      );
+      --section-intro-text-size: 1.625rem;
+    }
+
+    .scene-intro--fixed-height {
+      --scene-intro-responsive-min-height: var(
+        --scene-intro-min-height-desktopCompact,
+        var(--scene-intro-min-height, auto)
+      );
+    }
+  }
+
+  @media (--necoz-content-compact) {
+    .section-container {
+      margin-top: 0;
+    }
+
+    .scene-intro {
+      --description-margin-top-responsive: var(
+        --description-margin-top-contentCompact,
+        var(--description-margin-top)
+      );
+      --lead-content-margin-top-responsive: var(
+        --lead-content-margin-top-contentCompact,
+        var(--lead-content-margin-top, 4rem)
+      );
+      --section-container-margin-top: 2.75rem;
+      --section-title-image-responsive-width: var(
+        --section-title-image-width-contentCompact,
+        var(--section-title-image-base-width, 100vw)
+      );
+      --section-title-offset-responsive: var(
+        --section-title-offset-contentCompact,
+        var(--section-title-offset, 0rem)
+      );
+      --section-title-offset-x-responsive: var(
+        --section-title-offset-x-contentCompact,
+        var(--section-title-offset-x, 0rem)
+      );
+      --section-intro-text-size: 1.375rem;
+    }
+
+    .scene-intro--fixed-height {
+      --scene-intro-responsive-min-height: var(
+        --scene-intro-min-height-contentCompact,
+        var(--scene-intro-min-height, auto)
+      );
+    }
+  }
+
+  @media (--necoz-content-narrow) {
+    .section-container {
+      margin-top: 0;
+    }
+
+    .scene-intro {
+      --description-margin-top-responsive: var(
+        --description-margin-top-contentNarrow,
+        var(--description-margin-top)
+      );
+      --lead-content-margin-top-responsive: var(
+        --lead-content-margin-top-contentNarrow,
+        var(--lead-content-margin-top, 4rem)
+      );
+      --section-container-margin-top: 2.25rem;
+      --section-title-image-responsive-width: var(
+        --section-title-image-width-contentNarrow,
+        var(--section-title-image-base-width, 100vw)
+      );
+      --section-title-offset-responsive: var(
+        --section-title-offset-contentNarrow,
+        var(--section-title-offset, 0rem)
+      );
+      --section-title-offset-x-responsive: var(
+        --section-title-offset-x-contentNarrow,
+        var(--section-title-offset-x, 0rem)
+      );
+      --section-intro-text-size: 1rem;
+    }
+
+    .scene-intro--fixed-height {
+      --scene-intro-responsive-min-height: var(
+        --scene-intro-min-height-contentNarrow,
+        var(--scene-intro-min-height, auto)
+      );
+    }
+  }
+
+  @media (--necoz-content-narrow) and (min-width: 26.9375rem) {
+    .section-container {
+      margin-top: 0;
+    }
+
+    .lead > :global(*) {
+      --necoz-basic-text-transform-x: 1.25;
+      --section-intro-lead-max-width: calc(
+        var(--section-intro-lead-available-width) / 1.25
+      );
+    }
+  }
+
+  @media (--necoz-phone) {
+    .scene-intro {
+      --section-intro-mobile-block: var(--necoz-14-grid-cell);
+      --section-intro-mobile-inline-start: calc(
+        var(--section-intro-mobile-block) * 2
+      );
+      --block-grid-cell: var(--necoz-14-grid-cell);
+      --scene-intro-min-height-mobile: calc(var(--block-grid-cell) * 13);
+    }
+
+    .section-container {
+      margin-top: var(--mobile-section-container-margin-top, 3rem);
+    }
+
+    .section-title {
+      margin-left: var(--section-intro-mobile-inline-start);
+    }
+
+    .section-title--offset {
+      transform: none;
+    }
+
+    .section-title__spacer,
+    .lead__spacer {
+      display: none;
+    }
+
+    .section-title__image {
+      width: var(--mobile-section-title-image-width, 9rem);
+      height: auto;
+    }
+
+    .lead {
+      gap: 0;
+      margin-left: var(--section-intro-mobile-inline-start);
+    }
+
+    .lead > :global(*) {
+      --section-intro-lead-available-width: calc(
+        100vw - var(--section-intro-mobile-inline-start) - 1rem
+      );
+      --section-intro-lead-max-width: calc(
+        var(--section-intro-lead-available-width) / 1.5
+      );
+    }
+
+    .lead > :global(.section-intro__lead-content) {
+      width: var(
+        --mobile-lead-content-width,
+        calc(100vw - var(--section-intro-mobile-inline-start) - 10rem)
+      );
+      max-width: var(--section-intro-lead-max-width);
+      margin-top: var(--mobile-lead-content-margin-top, 2rem);
+    }
+
+    .description--offset {
+      margin-top: var(
+        --mobile-description-margin-top,
+        var(--description-margin-top)
+      );
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+type Props = {
+  /** Additional class names applied to the stack wrapper. */
+  class?: string;
+  /** Additional class names applied to the plumbing icon. */
+  plumbingClass?: string;
+  /** Additional class names applied to the work icon. */
+  workClass?: string;
+  /** Inline placement and sizing styles for the stack wrapper. */
+  style?: string;
+};
+
+const {
+  class: className,
+  plumbingClass,
+  style,
+  workClass,
+  ...attrs
+} = Astro.props as Props;
+---
+
+<div class:list={["work-icon-stack", className]} style={style} {...attrs}>
+  <img
+    class:list={["icon-work", "work-icon-stack__work", workClass]}
+    src="/assets/icons/work.svg"
+    alt="Work icon"
+  />
+  <img
+    class:list={["icon-plumbing", "work-icon-stack__plumbing", plumbingClass]}
+    src="/assets/icons/plumbing.svg"
+    alt="Plumbing icon"
+  />
+</div>
+
+<style>
+  .work-icon-stack {
+    --work-icon-stack-layer-work: var(--layer-scene-background);
+    --work-icon-stack-layer-plumbing: var(--layer-scene-background-raised);
+    position: absolute;
+    width: var(--work-icon-stack-width, 100%);
+    line-height: 0;
+  }
+
+  .work-icon-stack__plumbing {
+    position: relative;
+    z-index: var(--work-icon-stack-layer-plumbing);
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .work-icon-stack__work {
+    position: absolute;
+    left: var(--work-icon-stack-work-left, 25%);
+    bottom: var(--work-icon-stack-work-bottom, 0);
+    z-index: var(--work-icon-stack-layer-work);
+    display: block;
+    width: var(--work-icon-stack-work-width, 60%);
+    height: auto;
+    opacity: 0;
+    transform: translate(
+      var(--work-translate-x, 0px),
+      var(--work-translate-y, 0px)
+    );
+    transition: opacity 0.2s linear;
+  }
+
+  .work-icon-stack[data-work-scene-phase="hidden"] .work-icon-stack__work {
+    opacity: 0;
+  }
+
+  .work-icon-stack[data-work-scene-phase="reveal"] .work-icon-stack__work {
+    opacity: 1;
+  }
+</style>

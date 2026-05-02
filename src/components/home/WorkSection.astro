@@ -1,0 +1,418 @@
+---
+import BackgroundBlockStack from "~/components/ui/block/BackgroundBlockStack.astro";
+import BlockShape from "~/components/ui/block/BlockShape.astro";
+import NecozButton from "~/components/ui/button/NecozButton";
+import SceneSection from "~/components/ui/layout/SceneSection.astro";
+import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
+import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
+import WorkIconStack from "~/components/ui/scene/WorkIconStack.astro";
+import Text from "~/components/ui/text/Text";
+import { PORTFOLIO_URL } from "~/lib/site-links";
+
+const desktopBlockThreeRows = [
+  {
+    class: "block-three-1",
+    columns: 30,
+    emptyCount: 11,
+    dataNyaomaruTarget: true,
+  },
+  { class: "block-three-2", columns: 30, emptyCount: 7 },
+  { class: "block-three-3", columns: 26, emptyCount: 7 },
+  { class: "block-three-4", columns: 26, emptyCount: 9 },
+];
+
+const mobileBlockThreeRows = [
+  { class: "block-three-1", columns: 5, dataNyaomaruTarget: true },
+  { class: "block-three-2", columns: 5 },
+  { class: "block-three-3", columns: 7 },
+  { class: "block-three-4", columns: 2 },
+];
+
+const blockFourSegments = [
+  {
+    class: "block-four__segment first-block",
+    columns: 15,
+    attributes: { "data-nyaomaru-work-step": 1 },
+  },
+  {
+    class: "block-four__segment",
+    columns: 15,
+    attributes: { "data-nyaomaru-work-step": 2 },
+  },
+  {
+    class: "block-four__segment",
+    columns: 22,
+    attributes: { "data-nyaomaru-work-step": 3 },
+  },
+  {
+    class: "block-four__segment",
+    columns: 22,
+    attributes: { "data-nyaomaru-work-step": 4 },
+  },
+  {
+    class: "block-four__segment",
+    columns: 24,
+    attributes: { "data-nyaomaru-work-step": 5 },
+  },
+  {
+    class: "block-four__segment",
+    columns: 16,
+    attributes: { "data-nyaomaru-work-step": 6 },
+  },
+];
+
+const desktopServiceItems = [
+  "Front-end architecture & UI",
+  "Web application development",
+  "Technical consulting",
+  "OSS development",
+];
+
+const mobileServiceItems = [
+  "Front-end architecture",
+  "Application development",
+  "Technical consulting",
+  "OSS development",
+];
+---
+
+<SceneSection id="work" class="work-section">
+  <SceneBackground zIndex="var(--layer-scene-background)">
+    <div class="block block-three block-three--desktop">
+      <div class="block-three__anchor necoz-scene-anchor" data-work-scene-anchor>
+        <BlockShape
+          class={desktopBlockThreeRows[0].class}
+          columns={desktopBlockThreeRows[0].columns}
+          emptyCount={desktopBlockThreeRows[0].emptyCount}
+          data-nyaomaru-target={desktopBlockThreeRows[0].dataNyaomaruTarget}
+        />
+        <WorkIconStack
+          class="icon-plumbing-stack"
+          data-work-scene-phase="hidden"
+          data-work-scene-display
+        />
+      </div>
+      {
+        desktopBlockThreeRows
+          .slice(1)
+          .map((row) => (
+            <BlockShape
+              class={row.class}
+              columns={row.columns}
+              emptyCount={row.emptyCount}
+            />
+          ))
+      }
+    </div>
+    <div class="block block-three block-three--mobile">
+      <div class="block-three__anchor necoz-scene-anchor" data-work-scene-anchor>
+        <BlockShape
+          class={mobileBlockThreeRows[0].class}
+          columns={mobileBlockThreeRows[0].columns}
+          data-nyaomaru-target={mobileBlockThreeRows[0].dataNyaomaruTarget}
+        />
+        <WorkIconStack class="icon-plumbing-stack" data-work-mobile-target />
+      </div>
+      {
+        mobileBlockThreeRows
+          .slice(1)
+          .map((row) => <BlockShape class={row.class} columns={row.columns} />)
+      }
+    </div>
+
+    <BackgroundBlockStack
+      class="block-four"
+      position="relative"
+      align="start"
+      segments={blockFourSegments}
+      aria-hidden="true"
+    >
+      <WorkIconStack
+        class="icon-plumbing-stack-second"
+        data-nyaomaru-work-exit
+      />
+    </BackgroundBlockStack>
+
+    <div class="icon-shot" aria-hidden="true">
+      <img
+        class="icon-shot__part icon-shot__part--base"
+        src="/assets/icons/charge_shot1.svg"
+        alt="Charge shot base"
+      />
+      <img
+        class="icon-shot__part icon-shot__part--burst"
+        src="/assets/icons/charge_shot2.svg"
+        alt="Charge shot burst"
+      />
+    </div>
+  </SceneBackground>
+
+  <SectionIntro
+    titleSrc="/assets/texts/what_we_do.svg"
+    titleAlt="What we do"
+    sectionTitleOffset="8rem"
+    sectionTitleOffsetX="0.5rem"
+    descriptionMarginTop="6.5rem"
+    leadContentMarginTop="6rem"
+    leadContentWidth="70rem"
+    mobileDescriptionMarginTop="0"
+    mobileLeadContentMarginTop="2rem"
+    mobileLeadContentWidth="calc(100vw - var(--necoz-14-grid-cell) * 1.5 - 7rem)"
+    mobileTitleImageWidth="18rem"
+    titleLayered={true}
+  >
+    <div class="section-intro__lead-content work-copy necoz-section-copy-mobile">
+      <Text as="p" className="section-text">
+        We build responsive,<br class="work-copy__mobile-break" /><span
+          class="work-copy__desktop-space"
+        >
+        </span>scalable web apps that scale<br
+          class="work-copy__mobile-break"
+        /><span class="work-copy__desktop-space"> </span>with you :
+      </Text>
+      <ul class="pixel-list pixel-list--desktop necoz-basic-text">
+        {desktopServiceItems.map((item) => <li>{item}</li>)}
+      </ul>
+      <ul class="pixel-list pixel-list--mobile necoz-basic-text">
+        {mobileServiceItems.map((item) => <li>{item}</li>)}
+      </ul>
+      <div class="pixel-actions">
+        <NecozButton
+          as="a"
+          href={PORTFOLIO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Text as="span">View Portfolio</Text>
+        </NecozButton>
+      </div>
+    </div>
+  </SectionIntro>
+</SceneSection>
+
+<style>
+  :global(.work-section) {
+    --work-layer-desktop-anchor: var(--layer-scene-accent);
+    --work-layer-mobile-anchor: var(--layer-scene-copy-emphasis);
+    --work-layer-mobile-stack: var(--layer-scene-copy);
+    --work-block-four-bottom: -38rem;
+    --work-block-three-bottom: 31rem;
+    --work-block-three-margin-left: 2rem;
+    --work-pixel-actions-margin-top: 1.375rem;
+    --work-shot-size: 5rem;
+  }
+
+  .pixel-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--main);
+  }
+
+  .pixel-list li {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .pixel-list li::before {
+    content: "・";
+    position: absolute;
+    left: -0.5rem;
+    top: 0;
+    transform: scale(0.75);
+  }
+
+  .pixel-list--mobile {
+    display: none;
+    margin-left: 0.25rem;
+  }
+
+  .pixel-actions {
+    margin-top: var(--work-pixel-actions-margin-top);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .section-text {
+    margin: 0;
+  }
+
+  .work-copy__mobile-break {
+    display: none;
+  }
+
+  .block-three {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    bottom: var(--work-block-three-bottom);
+    margin-left: var(--work-block-three-margin-left);
+  }
+
+  .block-three > * + * {
+    margin-top: calc(-1 * var(--block-grid-stroke-width));
+  }
+
+  .block-three--mobile {
+    display: none;
+  }
+
+  .block-three-1 {
+    position: relative;
+    z-index: var(--work-layer-desktop-anchor);
+  }
+
+  .block-four {
+    bottom: var(--work-block-four-bottom);
+  }
+
+  .icon-plumbing-stack {
+    right: calc(var(--block-grid-cell) * 2.2);
+    bottom: calc(100% - 0.75rem);
+    --work-icon-stack-width: calc(var(--block-grid-cell) * 2.5);
+  }
+
+  .icon-plumbing-stack-second {
+    left: calc(var(--block-grid-cell) * 2.2);
+    bottom: calc(100% - 0.75rem);
+    --work-icon-stack-width: calc(var(--block-grid-cell) * 2.5);
+  }
+
+  .icon-shot {
+    --shot-size: var(--work-shot-size);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--shot-size);
+    aspect-ratio: 75 / 70;
+    opacity: 0;
+    transform: translate(
+      var(--shot-translate-x, 0px),
+      var(--shot-translate-y, 0px)
+    );
+    transition: opacity 0.12s linear;
+  }
+
+  .icon-shot__part {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .icon-shot__part--burst {
+    transform: translateX(var(--shot-burst-translate-x, 0px));
+  }
+
+  @media (--necoz-stage-wide) {
+    :global(.work-section) {
+      --work-block-four-bottom: -42rem;
+      --work-block-three-bottom: 36rem;
+    }
+  }
+
+  @media (--necoz-stage-compact) {
+    :global(.work-section) {
+      --work-block-four-bottom: -36rem;
+      --work-block-three-bottom: 29rem;
+      --work-block-three-margin-left: 1.8rem;
+      --work-pixel-actions-margin-top: 1.25rem;
+      --work-shot-size: 5rem;
+    }
+  }
+
+  @media (--necoz-desktop-compact) {
+    :global(.work-section) {
+      --work-block-four-bottom: -31rem;
+      --work-block-three-bottom: 25rem;
+      --work-block-three-margin-left: 1.5rem;
+      --work-pixel-actions-margin-top: 1.125rem;
+      --work-shot-size: 4rem;
+    }
+  }
+
+  @media (--necoz-content-compact) {
+    :global(.work-section) {
+      --work-block-four-bottom: -25rem;
+      --work-block-three-bottom: 21rem;
+      --work-block-three-margin-left: 1.2rem;
+      --work-pixel-actions-margin-top: 1rem;
+      --work-shot-size: 4rem;
+    }
+  }
+
+  @media (--necoz-content-narrow) {
+    :global(.work-section) {
+      --work-block-four-bottom: -18rem;
+      --work-block-three-bottom: 16rem;
+      --work-block-three-margin-left: 1rem;
+      --work-pixel-actions-margin-top: 0.875rem;
+      --work-shot-size: 3rem;
+    }
+  }
+
+  @media (--necoz-phone) {
+    :global(.work-section) {
+      --work-layer-desktop-anchor: var(--work-layer-mobile-anchor);
+    }
+
+    .block-three-1 {
+      z-index: var(--work-layer-desktop-anchor);
+    }
+
+    .block-three.block-three--desktop {
+      display: none;
+    }
+
+    .pixel-list {
+      margin-top: 1rem;
+    }
+
+    .pixel-list--desktop {
+      display: none;
+    }
+
+    .pixel-list--mobile {
+      --necoz-basic-text-size: 1rem;
+      display: block;
+    }
+
+    .block-three.block-three--mobile {
+      z-index: var(--work-layer-mobile-anchor);
+      --block-grid-cell: var(--necoz-14-grid-cell);
+      display: flex;
+      bottom: 4rem;
+      margin-left: 0;
+    }
+
+    .block-four {
+      display: none;
+    }
+
+    .icon-plumbing-stack {
+      left: calc(var(--block-grid-cell) * 0.8);
+      right: auto;
+      bottom: calc(100% - var(--block-grid-cell) * 0.08);
+      z-index: var(--work-layer-mobile-stack);
+      --work-icon-stack-width: calc(var(--block-grid-cell) * 1.2);
+    }
+
+    :global(.work-section) .icon-shot {
+      width: var(--necoz-14-grid-cell);
+    }
+    .work-copy__mobile-break {
+      display: block;
+    }
+
+    .work-copy__desktop-space {
+      display: none;
+    }
+
+    .pixel-list li {
+      padding-left: 0.5rem;
+    }
+  }
+</style>
