@@ -21,6 +21,7 @@
     "@fontsource/space-grotesk": "^5.2.10",
     "astro": "^6.1.9",
     "framer-motion": "^12.38.0",
+    "is-kit": "^1.7.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },

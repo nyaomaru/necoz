@@ -1,11 +1,10 @@
 import { clamp } from '~/lib/math';
+import { isEditableTarget, isInteractiveTarget } from '~/lib/is';
 
 const KEYBOARD_SCROLL_STEP = 40;
 const PAGE_SCROLL_RATIO = 0.9;
 
-export const isEditableTarget = (target: EventTarget | null) =>
-  target instanceof HTMLElement &&
-  Boolean(target.closest('input, textarea, select, button, [contenteditable="true"]'));
+export { isEditableTarget, isInteractiveTarget };
 
 export const getKeyboardScrollTarget = ({
   event,

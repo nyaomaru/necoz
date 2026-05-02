@@ -9,7 +9,9 @@ import {
   getHashTargetVirtualScrollY,
   getKeyboardScrollTarget,
   isEditableTarget,
+  isInteractiveTarget,
 } from './virtual-scroll-navigation';
+import { isElement } from '~/lib/is';
 
 const MIN_THUMB_HEIGHT = 48;
 const SMOOTH_SCROLL_EASING = 0.15;
@@ -33,6 +35,7 @@ export const setupVirtualScroll = () => {
   let activePointerId: number | null = null;
   let dragOffsetY = 0;
   let lastTouchY: number | null = null;
+  let nativeTouchTargetActive = false;
 
   const getSceneScrollY = () => renderedVirtualScrollY / getBaseScrollRangeMultiplier();
   const getVisualScrollY = () =>
@@ -134,10 +137,9 @@ export const setupVirtualScroll = () => {
     setTargetVirtualScrollY(nextVirtualScrollY);
   };
   const handleDocumentClick = (event: MouseEvent) => {
-    const anchor =
-      event.target instanceof Element
-        ? event.target.closest<HTMLAnchorElement>('a[href^="#"]')
-        : null;
+    const anchor = isElement(event.target)
+      ? event.target.closest<HTMLAnchorElement>('a[href^="#"]')
+      : null;
 
     if (!anchor) {
       return;
@@ -199,14 +201,17 @@ export const setupVirtualScroll = () => {
     thumb.releasePointerCapture(event.pointerId);
   };
   const handleTouchStart = (event: TouchEvent) => {
-    if (isEditableTarget(event.target)) {
+    nativeTouchTargetActive = isInteractiveTarget(event.target);
+
+    if (nativeTouchTargetActive || isEditableTarget(event.target)) {
+      lastTouchY = null;
       return;
     }
 
     lastTouchY = event.touches[0]?.clientY ?? null;
   };
   const handleTouchMove = (event: TouchEvent) => {
-    if (isEditableTarget(event.target) || lastTouchY === null) {
+    if (nativeTouchTargetActive || isEditableTarget(event.target) || lastTouchY === null) {
       return;
     }
 
@@ -221,6 +226,7 @@ export const setupVirtualScroll = () => {
     lastTouchY = touchY;
   };
   const handleTouchEnd = () => {
+    nativeTouchTargetActive = false;
     lastTouchY = null;
   };
 
@@ -232,6 +238,7 @@ export const setupVirtualScroll = () => {
   window.addEventListener('touchstart', handleTouchStart, { passive: true });
   window.addEventListener('touchmove', handleTouchMove, { passive: false });
   window.addEventListener('touchend', handleTouchEnd, { passive: true });
+  window.addEventListener('touchcancel', handleTouchEnd, { passive: true });
   document.addEventListener('click', handleDocumentClick);
   track.addEventListener('pointerdown', handleTrackPointerDown);
   thumb.addEventListener('pointerdown', handleThumbPointerDown);

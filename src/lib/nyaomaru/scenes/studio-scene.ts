@@ -1,4 +1,5 @@
 import type { WalkerEffectScene, WalkerOverridePose } from '~/lib/nyaomaru/types';
+import { isHTMLElement } from '~/lib/is';
 import {
   getStudioSceneReady,
   setContactSceneReady,
@@ -356,7 +357,7 @@ const setPoopProgress = (
   const poopRect = poopIcon.getBoundingClientRect();
   const poopOffsetParent = poopIcon.offsetParent;
 
-  if (!(poopOffsetParent instanceof HTMLElement)) {
+  if (!isHTMLElement(poopOffsetParent)) {
     return;
   }
 
@@ -525,7 +526,7 @@ const setContactReactionProgress = (
 
   const heartOffsetParent = heartIcon.offsetParent;
 
-  if (!(heartOffsetParent instanceof HTMLElement)) {
+  if (!isHTMLElement(heartOffsetParent)) {
     heartIcon.style.setProperty('--contact-heart-opacity', '0');
     return;
   }

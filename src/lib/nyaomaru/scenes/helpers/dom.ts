@@ -1,9 +1,7 @@
+import { isVisibleHTMLElement } from '~/lib/is';
+
 export const getVisibleElement = <T extends HTMLElement>(selector: string) =>
-  Array.from(document.querySelectorAll<T>(selector)).find(
-    (element) => element.getClientRects().length > 0,
-  ) ?? null;
+  Array.from(document.querySelectorAll<T>(selector)).find(isVisibleHTMLElement) ?? null;
 
 export const getVisibleElements = <T extends HTMLElement>(selector: string) =>
-  Array.from(document.querySelectorAll<T>(selector)).filter(
-    (element) => element.getClientRects().length > 0,
-  );
+  Array.from(document.querySelectorAll<T>(selector)).filter(isVisibleHTMLElement);

@@ -22,10 +22,13 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "~/lib/site-metadata";
+import {
+  isStructuredData,
+  isStructuredDataArray,
+  type StructuredData,
+} from "~/lib/is";
 import "~/styles/global.css";
 import VirtualScroll from "~/components/ui/scroll/VirtualScroll.astro";
-
-type StructuredData = Record<string, unknown>;
 
 type Props = {
   /** Page description used for the document meta description. */
@@ -95,15 +98,17 @@ const serializeStructuredData = (data: StructuredData) =>
     .replace(/\u2028/g, "\\u2028")
     .replace(/\u2029/g, "\\u2029");
 
+const additionalStructuredDataBlocks = isStructuredDataArray(structuredData)
+  ? structuredData
+  : isStructuredData(structuredData)
+    ? [structuredData]
+    : [];
+
 const structuredDataBlocks = [
   organizationStructuredData,
   websiteStructuredData,
-  ...(Array.isArray(structuredData)
-    ? structuredData
-    : structuredData
-      ? [structuredData]
-      : []),
-].filter(Boolean) as StructuredData[];
+  ...additionalStructuredDataBlocks,
+].filter(isStructuredData);
 ---
 
 <!doctype html>
