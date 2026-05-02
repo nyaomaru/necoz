@@ -14,6 +14,7 @@ import {
   DEFAULT_KEYWORDS,
   DEFAULT_TITLE,
   LEGAL_NAME,
+  OGP_IMAGE_PATH,
   SAME_AS_URLS,
   SITE_NAME,
   SITE_URL,
@@ -57,7 +58,7 @@ const canonicalUrl = SITE_URL
   ? new URL(canonicalPath, `${SITE_URL}/`).toString()
   : undefined;
 const socialPreviewImage = SITE_URL
-  ? new URL("/favicon.png", `${SITE_URL}/`).toString()
+  ? new URL(OGP_IMAGE_PATH, `${SITE_URL}/`).toString()
   : undefined;
 
 const organizationStructuredData = {
@@ -117,6 +118,9 @@ const structuredDataBlocks = [
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {socialPreviewImage && (
       <meta property="og:image" content={socialPreviewImage} />
+    )}
+    {socialPreviewImage && (
+      <meta property="og:image:type" content="image/svg+xml" />
     )}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
