@@ -1,7 +1,8 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import { createBreakpointMediaTokenPlugin } from './src/styles/breakpoint-media-token-plugin.mjs';
+import { fileURLToPath } from "node:url";
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import { createBreakpointMediaTokenPlugin } from "./src/styles/breakpoint-media-token-plugin.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,7 +10,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '~': new URL('./src', import.meta.url).pathname,
+        "~": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
     plugins: [createBreakpointMediaTokenPlugin()],
