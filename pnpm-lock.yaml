@@ -23,6 +23,9 @@ importers:
       framer-motion:
         specifier: ^12.38.0
         version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      is-kit:
+        specifier: ^1.7.0
+        version: 1.7.0
       react:
         specifier: ^19.2.5
         version: 19.2.5
@@ -1631,6 +1634,9 @@ packages:
     resolution: {integrity: sha512-KIYLCCJghfHZxqjYBE7rEy0OBuTd5xCHS7tHVgvCLkx7StIoaxwNW3hCALgEUjFfeRk+MG/Qxmp/vtETEF3tRA==}
     engines: {node: '>=14.16'}
     hasBin: true
+
+  is-kit@1.7.0:
+    resolution: {integrity: sha512-8FXvzcOg3/64QZLa/ZDVVxMdbNrkUPm0IE04qy3pddNujrVmrmfUf9cc9p7uVifsao5+5i7ukZSd4/CNRzOv2g==}
 
   is-plain-obj@4.1.0:
     resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
@@ -4187,6 +4193,8 @@ snapshots:
   is-inside-container@1.0.0:
     dependencies:
       is-docker: 3.0.0
+
+  is-kit@1.7.0: {}
 
   is-plain-obj@4.1.0: {}
 

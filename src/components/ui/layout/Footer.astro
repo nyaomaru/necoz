@@ -39,7 +39,7 @@ import Text from "~/components/ui/text/Text";
     --necoz-basic-text-size: 1.25rem;
     --necoz-basic-text-line-height: 1.4;
     --necoz-basic-text-transform-x: 1.5;
-    --footer-layer-shell: var(--layer-scene-background-raised);
+    --footer-layer-shell: var(--layer-site-chrome);
     --footer-layer-fish-bone: var(--layer-scene-copy);
     position: relative;
     z-index: var(--footer-layer-shell);
@@ -84,6 +84,8 @@ import Text from "~/components/ui/text/Text";
   }
 
   .footer-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -95,6 +97,11 @@ import Text from "~/components/ui/text/Text";
   }
 
   .footer :global(.footer-link) {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    pointer-events: auto;
+    touch-action: manipulation;
     white-space: nowrap;
   }
 
