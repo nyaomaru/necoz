@@ -14,7 +14,10 @@ import {
   DEFAULT_KEYWORDS,
   DEFAULT_TITLE,
   LEGAL_NAME,
+  OGP_IMAGE_HEIGHT,
   OGP_IMAGE_PATH,
+  OGP_IMAGE_TYPE,
+  OGP_IMAGE_WIDTH,
   SAME_AS_URLS,
   SITE_NAME,
   SITE_URL,
@@ -120,9 +123,15 @@ const structuredDataBlocks = [
       <meta property="og:image" content={socialPreviewImage} />
     )}
     {socialPreviewImage && (
-      <meta property="og:image:type" content="image/svg+xml" />
+      <meta property="og:image:type" content={OGP_IMAGE_TYPE} />
     )}
-    <meta name="twitter:card" content="summary" />
+    {socialPreviewImage && (
+      <meta property="og:image:width" content={String(OGP_IMAGE_WIDTH)} />
+    )}
+    {socialPreviewImage && (
+      <meta property="og:image:height" content={String(OGP_IMAGE_HEIGHT)} />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {socialPreviewImage && (

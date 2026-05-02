@@ -18,7 +18,10 @@ export const DEFAULT_KEYWORDS = [
 export const CONTACT_EMAIL = 'nyaonyao0725@gmail.com';
 export const CHAMBER_OF_COMMERCE_ID = '97930946';
 export const DEFAULT_SITE_URL = 'https://necoz.co';
-export const OGP_IMAGE_PATH = '/assets/necoz_logo.svg';
+export const OGP_IMAGE_PATH = '/necoz_ogp.png';
+export const OGP_IMAGE_TYPE = 'image/png';
+export const OGP_IMAGE_WIDTH = 1200;
+export const OGP_IMAGE_HEIGHT = 630;
 
 export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, '');
 
