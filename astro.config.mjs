@@ -6,6 +6,7 @@ import { createBreakpointMediaTokenPlugin } from './src/styles/breakpoint-media-
 
 // https://astro.build/config
 export default defineConfig({
+  site: process.env.PUBLIC_SITE_URL || 'https://necoz.co',
   integrations: [react()],
   vite: {
     resolve: {

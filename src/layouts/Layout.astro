@@ -7,12 +7,35 @@ import "@fontsource/source-sans-3/700.css";
 import "@fontsource/space-grotesk/400.css";
 import "@fontsource/space-grotesk/500.css";
 import "@fontsource/space-grotesk/600.css";
+import {
+  CHAMBER_OF_COMMERCE_ID,
+  CONTACT_EMAIL,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_KEYWORDS,
+  DEFAULT_TITLE,
+  LEGAL_NAME,
+  SAME_AS_URLS,
+  SITE_NAME,
+  SITE_URL,
+} from "~/lib/site-metadata";
 import "~/styles/global.css";
 import VirtualScroll from "~/components/ui/scroll/VirtualScroll.astro";
+
+type StructuredData = Record<string, unknown>;
 
 type Props = {
   /** Page description used for the document meta description. */
   description?: string;
+  /** Canonical path used to build an absolute canonical URL when the site URL is configured. */
+  canonicalPath?: string;
+  /** Keywords forwarded to search engines that still use them as a weak signal. */
+  keywords?: string;
+  /** Whether search engines should index this page. */
+  noindex?: boolean;
+  /** Open Graph object type. */
+  ogType?: "article" | "website";
+  /** Additional structured data blocks injected as JSON-LD. */
+  structuredData?: StructuredData | StructuredData[];
   /** Page title used for the document title. */
   title?: string;
   /** Whether to use the animated virtual scroll controller. */
@@ -20,10 +43,57 @@ type Props = {
 };
 
 const {
-  description = "Necoz B.V. is a small software development studio. We focus on well-designed systems, clean architecture, and software that scales without losing clarity.",
-  title = "Necoz B.V.",
+  canonicalPath = Astro.url.pathname,
+  description = DEFAULT_DESCRIPTION,
+  keywords = DEFAULT_KEYWORDS,
+  noindex = false,
+  ogType = "website",
+  structuredData,
+  title = DEFAULT_TITLE,
   virtualScroll = true,
 } = Astro.props as Props;
+
+const canonicalUrl = SITE_URL
+  ? new URL(canonicalPath, `${SITE_URL}/`).toString()
+  : undefined;
+const socialPreviewImage = SITE_URL
+  ? new URL("/favicon.png", `${SITE_URL}/`).toString()
+  : undefined;
+
+const organizationStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  legalName: LEGAL_NAME,
+  ...(SITE_URL ? { url: SITE_URL } : {}),
+  email: CONTACT_EMAIL,
+  identifier: CHAMBER_OF_COMMERCE_ID,
+  sameAs: SAME_AS_URLS,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Amsterdam",
+    addressCountry: "NL",
+  },
+};
+
+const websiteStructuredData = SITE_URL
+  ? {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: SITE_URL,
+    }
+  : null;
+
+const structuredDataBlocks = [
+  organizationStructuredData,
+  websiteStructuredData,
+  ...(Array.isArray(structuredData)
+    ? structuredData
+    : structuredData
+      ? [structuredData]
+      : []),
+].filter(Boolean) as StructuredData[];
 ---
 
 <!doctype html>
@@ -35,6 +105,34 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={LEGAL_NAME} />
+    <meta name="application-name" content={LEGAL_NAME} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {socialPreviewImage && (
+      <meta property="og:image" content={socialPreviewImage} />
+    )}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {socialPreviewImage && (
+      <meta name="twitter:image" content={socialPreviewImage} />
+    )}
+    {
+      structuredDataBlocks.map((data) => (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(data)}
+        />
+      ))
+    }
   </head>
   <body
     class:list={[virtualScroll ? "virtual-scroll-body" : "native-scroll-body"]}

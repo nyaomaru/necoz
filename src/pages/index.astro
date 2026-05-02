@@ -6,12 +6,21 @@ import WorkSection from "~/components/home/WorkSection.astro";
 import Footer from "~/components/ui/layout/Footer.astro";
 import Header from "~/components/ui/layout/Header.astro";
 import NyaomaruWalker from "~/components/ui/nyaomaru/NyaomaruWalker.astro";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from "~/lib/site-metadata";
 import Layout from "~/layouts/Layout.astro";
 ---
 
-<Layout>
+<Layout
+  title={DEFAULT_TITLE}
+  description={DEFAULT_DESCRIPTION}
+  canonicalPath="/"
+>
   <div class="pixel-page">
     <main id="top">
+      <h1 class="sr-only">
+        Necoz is a software development studio based in Amsterdam, the
+        Netherlands.
+      </h1>
       <Header />
       <HeroIntro />
       <WorkSection />
