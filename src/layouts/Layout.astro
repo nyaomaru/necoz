@@ -89,6 +89,12 @@ const websiteStructuredData = SITE_URL
     }
   : null;
 
+const serializeStructuredData = (data: StructuredData) =>
+  JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+
 const structuredDataBlocks = [
   organizationStructuredData,
   websiteStructuredData,
@@ -142,7 +148,7 @@ const structuredDataBlocks = [
         <script
           is:inline
           type="application/ld+json"
-          set:html={JSON.stringify(data)}
+          set:html={serializeStructuredData(data)}
         />
       ))
     }
