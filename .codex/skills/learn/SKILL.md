@@ -1,83 +1,127 @@
 ---
 name: learn
-description: Extract reusable patterns from non-trivial work in the is-kit repository and store them as project knowledge. Use after meaningful API design, type-system work, debugging, or compatibility discoveries.
+description: Extract reusable patterns from non-trivial work in the necoz repository and store them as project knowledge. Use after meaningful architecture, animation, responsive, SEO, or debugging work.
 ---
 
-# /learn - Capture Reusable is-kit Patterns
+# /learn - Capture Reusable necoz Patterns
 
-Analyze the current session and capture reusable knowledge for this TypeScript type-guard library.
+Analyze the current session and capture reusable knowledge for this Astro-based corporate site.
+
+This repository is not `is-kit`. It is the `necoz` website project, built around:
+
+- `Astro` for route structure, document output, and SEO-sensitive HTML
+- `React` for targeted interactive UI only
+- `TypeScript` in `src/lib/nyaomaru/` for walker runtime, scene logic, and scroll-driven animation
+- responsive DOM/layout variants for desktop and mobile
+- custom virtual scroll behavior that separates visual scroll from scene progress
+
+## Required Context
+
+Before capturing a lesson:
+
+1. Read `AGENTS.md`.
+2. Read `learned/LEARNED_INDEX.md`.
+3. Check whether the lesson is already covered in `.codex/skills/learn/learned/`.
+4. Prefer extending existing project knowledge rather than creating overlapping notes.
 
 ## Auto-Activation Criteria
 
 Consider auto-activating this skill when:
 
-1. A non-trivial bug was fixed in runtime guard behavior or type inference.
-2. A public API design decision was made and validated with tests.
-3. A tricky TypeScript modeling pattern was discovered.
-4. A runtime/type parity issue was diagnosed and resolved.
-5. The session produced reusable guidance about tests, docs, or release safety for this library.
+1. A non-trivial animation, scene, or walker behavior was fixed or redesigned.
+2. A responsive behavior required different DOM, motion tuning, or scene math across breakpoints.
+3. A virtual scroll, runtime state, or event coordination issue was diagnosed and resolved.
+4. A reusable SEO, metadata, routing, or production-build constraint was discovered.
+5. A verification or maintenance rule was clarified in a way that should guide future work.
+6. A refactor changed responsibility boundaries between `Astro`, `React`, `TypeScript`, and direct DOM access.
 
 Do not activate for:
 
-- trivial typo fixes
-- one-line doc wording changes
-- obvious refactors with no reusable lesson
-- patterns already documented in `.codex/skills/learn/learned/`
+- trivial copy edits
+- cosmetic refactors with no lasting lesson
+- one-line style changes
+- obvious file moves with no design insight
+- knowledge that is already documented clearly in `learned/`
 
 ## Manual Trigger
 
-Run `/learn` after finishing a meaningful implementation, refactor, or debugging session in `is-kit`.
+Run `/learn` after finishing meaningful implementation, debugging, refactoring, or architectural cleanup in `necoz`.
 
 ## What To Extract
 
-### 1. Public API Design Patterns
+### 1. Architecture And Responsibility Patterns
 
-- What API was added or changed?
-- Why was that shape chosen over alternatives?
-- What backward-compatibility constraint mattered?
-- How should similar future APIs be designed?
-
-Project-relevant examples:
-
-- Distinguishing key-level optionality from value-level `undefined`.
-- Choosing a specialized combinator vs. a more generic abstraction.
-- Preserving existing semantics in a minor release while introducing a new helper.
-
-### 2. Type Modeling Patterns
-
-- How were inference, narrowing, or overloads preserved?
-- What TypeScript limitation mattered?
-- What exact type shape or helper solved it?
+- Where should a concern live: `src/pages/`, `src/layouts/`, `src/components/`, or `src/lib/`?
+- Why was a behavior kept in `TypeScript` instead of `React` state?
+- Why was a page/layout concern kept in `Astro` instead of moving client-side?
+- What responsibility boundary should future changes preserve?
 
 Project-relevant examples:
 
-- Modeling `struct` schemas with required vs. optional keys.
-- Normalizing intersection-heavy inferred types for `tsd`.
-- Preserving literal narrowing without assertion casts.
+- Keeping page shells and metadata in `Layout.astro`
+- Keeping targeted interactivity in React islands only
+- Keeping scene progression and walker logic in `src/lib/nyaomaru/`
 
-### 3. Runtime Validation Patterns
+### 2. Animation And Scene Patterns
 
-- What runtime behavior needed to match the type-level contract?
-- What edge cases mattered?
-- What implementation detail should future changes preserve?
-
-Project-relevant examples:
-
-- Own-key checks vs. inherited property checks in `struct`.
-- Exact-mode semantics when optional keys are present or absent.
-- Composing schema markers with existing value guards.
-
-### 4. Verification Patterns
-
-- What test mix caught the issue?
-- What commands should be run after similar changes?
-- What docs needed updating to keep the repo consistent?
+- How was scene progress measured?
+- What timing, phase, or easing decision mattered?
+- What DOM measurements or runtime state were necessary?
+- What should future animation changes avoid breaking?
 
 Project-relevant examples:
 
-- Adding both Jest and `tsd` coverage for public API changes.
-- Running `pnpm build`, `pnpm lint`, `pnpm test`, and `pnpm test:types`.
-- Updating README and docs site examples when semantics change.
+- Mapping scroll progress to walker phases
+- Using `requestAnimationFrame` plus DOM measurement for fine control
+- Separating walker scenes from effect scenes
+
+### 3. Responsive Motion Patterns
+
+- What changed between desktop and mobile besides CSS?
+- Did DOM structure, landing positions, scroll multipliers, or target elements differ?
+- What breakpoint assumptions were encoded in logic?
+
+Project-relevant examples:
+
+- Using separate desktop and mobile block structures
+- Switching active scene targets with `getVisibleElement`
+- Adjusting virtual scroll density or scene progress for smaller viewports
+
+### 4. Scroll And Runtime State Patterns
+
+- Was native scroll used directly, or translated into virtual scene progress?
+- What state was shared through runtime helpers?
+- What event flow coordinated updates across scenes?
+
+Project-relevant examples:
+
+- Distinguishing `visualScrollY` from `sceneScrollY`
+- Centralizing shared scroll state
+- Driving scene updates via `necoz:virtual-scroll` and walker events
+
+### 5. SEO And Production Output Patterns
+
+- What metadata or route behavior needed to stay centralized?
+- What only fails in production output?
+- What must be verified in `dist/` after similar changes?
+
+Project-relevant examples:
+
+- Canonical and OGP behavior in `src/layouts/Layout.astro`
+- Site-wide constants in `src/lib/site-metadata.ts`
+- `robots.txt.ts` and `sitemap.xml.ts` generation
+
+### 6. Verification Patterns
+
+- What commands actually validated the change?
+- Was `pnpm build` necessary because production output matters?
+- Were there repo-specific pitfalls around formatting, linting, or tests?
+
+Project-relevant examples:
+
+- Always running `pnpm fmt` then `pnpm lint`
+- Running `pnpm test` for logic and Astro checks
+- Running `pnpm build` for rendering, routing, metadata, or asset changes
 
 ## Output Format
 
@@ -92,7 +136,7 @@ Template:
 
 **Captured:** YYYY-MM-DD
 **Context:** [When this pattern applies]
-**Tags:** typescript, type-guards, combinators, struct, tsd, api-design, runtime-validation, etc.
+**Tags:** astro, react, typescript, animation, virtual-scroll, responsive, seo, metadata, testing, etc.
 
 ## Problem
 
@@ -114,38 +158,42 @@ Template:
 
 ## Related Files
 
-- `src/core/combinators/struct.ts`
-- `src/types/schema.ts`
-- `tests/core/combinators/struct.test.ts`
-- `tests-d/core/combinators/struct.test-d.ts`
+- `src/layouts/Layout.astro`
+- `src/components/ui/scroll/virtual-scroll-controller.ts`
+- `src/lib/nyaomaru/runtime-state.ts`
+- `src/lib/nyaomaru/scenes/hero-scene.ts`
 ````
+
+Use only the files that are actually relevant to the captured lesson.
 
 ## Process
 
-1. Review the session for candidate learnings.
+1. Review the session for candidate lessons.
 2. Select the highest-value reusable pattern(s).
-3. Draft the pattern file.
-4. Ask for user confirmation before saving.
-5. Save to `.codex/skills/learn/learned/`.
+3. Check existing learned notes to avoid duplication.
+4. Draft the note in concrete, repo-specific language.
+5. Save it to `.codex/skills/learn/learned/`.
 6. Update `.codex/skills/learn/LEARNED_INDEX.md` with a one-line entry.
 
 Index format:
 
-`- **[pattern-name](learned/pattern-name.md)** - One-line summary.`
+- `**[pattern-name](learned/pattern-name.md)** - One-line summary.`
 
 ## Common Pattern Categories For This Repository
 
-- Guard/combinator API design
-- Runtime/type parity in public APIs
-- `struct` schema semantics and exact-mode behavior
-- TypeScript inference and overload design
-- `tsd`-driven regression prevention
-- Object-shape validation edge cases
-- Documentation alignment after API changes
+- Astro layout and metadata boundaries
+- React island usage and hydration scope
+- Virtual scroll architecture
+- Scroll-driven animation timing and phase design
+- Walker/runtime coordination
+- Responsive DOM plus motion divergence
+- Production-output SEO verification
+- Formatting, linting, testing, and build validation rules
 
 ## Notes
 
 - Capture only reusable, non-trivial lessons.
-- Prefer patterns that explain both runtime behavior and type inference.
-- Include the commands and tests that validated the pattern when relevant.
-- Keep entries concrete, searchable, and library-focused.
+- Prefer lessons that explain both code placement and behavior.
+- Favor concrete implementation constraints over abstract advice.
+- If a change involved production rendering, SEO, or route output, mention the exact verification commands.
+- Keep entries searchable and specific to `necoz`.
