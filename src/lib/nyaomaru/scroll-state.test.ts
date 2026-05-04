@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { getSceneScrollY, getVisualScrollY } from '~/lib/nyaomaru/scenes/helpers/scroll';
+import { getSceneScrollY, getVisualScrollY, setScrollState } from '~/lib/nyaomaru/scroll-state';
 
 type ScrollWindow = Window & {
   __necozSceneScrollY?: number;
@@ -9,7 +9,7 @@ type ScrollWindow = Window & {
 
 const scrollWindow = window as ScrollWindow;
 
-describe('scene scroll helpers', () => {
+describe('scroll state', () => {
   const originalScrollY = window.scrollY;
 
   beforeEach(() => {
@@ -39,18 +39,17 @@ describe('scene scroll helpers', () => {
     });
 
     expect(getVisualScrollY()).toBe(120);
+    expect(getSceneScrollY()).toBe(120);
   });
 
-  it('prefers the custom visual scroll override when present', () => {
-    scrollWindow.__necozScrollY = 240;
+  it('tracks visual and scene scroll independently', () => {
+    setScrollState({
+      sceneScrollY: 360,
+      visualScrollY: 240,
+    });
 
     expect(getVisualScrollY()).toBe(240);
-  });
-
-  it('prefers the custom scene scroll override when present', () => {
-    scrollWindow.__necozSceneScrollY = 360;
-
-    expect(getSceneScrollY(240)).toBe(360);
+    expect(getSceneScrollY()).toBe(360);
   });
 
   it('falls back to the visual scroll value for scene scroll', () => {

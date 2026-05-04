@@ -1,4 +1,5 @@
 import type { WalkerOverridePose } from '~/lib/nyaomaru/types';
+import { getSceneScrollY, getVisualScrollY, setScrollState } from '~/lib/nyaomaru/scroll-state';
 
 type WalkerSceneState = {
   /** Stable scene id used for coordination with effects. */
@@ -20,23 +21,7 @@ type NyaomaruWindow = Window & {
 
 const getRuntimeWindow = () => window as NyaomaruWindow;
 
-export const getVisualScrollY = () => getRuntimeWindow().__necozScrollY ?? window.scrollY;
-
-export const getSceneScrollY = (visualScrollY = getVisualScrollY()) =>
-  getRuntimeWindow().__necozSceneScrollY ?? visualScrollY;
-
-export const setScrollState = ({
-  sceneScrollY,
-  visualScrollY,
-}: {
-  sceneScrollY: number;
-  visualScrollY: number;
-}) => {
-  const runtimeWindow = getRuntimeWindow();
-
-  runtimeWindow.__necozScrollY = visualScrollY;
-  runtimeWindow.__necozSceneScrollY = sceneScrollY;
-};
+export { getSceneScrollY, getVisualScrollY, setScrollState };
 
 export const getWalkerOverride = () => getRuntimeWindow().__necozWalkerOverride ?? null;
 
