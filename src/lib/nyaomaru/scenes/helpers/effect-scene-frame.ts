@@ -1,4 +1,4 @@
-import { getSceneScrollY, getVisualScrollY } from './scroll';
+import { getSceneScrollY, getVisualScrollY } from '~/lib/nyaomaru/scroll-state';
 
 export type EffectSceneFrameMetrics = {
   /** Clamped scene progress in the 0..1 range. */

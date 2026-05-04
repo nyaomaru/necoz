@@ -11,7 +11,7 @@ import {
 import type { HeroSceneElements, HeroSceneLayout } from './model/hero';
 import { getVisibleElement } from './helpers/dom';
 import { getSegmentProgress, lerp } from './helpers/math';
-import { getSceneScrollY, getVisualScrollY } from './helpers/scroll';
+import { getSceneScrollY, getVisualScrollY } from '~/lib/nyaomaru/scroll-state';
 import { isMobileViewport } from './helpers/viewport';
 
 const resolveHeroSceneElements = (): HeroSceneElements | null => {
