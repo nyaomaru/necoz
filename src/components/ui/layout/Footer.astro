@@ -1,28 +1,29 @@
 ---
 import Text from "~/components/ui/text/Text";
+import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
 ---
 
-<footer class="footer" data-nyaomaru-contact-footer>
+<footer class="footer" {...{ [SCENE_DOM_ATTRIBUTES.contact.footer]: true }}>
   <img
     class="goal-fish"
     src="/assets/icons/fish.svg"
     alt="Fish icon"
     aria-hidden="true"
-    data-nyaomaru-goal-fish
+    {...{ [SCENE_DOM_ATTRIBUTES.contact.goalFish]: true }}
   />
   <img
     class="goal-flag"
     src="/assets/icons/flag.svg"
     alt="Goal flag"
     aria-hidden="true"
-    data-nyaomaru-goal-flag
+    {...{ [SCENE_DOM_ATTRIBUTES.contact.goalFlag]: true }}
   />
   <img
     class="goal-fish-bone"
     src="/assets/icons/fish_bone.svg"
     alt="Fish bone icon"
     aria-hidden="true"
-    data-nyaomaru-goal-fish-bone
+    {...{ [SCENE_DOM_ATTRIBUTES.contact.goalFishBone]: true }}
   />
   <div class="footer-content">
     <Text as="p" className="footer-copy"

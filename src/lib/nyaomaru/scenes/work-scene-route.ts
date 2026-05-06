@@ -24,6 +24,7 @@ import {
   WALKER_LAYER_IN_STRUCTURE,
   getDefaultWalkerLayer,
 } from './helpers/layers';
+import { SCENE_DOM_ATTRIBUTES } from './dom-contracts';
 
 type WorkWalkerRunElements = Pick<WorkSceneElements, 'blockThreeTarget' | 'mobileBlockTarget'>;
 type WorkBlockFourRouteElements = Pick<
@@ -241,7 +242,7 @@ export const getBlockFourRouteSegments = (
   }
 
   const routeSteps = blockFourSteps.filter((step) => {
-    const stepOrder = Number(step.getAttribute('data-nyaomaru-work-step'));
+    const stepOrder = Number(step.getAttribute(SCENE_DOM_ATTRIBUTES.work.step));
 
     return Number.isFinite(stepOrder) && stepOrder <= 5;
   });

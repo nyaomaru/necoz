@@ -5,22 +5,27 @@ import SceneSection from "~/components/ui/layout/SceneSection.astro";
 import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
 import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
 import Text from "~/components/ui/text/Text";
+import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
 ---
 
-<SceneSection id="studio" class="studio-section" data-nyaomaru-studio-scene>
+<SceneSection
+  id="studio"
+  class="studio-section"
+  {...{ [SCENE_DOM_ATTRIBUTES.studio.scene]: true }}
+>
   <SceneBackground>
     <div class="block-five block-five--desktop">
       <div class="block-five__anchor necoz-scene-anchor">
         <BlockShape
           class="block-five__segment block-five-1"
           columns={13}
-          data-nyaomaru-studio-step="1"
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.step]: "1" }}
         />
         <img
           class="icon-desk"
           src="/assets/icons/desk.svg"
           alt="Desk icon"
-          data-nyaomaru-studio-desk
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.desk]: true }}
         />
       </div>
       <BackgroundBlockStack
@@ -31,17 +36,17 @@ import Text from "~/components/ui/text/Text";
           {
             class: "block-five__segment",
             columns: 16,
-            attributes: { "data-nyaomaru-studio-step": 2 },
+            attributes: { [SCENE_DOM_ATTRIBUTES.studio.step]: 2 },
           },
           {
             class: "block-five__segment",
             columns: 20,
-            attributes: { "data-nyaomaru-studio-step": 3 },
+            attributes: { [SCENE_DOM_ATTRIBUTES.studio.step]: 3 },
           },
           {
             class: "block-five__segment",
             columns: 23,
-            attributes: { "data-nyaomaru-studio-step": 4 },
+            attributes: { [SCENE_DOM_ATTRIBUTES.studio.step]: 4 },
           },
           { class: "block-five__segment", columns: 23 },
           { class: "block-five__segment", columns: 9 },
@@ -53,13 +58,13 @@ import Text from "~/components/ui/text/Text";
         <BlockShape
           class="block-four__segment block-four-1"
           columns={5}
-          data-nyaomaru-studio-step="1"
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.step]: "1" }}
         />
         <img
           class="icon-desk"
           src="/assets/icons/desk.svg"
           alt="Desk icon"
-          data-nyaomaru-studio-desk
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.desk]: true }}
         />
       </div>
       <BackgroundBlockStack
@@ -70,17 +75,17 @@ import Text from "~/components/ui/text/Text";
           {
             class: "block-four__segment",
             columns: 7,
-            attributes: { "data-nyaomaru-studio-step": 2 },
+            attributes: { [SCENE_DOM_ATTRIBUTES.studio.step]: 2 },
           },
           {
             class: "block-four__segment",
             columns: 7,
-            attributes: { "data-nyaomaru-studio-step": 3 },
+            attributes: { [SCENE_DOM_ATTRIBUTES.studio.step]: 3 },
           },
           {
             class: "block-four__segment",
             columns: 3,
-            attributes: { "data-nyaomaru-studio-step": 4 },
+            attributes: { [SCENE_DOM_ATTRIBUTES.studio.step]: 4 },
           },
         ]}
       />
@@ -93,19 +98,19 @@ import Text from "~/components/ui/text/Text";
           class: "block-six__segment",
           columns: 12,
           attributes: {
-            "data-nyaomaru-studio-block-six": true,
-            "data-studio-walker-block-six-step": 1,
+            [SCENE_DOM_ATTRIBUTES.studio.blockSix]: true,
+            [SCENE_DOM_ATTRIBUTES.studio.blockSixStep]: 1,
           },
         },
         {
           class: "block-six__segment",
           columns: 12,
-          attributes: { "data-studio-walker-block-six-step": 2 },
+          attributes: { [SCENE_DOM_ATTRIBUTES.studio.blockSixStep]: 2 },
         },
         {
           class: "block-six__segment",
           columns: 14,
-          attributes: { "data-studio-walker-block-six-step": 3 },
+          attributes: { [SCENE_DOM_ATTRIBUTES.studio.blockSixStep]: 3 },
         },
         { class: "block-six__segment", columns: 14 },
         { class: "block-six__segment", columns: 5 },
@@ -116,13 +121,13 @@ import Text from "~/components/ui/text/Text";
           class="icon-poop"
           src="/assets/icons/poop.svg"
           alt="Poop icon"
-          data-nyaomaru-studio-poop
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.poop]: true }}
         />
         <img
           class="icon-question-mark"
           src="/assets/icons/question_mark.svg"
           alt="Question mark icon"
-          data-nyaomaru-studio-question-mark
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.questionMark]: true }}
         />
       </div>
     </BackgroundBlockStack>
@@ -134,15 +139,15 @@ import Text from "~/components/ui/text/Text";
           class: "block-five__segment",
           columns: 5,
           attributes: {
-            "data-nyaomaru-studio-block-five": true,
-            "data-studio-walker-block-five-step": 1,
+            [SCENE_DOM_ATTRIBUTES.studio.blockFive]: true,
+            [SCENE_DOM_ATTRIBUTES.studio.blockFiveStep]: 1,
           },
         },
         { class: "block-five__segment", columns: 6 },
         {
           class: "block-five__segment",
           columns: 6,
-          attributes: { "data-studio-walker-block-five-step": 3 },
+          attributes: { [SCENE_DOM_ATTRIBUTES.studio.blockFiveStep]: 3 },
         },
         { class: "block-five__segment", columns: 2 },
       ]}
@@ -152,13 +157,13 @@ import Text from "~/components/ui/text/Text";
           class="icon-poop"
           src="/assets/icons/poop.svg"
           alt="Poop icon"
-          data-nyaomaru-studio-poop
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.poop]: true }}
         />
         <img
           class="icon-question-mark"
           src="/assets/icons/question_mark.svg"
           alt="Question mark icon"
-          data-nyaomaru-studio-question-mark
+          {...{ [SCENE_DOM_ATTRIBUTES.studio.questionMark]: true }}
         />
       </div>
     </BackgroundBlockStack>

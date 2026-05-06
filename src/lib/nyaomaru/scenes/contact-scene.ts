@@ -42,6 +42,7 @@ import type {
   ContactSceneElements,
   WalkerRoot,
 } from './model/contact';
+import { SCENE_DOM_ATTRIBUTES, SCENE_DOM_SELECTORS } from './dom-contracts';
 import { getFilledCells, getFirstFilledCell } from './helpers/block-shape';
 import { getVisibleElement, getVisibleElements } from './helpers/dom';
 import { measureEffectSceneFrame } from './helpers/effect-scene-frame';
@@ -54,18 +55,20 @@ import { isMobileViewport } from './helpers/viewport';
 import { WALKER_LAYER_BEHIND_CONTENT, WALKER_LAYER_IN_FRONT_OF_CONTENT } from './helpers/layers';
 
 const resolveContactSceneElements = (): ContactSceneElements | null => {
-  const anchor = getVisibleElement<ContactAnchor>('[data-nyaomaru-contact-scene]');
-  const blockSevenSteps = getVisibleElements<HTMLElement>('[data-nyaomaru-contact-step]').sort(
+  const anchor = getVisibleElement<ContactAnchor>(SCENE_DOM_SELECTORS.contact.scene);
+  const blockSevenSteps = getVisibleElements<HTMLElement>(SCENE_DOM_SELECTORS.contact.step).sort(
     (left, right) =>
-      Number(left.getAttribute('data-nyaomaru-contact-step')) -
-      Number(right.getAttribute('data-nyaomaru-contact-step')),
+      Number(left.getAttribute(SCENE_DOM_ATTRIBUTES.contact.step)) -
+      Number(right.getAttribute(SCENE_DOM_ATTRIBUTES.contact.step)),
   );
-  const manyaIcon = getVisibleElement<HTMLImageElement>('[data-nyaomaru-contact-manya]');
-  const footer = document.querySelector<HTMLElement>('[data-nyaomaru-contact-footer]');
-  const goalFlag = document.querySelector<HTMLImageElement>('[data-nyaomaru-goal-flag]');
-  const goalFish = document.querySelector<HTMLImageElement>('[data-nyaomaru-goal-fish]');
-  const goalFishBone = document.querySelector<HTMLImageElement>('[data-nyaomaru-goal-fish-bone]');
-  const walker = document.querySelector<WalkerRoot>('[data-nyaomaru-walker]');
+  const manyaIcon = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.contact.manya);
+  const footer = document.querySelector<HTMLElement>(SCENE_DOM_SELECTORS.contact.footer);
+  const goalFlag = document.querySelector<HTMLImageElement>(SCENE_DOM_SELECTORS.contact.goalFlag);
+  const goalFish = document.querySelector<HTMLImageElement>(SCENE_DOM_SELECTORS.contact.goalFish);
+  const goalFishBone = document.querySelector<HTMLImageElement>(
+    SCENE_DOM_SELECTORS.contact.goalFishBone,
+  );
+  const walker = document.querySelector<WalkerRoot>(SCENE_DOM_SELECTORS.walker);
 
   if (
     !anchor ||

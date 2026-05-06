@@ -1,4 +1,5 @@
 import { clamp } from '~/lib/math';
+import { SCENE_DOM_SELECTORS } from '~/lib/nyaomaru/scenes/dom-contracts';
 import { BREAKPOINT_PIXELS } from '~/styles/breakpoints.mjs';
 
 const GLOBAL_SCROLL_RANGE_MULTIPLIER = 1.25;
@@ -48,7 +49,7 @@ export const getScrollRangeMultiplier = () => SCROLL_RANGE_MULTIPLIER * getScrol
 
 export const getFooterPinExtraScrollRange = (baseScrollRange: number) => {
   const legacyExtraScrollRange = baseScrollRange * getFooterPinExtraScrollRangeMultiplier();
-  const contactSection = document.querySelector<HTMLElement>('[data-nyaomaru-contact-scene]');
+  const contactSection = document.querySelector<HTMLElement>(SCENE_DOM_SELECTORS.contact.scene);
 
   if (!contactSection || baseScrollRange <= 0) {
     return legacyExtraScrollRange;

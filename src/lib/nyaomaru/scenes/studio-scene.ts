@@ -86,41 +86,40 @@ import {
   WALKER_LAYER_IN_STRUCTURE,
   getDefaultWalkerLayer,
 } from './helpers/layers';
+import { SCENE_DOM_ATTRIBUTES, SCENE_DOM_SELECTORS } from './dom-contracts';
 
 const resolveStudioSceneElements = (): StudioSceneElements | null => {
-  const anchor = getVisibleElement<StudioAnchor>('[data-nyaomaru-studio-scene]');
-  const blockFourSteps = getVisibleElements<HTMLElement>('[data-nyaomaru-studio-step]').sort(
+  const anchor = getVisibleElement<StudioAnchor>(SCENE_DOM_SELECTORS.studio.scene);
+  const blockFourSteps = getVisibleElements<HTMLElement>(SCENE_DOM_SELECTORS.studio.step).sort(
     (left, right) =>
-      Number(left.getAttribute('data-nyaomaru-studio-step')) -
-      Number(right.getAttribute('data-nyaomaru-studio-step')),
+      Number(left.getAttribute(SCENE_DOM_ATTRIBUTES.studio.step)) -
+      Number(right.getAttribute(SCENE_DOM_ATTRIBUTES.studio.step)),
   );
-  const blockFiveTarget = getVisibleElement<HTMLElement>(
-    '[data-nyaomaru-studio-block-five], [data-nyaomaru-studio-block-six]',
-  );
-  const blockFiveSteps = getVisibleElements<HTMLElement>(
-    '[data-studio-walker-block-five-step], [data-studio-walker-block-six-step]',
-  ).sort(
+  const blockFiveTarget = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.studio.blockTarget);
+  const blockFiveSteps = getVisibleElements<HTMLElement>(SCENE_DOM_SELECTORS.studio.blockStep).sort(
     (left, right) =>
       Number(
-        left.getAttribute('data-studio-walker-block-five-step') ??
-          left.getAttribute('data-studio-walker-block-six-step'),
+        left.getAttribute(SCENE_DOM_ATTRIBUTES.studio.blockFiveStep) ??
+          left.getAttribute(SCENE_DOM_ATTRIBUTES.studio.blockSixStep),
       ) -
       Number(
-        right.getAttribute('data-studio-walker-block-five-step') ??
-          right.getAttribute('data-studio-walker-block-six-step'),
+        right.getAttribute(SCENE_DOM_ATTRIBUTES.studio.blockFiveStep) ??
+          right.getAttribute(SCENE_DOM_ATTRIBUTES.studio.blockSixStep),
       ),
   );
-  const blockSevenSteps = getVisibleElements<HTMLElement>('[data-studio-walker-step]').sort(
+  const blockSevenSteps = getVisibleElements<HTMLElement>(
+    SCENE_DOM_SELECTORS.studio.blockSevenStep,
+  ).sort(
     (left, right) =>
-      Number(left.getAttribute('data-studio-walker-step')) -
-      Number(right.getAttribute('data-studio-walker-step')),
+      Number(left.getAttribute(SCENE_DOM_ATTRIBUTES.studio.blockSevenStep)) -
+      Number(right.getAttribute(SCENE_DOM_ATTRIBUTES.studio.blockSevenStep)),
   );
-  const heartIcon = getVisibleElement<HTMLImageElement>('[data-nyaomaru-contact-heart]');
-  const manyaIcon = getVisibleElement<HTMLImageElement>('[data-nyaomaru-contact-manya]');
-  const poopIcon = getVisibleElement<HTMLImageElement>('[data-nyaomaru-studio-poop]');
-  const questionMark = getVisibleElement<HTMLImageElement>('[data-nyaomaru-studio-question-mark]');
-  const studioDesk = getVisibleElement<HTMLImageElement>('[data-nyaomaru-studio-desk]');
-  const walker = document.querySelector<WalkerRoot>('[data-nyaomaru-walker]');
+  const heartIcon = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.contact.heart);
+  const manyaIcon = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.contact.manya);
+  const poopIcon = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.studio.poop);
+  const questionMark = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.studio.questionMark);
+  const studioDesk = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.studio.desk);
+  const walker = document.querySelector<WalkerRoot>(SCENE_DOM_SELECTORS.walker);
 
   if (
     !anchor ||

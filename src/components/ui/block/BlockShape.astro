@@ -1,4 +1,6 @@
 ---
+import { SCENE_DOM_CLASSES } from "~/lib/nyaomaru/scenes/dom-contracts";
+
 type Props = {
   /** HTML tag used for the block-shape wrapper. */
   as?: "div" | "span";
@@ -31,8 +33,8 @@ const cells = Array.from({ length: columns }, (_, index) => index < emptyCount);
       {cells.map((isEmpty) => (
         <span
           class:list={[
-            "block-shape__cell",
-            isEmpty && "block-shape__cell--empty",
+            SCENE_DOM_CLASSES.blockShape.cell,
+            isEmpty && SCENE_DOM_CLASSES.blockShape.emptyCell,
           ]}
         />
       ))}
@@ -46,8 +48,8 @@ const cells = Array.from({ length: columns }, (_, index) => index < emptyCount);
       {cells.map((isEmpty) => (
         <span
           class:list={[
-            "block-shape__cell",
-            isEmpty && "block-shape__cell--empty",
+            SCENE_DOM_CLASSES.blockShape.cell,
+            isEmpty && SCENE_DOM_CLASSES.blockShape.emptyCell,
           ]}
         />
       ))}
