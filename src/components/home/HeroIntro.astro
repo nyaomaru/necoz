@@ -4,27 +4,32 @@ import SceneSection from "~/components/ui/layout/SceneSection.astro";
 import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
 import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
 import Text from "~/components/ui/text/Text";
+import {
+  SCENE_DOM_ATTRIBUTES,
+  SCENE_DOM_CLASSES,
+  WORK_SCENE_PHASES,
+} from "~/lib/nyaomaru/scenes/dom-contracts";
 
 const desktopBlockOneSegments = [
   {
     class: "block-one__segment",
     columns: 9,
-    attributes: { "data-nyaomaru-block-1": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block1]: true },
   },
   {
     class: "block-one__segment",
     columns: 11,
-    attributes: { "data-nyaomaru-block-2": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block2]: true },
   },
   {
     class: "block-one__segment",
     columns: 11,
-    attributes: { "data-nyaomaru-block-3": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block3]: true },
   },
   {
     class: "block-one__segment",
     columns: 6,
-    attributes: { "data-nyaomaru-block-4": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block4]: true },
   },
 ];
 
@@ -32,22 +37,22 @@ const mobileBlockOneSegments = [
   {
     class: "block-one__segment",
     columns: 5,
-    attributes: { "data-nyaomaru-block-1": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block1]: true },
   },
   {
     class: "block-one__segment",
     columns: 6,
-    attributes: { "data-nyaomaru-block-2": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block2]: true },
   },
   {
     class: "block-one__segment",
     columns: 6,
-    attributes: { "data-nyaomaru-block-3": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block3]: true },
   },
   {
     class: "block-one__segment",
     columns: 2,
-    attributes: { "data-nyaomaru-block-4": true },
+    attributes: { [SCENE_DOM_ATTRIBUTES.hero.block4]: true },
   },
 ];
 
@@ -70,7 +75,7 @@ const mobileBlockTwoSegmentWidths = [6.5, 8.5, 8.5, 3.5];
       class="sprite sprite-anchor"
       src="/assets/icons/nyaomaru.svg"
       alt="Nyaomaru"
-      data-nyaomaru-start
+      {...{ [SCENE_DOM_ATTRIBUTES.hero.start]: true }}
     />
     <BackgroundBlockStack
       class="block-one block-one--desktop"
@@ -98,8 +103,8 @@ const mobileBlockTwoSegmentWidths = [6.5, 8.5, 8.5, 3.5];
             style={`--block-two-mobile-columns: ${columns};`}
             {...(index === 0
               ? {
-                  "data-nyaomaru-mobile-target": true,
-                  "data-work-mobile-clamp-target": true,
+                  [SCENE_DOM_ATTRIBUTES.hero.mobileTarget]: true,
+                  [SCENE_DOM_ATTRIBUTES.work.mobileClampTarget]: true,
                 }
               : {})}
           />
@@ -107,17 +112,22 @@ const mobileBlockTwoSegmentWidths = [6.5, 8.5, 8.5, 3.5];
       }
       <div
         class="block-two__mobile-stack"
-        data-work-scene-phase="hidden"
-        data-work-scene-display
-        data-work-mobile-origin
+        {...{
+          [SCENE_DOM_ATTRIBUTES.work.phase]: WORK_SCENE_PHASES.hidden,
+          [SCENE_DOM_ATTRIBUTES.work.display]: true,
+          [SCENE_DOM_ATTRIBUTES.work.mobileOrigin]: true,
+        }}
       >
         <img
-          class="icon-work block-two__mobile-work"
+          class:list={[SCENE_DOM_CLASSES.work.workIcon, "block-two__mobile-work"]}
           src="/assets/icons/work.svg"
           alt="Work icon"
         />
         <img
-          class="icon-plumbing block-two__mobile-plumbing"
+          class:list={[
+            SCENE_DOM_CLASSES.work.plumberIcon,
+            "block-two__mobile-plumbing",
+          ]}
           src="/assets/icons/plumbing.svg"
           alt="Plumbing icon"
         />

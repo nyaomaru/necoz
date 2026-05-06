@@ -6,6 +6,7 @@ import SocialLinks from "~/components/ui/layout/SocialLinks.astro";
 import MailDialogTrigger from "~/components/ui/mail/mail-dialog-trigger";
 import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
 import Text from "~/components/ui/text/Text";
+import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
 
 const desktopBlockSevenRows = [
   {
@@ -13,23 +14,23 @@ const desktopBlockSevenRows = [
     columns: 27,
     emptyCount: 13,
     attributes: {
-      "data-nyaomaru-contact-step": 1,
-      "data-studio-walker-step": 1,
+      [SCENE_DOM_ATTRIBUTES.contact.step]: 1,
+      [SCENE_DOM_ATTRIBUTES.studio.blockSevenStep]: 1,
     },
   },
   {
     class: "block-seven__segment",
     columns: 27,
     emptyCount: 10,
-    attributes: { "data-nyaomaru-contact-step": 2 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.contact.step]: 2 },
   },
   {
     class: "block-seven__segment",
     columns: 30,
     emptyCount: 10,
     attributes: {
-      "data-nyaomaru-contact-step": 3,
-      "data-studio-walker-step": 3,
+      [SCENE_DOM_ATTRIBUTES.contact.step]: 3,
+      [SCENE_DOM_ATTRIBUTES.studio.blockSevenStep]: 3,
     },
   },
   {
@@ -37,8 +38,8 @@ const desktopBlockSevenRows = [
     columns: 30,
     emptyCount: 17,
     attributes: {
-      "data-nyaomaru-contact-step": 4,
-      "data-studio-walker-step": 4,
+      [SCENE_DOM_ATTRIBUTES.contact.step]: 4,
+      [SCENE_DOM_ATTRIBUTES.studio.blockSevenStep]: 4,
     },
   },
 ];
@@ -49,23 +50,23 @@ const mobileBlockSevenRows = [
     columns: 6,
     emptyCount: 0,
     attributes: {
-      "data-nyaomaru-contact-step": 1,
-      "data-studio-walker-step": 1,
+      [SCENE_DOM_ATTRIBUTES.contact.step]: 1,
+      [SCENE_DOM_ATTRIBUTES.studio.blockSevenStep]: 1,
     },
   },
   {
     class: "block-seven__segment",
     columns: 8,
     emptyCount: 0,
-    attributes: { "data-nyaomaru-contact-step": 2 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.contact.step]: 2 },
   },
   {
     class: "block-seven__segment",
     columns: 8,
     emptyCount: 0,
     attributes: {
-      "data-nyaomaru-contact-step": 3,
-      "data-studio-walker-step": 3,
+      [SCENE_DOM_ATTRIBUTES.contact.step]: 3,
+      [SCENE_DOM_ATTRIBUTES.studio.blockSevenStep]: 3,
     },
   },
   {
@@ -73,8 +74,8 @@ const mobileBlockSevenRows = [
     columns: 2,
     emptyCount: 0,
     attributes: {
-      "data-nyaomaru-contact-step": 4,
-      "data-studio-walker-step": 4,
+      [SCENE_DOM_ATTRIBUTES.contact.step]: 4,
+      [SCENE_DOM_ATTRIBUTES.studio.blockSevenStep]: 4,
     },
   },
 ];
@@ -83,7 +84,7 @@ const mobileBlockSevenRows = [
 <SceneSection
   id="contact"
   class="contact-section"
-  data-nyaomaru-contact-scene
+  {...{ [SCENE_DOM_ATTRIBUTES.contact.scene]: true }}
 >
   <SceneBackground zIndex="var(--layer-scene-background)">
     <div class="block block-seven block-seven--desktop">
@@ -98,13 +99,13 @@ const mobileBlockSevenRows = [
           class="icon-heart"
           src="/assets/icons/heart.svg"
           alt="Heart icon"
-          data-nyaomaru-contact-heart
+          {...{ [SCENE_DOM_ATTRIBUTES.contact.heart]: true }}
         />
         <img
           class="icon-manya"
           src="/assets/icons/manya.svg"
           alt="Manya icon"
-          data-nyaomaru-contact-manya
+          {...{ [SCENE_DOM_ATTRIBUTES.contact.manya]: true }}
         />
       </div>
       {
@@ -132,13 +133,13 @@ const mobileBlockSevenRows = [
           class="icon-heart"
           src="/assets/icons/heart.svg"
           alt="Heart icon"
-          data-nyaomaru-contact-heart
+          {...{ [SCENE_DOM_ATTRIBUTES.contact.heart]: true }}
         />
         <img
           class="icon-manya"
           src="/assets/icons/manya.svg"
           alt="Manya icon"
-          data-nyaomaru-contact-manya
+          {...{ [SCENE_DOM_ATTRIBUTES.contact.manya]: true }}
         />
       </div>
       {

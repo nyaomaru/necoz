@@ -1,8 +1,14 @@
+---
+import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
+---
+
 <div
   class="nyaomaru-walker"
   aria-hidden="true"
-  data-nyaomaru-walker
-  data-sprite-variant="default"
+  {...{
+    [SCENE_DOM_ATTRIBUTES.walker]: true,
+    [SCENE_DOM_ATTRIBUTES.spriteVariant]: "default",
+  }}
 >
   <div class="nyaomaru-walker__stack">
     <img

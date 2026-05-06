@@ -3,15 +3,6 @@ export const MOTION_PORTIONS = {
   secondRun: 0.2,
 } as const;
 
-export const SELECTORS = {
-  start: '[data-nyaomaru-start]',
-  target: '[data-nyaomaru-target]',
-  mobileTarget: '[data-nyaomaru-mobile-target]',
-  block1: '[data-nyaomaru-block-1]',
-  block2: '[data-nyaomaru-block-2]',
-  block3: '[data-nyaomaru-block-3]',
-} as const;
-
 export const MIN_SCROLL_DISTANCE = 1;
 export const NYAOMARU_ADJUST_X_OFFSET = 16;
 export const MOBILE_LANDING_X_OFFSET = 16;

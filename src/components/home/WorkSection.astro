@@ -7,24 +7,33 @@ import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
 import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
 import WorkIconStack from "~/components/ui/scene/WorkIconStack.astro";
 import Text from "~/components/ui/text/Text";
+import {
+  SCENE_DOM_ATTRIBUTES,
+  SCENE_DOM_CLASSES,
+  WORK_SCENE_PHASES,
+} from "~/lib/nyaomaru/scenes/dom-contracts";
 import { PORTFOLIO_URL } from "~/lib/site-links";
 
 const desktopBlockThreeRows = [
   {
-    class: "block-three-1",
+    class: SCENE_DOM_CLASSES.work.firstRow,
     columns: 30,
     emptyCount: 11,
     dataNyaomaruTarget: true,
   },
   { class: "block-three-2", columns: 30, emptyCount: 7 },
-  { class: "block-three-3", columns: 26, emptyCount: 7 },
+  { class: SCENE_DOM_CLASSES.work.thirdRow, columns: 26, emptyCount: 7 },
   { class: "block-three-4", columns: 26, emptyCount: 9 },
 ];
 
 const mobileBlockThreeRows = [
-  { class: "block-three-1", columns: 5, dataNyaomaruTarget: true },
+  {
+    class: SCENE_DOM_CLASSES.work.firstRow,
+    columns: 5,
+    dataNyaomaruTarget: true,
+  },
   { class: "block-three-2", columns: 5 },
-  { class: "block-three-3", columns: 7 },
+  { class: SCENE_DOM_CLASSES.work.thirdRow, columns: 7 },
   { class: "block-three-4", columns: 2 },
 ];
 
@@ -32,32 +41,32 @@ const blockFourSegments = [
   {
     class: "block-four__segment first-block",
     columns: 15,
-    attributes: { "data-nyaomaru-work-step": 1 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.work.step]: 1 },
   },
   {
     class: "block-four__segment",
     columns: 15,
-    attributes: { "data-nyaomaru-work-step": 2 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.work.step]: 2 },
   },
   {
     class: "block-four__segment",
     columns: 22,
-    attributes: { "data-nyaomaru-work-step": 3 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.work.step]: 3 },
   },
   {
     class: "block-four__segment",
     columns: 22,
-    attributes: { "data-nyaomaru-work-step": 4 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.work.step]: 4 },
   },
   {
     class: "block-four__segment",
     columns: 24,
-    attributes: { "data-nyaomaru-work-step": 5 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.work.step]: 5 },
   },
   {
     class: "block-four__segment",
     columns: 16,
-    attributes: { "data-nyaomaru-work-step": 6 },
+    attributes: { [SCENE_DOM_ATTRIBUTES.work.step]: 6 },
   },
 ];
 
@@ -79,17 +88,25 @@ const mobileServiceItems = [
 <SceneSection id="work" class="work-section">
   <SceneBackground zIndex="var(--layer-scene-background)">
     <div class="block block-three block-three--desktop">
-      <div class="block-three__anchor necoz-scene-anchor" data-work-scene-anchor>
+      <div
+        class="block-three__anchor necoz-scene-anchor"
+        {...{ [SCENE_DOM_ATTRIBUTES.work.anchor]: true }}
+      >
         <BlockShape
           class={desktopBlockThreeRows[0].class}
           columns={desktopBlockThreeRows[0].columns}
           emptyCount={desktopBlockThreeRows[0].emptyCount}
-          data-nyaomaru-target={desktopBlockThreeRows[0].dataNyaomaruTarget}
+          {...{
+            [SCENE_DOM_ATTRIBUTES.hero.target]:
+              desktopBlockThreeRows[0].dataNyaomaruTarget,
+          }}
         />
         <WorkIconStack
           class="icon-plumbing-stack"
-          data-work-scene-phase="hidden"
-          data-work-scene-display
+          {...{
+            [SCENE_DOM_ATTRIBUTES.work.phase]: WORK_SCENE_PHASES.hidden,
+            [SCENE_DOM_ATTRIBUTES.work.display]: true,
+          }}
         />
       </div>
       {
@@ -105,13 +122,22 @@ const mobileServiceItems = [
       }
     </div>
     <div class="block block-three block-three--mobile">
-      <div class="block-three__anchor necoz-scene-anchor" data-work-scene-anchor>
+      <div
+        class="block-three__anchor necoz-scene-anchor"
+        {...{ [SCENE_DOM_ATTRIBUTES.work.anchor]: true }}
+      >
         <BlockShape
           class={mobileBlockThreeRows[0].class}
           columns={mobileBlockThreeRows[0].columns}
-          data-nyaomaru-target={mobileBlockThreeRows[0].dataNyaomaruTarget}
+          {...{
+            [SCENE_DOM_ATTRIBUTES.hero.target]:
+              mobileBlockThreeRows[0].dataNyaomaruTarget,
+          }}
         />
-        <WorkIconStack class="icon-plumbing-stack" data-work-mobile-target />
+        <WorkIconStack
+          class="icon-plumbing-stack"
+          {...{ [SCENE_DOM_ATTRIBUTES.work.mobileTarget]: true }}
+        />
       </div>
       {
         mobileBlockThreeRows
@@ -129,11 +155,11 @@ const mobileServiceItems = [
     >
       <WorkIconStack
         class="icon-plumbing-stack-second"
-        data-nyaomaru-work-exit
+        {...{ [SCENE_DOM_ATTRIBUTES.work.exit]: true }}
       />
     </BackgroundBlockStack>
 
-    <div class="icon-shot" aria-hidden="true">
+    <div class={SCENE_DOM_CLASSES.work.shotIcon} aria-hidden="true">
       <img
         class="icon-shot__part icon-shot__part--base"
         src="/assets/icons/charge_shot1.svg"

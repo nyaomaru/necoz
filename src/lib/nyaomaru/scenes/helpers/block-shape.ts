@@ -1,7 +1,7 @@
+import { SCENE_DOM_SELECTORS } from '../dom-contracts';
+
 export const getFilledCells = (segment: HTMLElement) =>
-  Array.from(
-    segment.querySelectorAll<HTMLElement>('.block-shape__cell:not(.block-shape__cell--empty)'),
-  );
+  Array.from(segment.querySelectorAll<HTMLElement>(SCENE_DOM_SELECTORS.blockShape.filledCell));
 
 export const getFirstFilledCell = (segment: HTMLElement) => getFilledCells(segment).at(0);
 

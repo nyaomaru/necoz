@@ -58,6 +58,9 @@ import {
   getWalkerRoutePose,
   getWalkerRunY,
 } from './work-scene-route';
+import { WORK_SCENE_PHASES } from './dom-contracts';
+
+type WorkScenePhase = (typeof WORK_SCENE_PHASES)[keyof typeof WORK_SCENE_PHASES];
 
 const isOverlapping = (a: RectBounds, b: RectBounds) =>
   a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
@@ -129,7 +132,7 @@ const resetCollisionState = (collisionState: CollisionState) => {
   collisionState.hasShotCollided = false;
 };
 
-export const setWorkScenePhase = (phaseTargets: WorkAnchor[], phase: 'hidden' | 'reveal') => {
+export const setWorkScenePhase = (phaseTargets: WorkAnchor[], phase: WorkScenePhase) => {
   phaseTargets.forEach((target) => {
     target.dataset.workScenePhase = phase;
   });
@@ -259,7 +262,7 @@ export const applyHiddenPhase = (
   { phaseTargets }: Pick<WorkSceneElements, 'phaseTargets'>,
   frame: WorkFrameMetrics,
 ) => {
-  setWorkScenePhase(phaseTargets, 'hidden');
+  setWorkScenePhase(phaseTargets, WORK_SCENE_PHASES.hidden);
   resetCollisionState(collisionState);
   actions.resetWalkerOverride();
   actions.setWorkPosition(frame.stackX, frame.hiddenY);
@@ -272,7 +275,7 @@ export const applyRevealPhase = (
   { phaseTargets }: Pick<WorkSceneElements, 'phaseTargets'>,
   frame: WorkFrameMetrics,
 ) => {
-  setWorkScenePhase(phaseTargets, 'reveal');
+  setWorkScenePhase(phaseTargets, WORK_SCENE_PHASES.reveal);
   resetCollisionState(collisionState);
   actions.resetWalkerOverride();
   actions.resetShot();

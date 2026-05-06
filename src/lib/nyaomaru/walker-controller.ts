@@ -1,4 +1,5 @@
 import { contactScene } from './scenes/contact-scene';
+import { SCENE_DOM_SELECTORS } from './scenes/dom-contracts';
 import { heroScene } from './scenes/hero-scene';
 import { studioScene } from './scenes/studio-scene';
 import { workScene } from './scenes/work-scene';
@@ -12,7 +13,6 @@ import type {
   WalkerSceneSnapshot,
 } from './types';
 
-const WALKER_SELECTOR = '[data-nyaomaru-walker]';
 const WALKER_STATE_EVENT = 'necoz:walker-state';
 const MIN_SCROLL_DISTANCE = 1;
 
@@ -21,7 +21,7 @@ const effectScenes: WalkerEffectScene[] = [workScene, studioScene, contactScene]
 
 const getActiveScrollY = () => getSceneScrollY();
 
-const resolveWalkerRoot = () => document.querySelector<WalkerRoot>(WALKER_SELECTOR);
+const resolveWalkerRoot = () => document.querySelector<WalkerRoot>(SCENE_DOM_SELECTORS.walker);
 
 const getSceneProgress = (scrollY: number, snapshot: WalkerSceneSnapshot) =>
   clamp(

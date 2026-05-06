@@ -1,4 +1,5 @@
 import type { WalkerEffectScene } from '~/lib/nyaomaru/types';
+import { SCENE_DOM_SELECTORS, WORK_SCENE_PHASES } from './dom-contracts';
 import {
   CENTER_RATIO,
   DESCEND_PHASE_END,
@@ -48,33 +49,41 @@ const getShotRevealStartProgress = () =>
   isMobileViewport() ? MOBILE_SHOT_REVEAL_START_PROGRESS : SHOT_REVEAL_START_PROGRESS;
 
 const resolveWorkSceneElements = (): WorkSceneElements | null => {
-  const anchor = getVisibleElement<WorkAnchor>('[data-work-scene-anchor]');
-  const activeBlockThree = anchor?.closest<HTMLElement>('.block-three');
+  const anchor = getVisibleElement<WorkAnchor>(SCENE_DOM_SELECTORS.work.anchor);
+  const activeBlockThree = anchor?.closest<HTMLElement>(SCENE_DOM_SELECTORS.work.activeBlockThree);
   const phaseTargets = Array.from(
-    document.querySelectorAll<WorkAnchor>('[data-work-scene-phase]'),
+    document.querySelectorAll<WorkAnchor>(SCENE_DOM_SELECTORS.work.phaseTarget),
   ).filter((element) => element.getClientRects().length > 0);
-  const blockThreeFirstRow = activeBlockThree?.querySelector<HTMLElement>('.block-three-1');
-  const blockThreeThirdRow = activeBlockThree?.querySelector<HTMLElement>('.block-three-3');
-  const mobileBlockTarget = getVisibleElement<HTMLElement>('[data-work-mobile-target]');
-  const mobileWorkClampTarget = getVisibleElement<HTMLElement>('[data-work-mobile-clamp-target]');
-  const workStack = isMobileViewport()
-    ? getVisibleElement<HTMLElement>('[data-work-mobile-origin]')
-    : getVisibleElement<HTMLElement>('[data-work-scene-display]');
-  const blockFourExit = document.querySelector<HTMLElement>('[data-nyaomaru-work-exit]');
-  const blockFourSteps = Array.from(
-    document.querySelectorAll<HTMLElement>('[data-nyaomaru-work-step]'),
+  const blockThreeFirstRow = activeBlockThree?.querySelector<HTMLElement>(
+    SCENE_DOM_SELECTORS.work.firstRow,
   );
-  const studioDesk = getVisibleElement<HTMLImageElement>('[data-nyaomaru-studio-desk]');
-  const workIcon = workStack?.querySelector<HTMLImageElement>('.icon-work');
-  const plumberIcon = workStack?.querySelector<HTMLImageElement>('.icon-plumbing');
+  const blockThreeThirdRow = activeBlockThree?.querySelector<HTMLElement>(
+    SCENE_DOM_SELECTORS.work.thirdRow,
+  );
+  const mobileBlockTarget = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.work.mobileTarget);
+  const mobileWorkClampTarget = getVisibleElement<HTMLElement>(
+    SCENE_DOM_SELECTORS.work.mobileClampTarget,
+  );
+  const workStack = isMobileViewport()
+    ? getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.work.mobileOrigin)
+    : getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.work.display);
+  const blockFourExit = document.querySelector<HTMLElement>(SCENE_DOM_SELECTORS.work.exit);
+  const blockFourSteps = Array.from(
+    document.querySelectorAll<HTMLElement>(SCENE_DOM_SELECTORS.work.step),
+  );
+  const studioDesk = getVisibleElement<HTMLImageElement>(SCENE_DOM_SELECTORS.studio.desk);
+  const workIcon = workStack?.querySelector<HTMLImageElement>(SCENE_DOM_SELECTORS.work.workIcon);
+  const plumberIcon = workStack?.querySelector<HTMLImageElement>(
+    SCENE_DOM_SELECTORS.work.plumberIcon,
+  );
   const visibleBlockThree = Array.from(
-    activeBlockThree?.querySelectorAll<HTMLElement>('.block-three-1') ?? [],
+    activeBlockThree?.querySelectorAll<HTMLElement>(SCENE_DOM_SELECTORS.work.firstRow) ?? [],
   ).find((element) => element.getClientRects().length > 0);
   const blockThreeTarget = visibleBlockThree?.querySelector<HTMLElement>(
-    '.block-shape__cell:not(.block-shape__cell--empty)',
+    SCENE_DOM_SELECTORS.blockShape.filledCell,
   );
-  const shotIcon = document.querySelector<HTMLElement>('.icon-shot');
-  const walker = document.querySelector<WalkerRoot>('[data-nyaomaru-walker]');
+  const shotIcon = document.querySelector<HTMLElement>(SCENE_DOM_SELECTORS.work.shotIcon);
+  const walker = document.querySelector<WalkerRoot>(SCENE_DOM_SELECTORS.walker);
 
   if (
     !anchor ||
@@ -234,7 +243,7 @@ export const workScene: WalkerEffectScene = {
         return;
       }
 
-      setWorkScenePhase(elements.phaseTargets, 'reveal');
+      setWorkScenePhase(elements.phaseTargets, WORK_SCENE_PHASES.reveal);
 
       if (frame.progress <= EMERGE_PHASE_END) {
         applyRevealPhase(actions, collisionState, elements, frame);

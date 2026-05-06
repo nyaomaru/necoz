@@ -1,4 +1,6 @@
 ---
+import { SCENE_DOM_CLASSES } from "~/lib/nyaomaru/scenes/dom-contracts";
+
 type Props = {
   /** Additional class names applied to the stack wrapper. */
   class?: string;
@@ -21,12 +23,20 @@ const {
 
 <div class:list={["work-icon-stack", className]} style={style} {...attrs}>
   <img
-    class:list={["icon-work", "work-icon-stack__work", workClass]}
+    class:list={[
+      SCENE_DOM_CLASSES.work.workIcon,
+      "work-icon-stack__work",
+      workClass,
+    ]}
     src="/assets/icons/work.svg"
     alt="Work icon"
   />
   <img
-    class:list={["icon-plumbing", "work-icon-stack__plumbing", plumbingClass]}
+    class:list={[
+      SCENE_DOM_CLASSES.work.plumberIcon,
+      "work-icon-stack__plumbing",
+      plumbingClass,
+    ]}
     src="/assets/icons/plumbing.svg"
     alt="Plumbing icon"
   />

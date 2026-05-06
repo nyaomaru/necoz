@@ -6,22 +6,22 @@ import {
   MOTION_PORTIONS,
   MOBILE_LANDING_X_OFFSET,
   NYAOMARU_ADJUST_X_OFFSET,
-  SELECTORS,
 } from './model/hero';
 import type { HeroSceneElements, HeroSceneLayout } from './model/hero';
+import { SCENE_DOM_SELECTORS } from './dom-contracts';
 import { getVisibleElement } from './helpers/dom';
 import { getSegmentProgress, lerp } from './helpers/math';
 import { getSceneScrollY, getVisualScrollY } from '~/lib/nyaomaru/scroll-state';
 import { isMobileViewport } from './helpers/viewport';
 
 const resolveHeroSceneElements = (): HeroSceneElements | null => {
-  const start = document.querySelector<HTMLElement>(SELECTORS.start);
-  const walker = document.querySelector<HTMLElement>('[data-nyaomaru-walker]');
-  const target = getVisibleElement<HTMLElement>(SELECTORS.target);
-  const block1 = getVisibleElement<HTMLElement>(SELECTORS.block1);
-  const block2 = getVisibleElement<HTMLElement>(SELECTORS.block2);
-  const block3 = getVisibleElement<HTMLElement>(SELECTORS.block3);
-  const mobileTarget = getVisibleElement<HTMLElement>(SELECTORS.mobileTarget);
+  const start = document.querySelector<HTMLElement>(SCENE_DOM_SELECTORS.hero.start);
+  const walker = document.querySelector<HTMLElement>(SCENE_DOM_SELECTORS.walker);
+  const target = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.hero.target);
+  const block1 = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.hero.block1);
+  const block2 = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.hero.block2);
+  const block3 = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.hero.block3);
+  const mobileTarget = getVisibleElement<HTMLElement>(SCENE_DOM_SELECTORS.hero.mobileTarget);
 
   if (!start || !walker || !block3 || !target || !block1 || !block2) {
     return null;
