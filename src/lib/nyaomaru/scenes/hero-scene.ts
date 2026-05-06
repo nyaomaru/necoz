@@ -43,7 +43,9 @@ const measureHeroSceneLayout = ({
   const sceneScrollY = getSceneScrollY();
   const startRect = start.getBoundingClientRect();
   const walkerRect = walker.getBoundingClientRect();
-  const walkerBaseY = Number.parseFloat(window.getComputedStyle(walker).top) || 0;
+  const walkerComputedStyle = window.getComputedStyle(walker);
+  const walkerBaseX = Number.parseFloat(walkerComputedStyle.left) || 0;
+  const walkerBaseY = Number.parseFloat(walkerComputedStyle.top) || 0;
   const targetRect = (mobileTarget ?? target).getBoundingClientRect();
   const block1Rect = block1.getBoundingClientRect();
   const block2Rect = block2.getBoundingClientRect();
@@ -64,7 +66,7 @@ const measureHeroSceneLayout = ({
 
   return {
     layout: {
-      startX: startRect.left,
+      startX: -(walkerBaseX + walkerRect.width),
       startY,
       firstFallX: block1Rect.width - NYAOMARU_ADJUST_X_OFFSET,
       secondRunY,
