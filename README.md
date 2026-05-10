@@ -1,5 +1,10 @@
 # necoz
 
+<img
+  src="https://raw.githubusercontent.com/nyaomaru/necoz/main/public/necoz_ogp.png"
+  alt="necoz logo"
+/>
+
 Necoz B.V. website built with Astro, React islands, and custom scroll / walker animation logic.
 
 Scroll down and enjoy the animations!
