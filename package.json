@@ -16,27 +16,32 @@
     "fmt:check": "oxfmt --check ."
   },
   "dependencies": {
-    "@astrojs/react": "^5.0.4",
+    "@astrojs/react": "^5.0.7",
     "@fontsource/source-sans-3": "^5.2.9",
     "@fontsource/space-grotesk": "^5.2.10",
-    "astro": "^6.1.9",
-    "framer-motion": "^12.38.0",
-    "is-kit": "^1.7.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "astro": "^6.4.4",
+    "framer-motion": "^12.40.0",
+    "is-kit": "^1.7.4",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.9",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
-    "@types/node": "^24.9.1",
-    "@types/react": "^19.2.14",
+    "@types/node": "^25.9.2",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "jsdom": "^29.1.0",
-    "oxfmt": "^0.46.0",
-    "oxlint": "^1.61.0",
+    "jsdom": "^29.1.1",
+    "oxfmt": "^0.53.0",
+    "oxlint": "^1.68.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.8"
   },
-  "packageManager": "pnpm@10.31.0"
+  "packageManager": "pnpm@10.31.0",
+  "pnpm": {
+    "overrides": {
+      "yaml": "2.9.0"
+    }
+  }
 }
