@@ -17,8 +17,9 @@
     0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.35),
     0 0.25rem 0.375rem -0.25rem rgba(0, 0, 0, 0.35);
   --necoz-basic-text-family: 'Source Sans 3', system-ui, sans-serif;
+  --necoz-basic-text-scale: 0.75;
   --necoz-basic-text-size: 2rem;
-  --necoz-basic-text-weight: 600;
+  --necoz-basic-text-weight: 500;
   --necoz-basic-text-line-height: 1.6;
   --necoz-basic-text-transform-x: 1.4;
   --scene-shell-padding-block-end: 5rem;
@@ -68,6 +69,7 @@
 
 @media (--necoz-phone) {
   :root {
+    --necoz-basic-text-scale: 1;
     --necoz-basic-text-transform-x: 1.5;
   }
 }
@@ -108,7 +110,7 @@ a {
 
 .necoz-basic-text {
   font-family: var(--necoz-basic-text-family);
-  font-size: var(--necoz-basic-text-size);
+  font-size: calc(var(--necoz-basic-text-size) * var(--necoz-basic-text-scale));
   font-weight: var(--necoz-basic-text-weight);
   line-height: var(--necoz-basic-text-line-height);
   transform: scaleX(var(--necoz-basic-text-transform-x));

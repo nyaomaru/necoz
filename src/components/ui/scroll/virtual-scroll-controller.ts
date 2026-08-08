@@ -3,6 +3,13 @@ import {
   getFooterPinExtraScrollRange,
   getScrollRangeMultiplier,
 } from './virtual-scroll-policy';
+import { VIRTUAL_SCROLL_SECTION_SELECTOR } from './virtual-scroll-contracts';
+import {
+  createVirtualScrollProfile,
+  getScrollStateForVirtualScrollY,
+  getVirtualScrollYForVisualScrollY,
+  type VirtualScrollProfile,
+} from './virtual-scroll-profile';
 import { clamp } from '~/lib/math';
 import { setScrollState } from '~/lib/nyaomaru/runtime-state';
 import {
@@ -30,6 +37,7 @@ export const setupVirtualScroll = () => {
   let animationFrameId = 0;
   let baseScrollRange = 0;
   let virtualScrollRange = 0;
+  let scrollProfile: VirtualScrollProfile | null = null;
   let renderedVirtualScrollY = 0;
   let targetVirtualScrollY = 0;
   let activePointerId: number | null = null;
@@ -37,9 +45,18 @@ export const setupVirtualScroll = () => {
   let lastTouchY: number | null = null;
   let nativeTouchTargetActive = false;
 
-  const getSceneScrollY = () => renderedVirtualScrollY / getBaseScrollRangeMultiplier();
-  const getVisualScrollY = () =>
-    clamp(renderedVirtualScrollY / getScrollRangeMultiplier(), 0, baseScrollRange);
+  const getCurrentScrollState = () =>
+    scrollProfile
+      ? getScrollStateForVirtualScrollY(scrollProfile, renderedVirtualScrollY)
+      : {
+          sceneScrollY: renderedVirtualScrollY / getBaseScrollRangeMultiplier(),
+          visualScrollY: clamp(
+            renderedVirtualScrollY / getScrollRangeMultiplier(),
+            0,
+            baseScrollRange,
+          ),
+        };
+  const getVisualScrollY = () => getCurrentScrollState().visualScrollY;
   const updateThumb = () => {
     const trackHeight = track.clientHeight;
     const totalVirtualHeight = window.innerHeight + virtualScrollRange;
@@ -55,8 +72,7 @@ export const setupVirtualScroll = () => {
     thumb.style.transform = `translateY(${maxThumbOffset * thumbProgress}px)`;
   };
   const applyScroll = () => {
-    const visualScrollY = getVisualScrollY();
-    const sceneScrollY = getSceneScrollY();
+    const { sceneScrollY, visualScrollY } = getCurrentScrollState();
 
     content.style.top = `${-visualScrollY}px`;
     setScrollState({ sceneScrollY, visualScrollY });
@@ -96,12 +112,25 @@ export const setupVirtualScroll = () => {
   };
   const syncMetrics = () => {
     const currentProgress = virtualScrollRange <= 0 ? 0 : targetVirtualScrollY / virtualScrollRange;
+    const baseScrollRangeMultiplier = getBaseScrollRangeMultiplier();
     const scrollRangeMultiplier = getScrollRangeMultiplier();
 
     content.style.top = '0px';
     baseScrollRange = Math.max(content.scrollHeight - window.innerHeight, 0);
-    virtualScrollRange =
-      baseScrollRange * scrollRangeMultiplier + getFooterPinExtraScrollRange(baseScrollRange);
+    const sections = Array.from(
+      content.querySelectorAll<HTMLElement>(VIRTUAL_SCROLL_SECTION_SELECTOR),
+    ).map((section) => ({
+      height: section.offsetHeight,
+      offsetTop: section.offsetTop,
+    }));
+    scrollProfile = createVirtualScrollProfile({
+      baseScrollRange,
+      baseScrollRangeMultiplier,
+      footerPinExtraScrollRange: getFooterPinExtraScrollRange(baseScrollRange),
+      scrollRangeMultiplier,
+      sections,
+    });
+    virtualScrollRange = scrollProfile.virtualScrollRange;
     targetVirtualScrollY = currentProgress * virtualScrollRange;
     renderedVirtualScrollY = targetVirtualScrollY;
     applyScroll();
@@ -149,7 +178,10 @@ export const setupVirtualScroll = () => {
       anchor,
       baseScrollRange,
       currentVisualScrollY: getVisualScrollY(),
-      scrollRangeMultiplier: getScrollRangeMultiplier(),
+      getVirtualScrollYForVisualScrollY: (visualScrollY) =>
+        scrollProfile
+          ? getVirtualScrollYForVisualScrollY(scrollProfile, visualScrollY)
+          : visualScrollY * getScrollRangeMultiplier(),
     });
 
     if (targetVirtualScrollY === null) {

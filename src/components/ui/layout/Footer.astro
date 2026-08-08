@@ -60,6 +60,7 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
     position: absolute;
     right: calc(var(--block-grid-cell) * 3.5);
     bottom: calc(100% - 0.125rem);
+    width: 25%;
     pointer-events: none;
   }
 
@@ -94,7 +95,7 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
 
   .footer :global(.footer-copy) {
     margin: 0;
-    margin-right: 10rem;
+    margin-right: 7.5rem;
   }
 
   .footer :global(.footer-link) {
@@ -111,6 +112,18 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
     text-decoration: underline;
   }
 
+  @media (--necoz-stage-wide) {
+    .goal-fish {
+      right: calc(var(--block-grid-cell) * 7.5);
+      bottom: calc(100% + var(--block-grid-cell) * 7);
+      width: calc(var(--block-grid-cell) * 1.5);
+    }
+
+    .goal-fish-bone {
+      width: calc(var(--block-grid-cell) * 1.5);
+    }
+  }
+
   @media (--necoz-stage-compact) {
     .footer {
       --footer-goal-cell: var(--necoz-14-grid-cell);
@@ -121,7 +134,7 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
     .goal-flag {
       right: calc(var(--footer-goal-cell) * 1);
       bottom: calc(100% - 0.75rem);
-      width: calc(var(--footer-goal-cell) * 5);
+      width: 25%;
     }
 
     .goal-fish {
@@ -131,7 +144,7 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
     }
 
     .goal-fish-bone {
-      width: calc(var(--block-grid-cell) * 2);
+      width: calc(var(--block-grid-cell) * 1.5);
     }
   }
 

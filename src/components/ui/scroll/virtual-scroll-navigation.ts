@@ -41,12 +41,12 @@ export const getHashTargetVirtualScrollY = ({
   anchor,
   baseScrollRange,
   currentVisualScrollY,
-  scrollRangeMultiplier,
+  getVirtualScrollYForVisualScrollY,
 }: {
   anchor: HTMLAnchorElement;
   baseScrollRange: number;
   currentVisualScrollY: number;
-  scrollRangeMultiplier: number;
+  getVirtualScrollYForVisualScrollY: (visualScrollY: number) => number;
 }) => {
   const hash = anchor.getAttribute('href');
 
@@ -66,7 +66,5 @@ export const getHashTargetVirtualScrollY = ({
     baseScrollRange,
   );
 
-  return scrollRangeMultiplier <= 0
-    ? targetVisualScrollY
-    : targetVisualScrollY * scrollRangeMultiplier;
+  return getVirtualScrollYForVisualScrollY(targetVisualScrollY);
 };
