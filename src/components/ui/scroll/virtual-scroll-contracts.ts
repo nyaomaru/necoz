@@ -1,0 +1,2 @@
+export const VIRTUAL_SCROLL_SECTION_ATTRIBUTE = 'data-virtual-scroll-section';
+export const VIRTUAL_SCROLL_SECTION_SELECTOR = `[${VIRTUAL_SCROLL_SECTION_ATTRIBUTE}]`;

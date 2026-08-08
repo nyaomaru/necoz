@@ -112,6 +112,16 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
     text-decoration: underline;
   }
 
+  @media (--necoz-stage-wide) {
+    .goal-fish {
+      width: calc(var(--footer-goal-cell) * 0.75);
+    }
+
+    .goal-fish-bone {
+      width: calc(var(--block-grid-cell) * 1.5);
+    }
+  }
+
   @media (--necoz-stage-compact) {
     .footer {
       --footer-goal-cell: var(--necoz-14-grid-cell);
@@ -132,7 +142,7 @@ import { SCENE_DOM_ATTRIBUTES } from "~/lib/nyaomaru/scenes/dom-contracts";
     }
 
     .goal-fish-bone {
-      width: calc(var(--block-grid-cell) * 2);
+      width: calc(var(--block-grid-cell) * 1.5);
     }
   }
 

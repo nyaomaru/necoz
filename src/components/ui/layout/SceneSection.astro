@@ -1,4 +1,6 @@
 ---
+import { VIRTUAL_SCROLL_SECTION_ATTRIBUTE } from "~/components/ui/scroll/virtual-scroll-contracts";
+
 type Props = {
   /** Additional class names applied to the section root. */
   class?: string;
@@ -9,7 +11,11 @@ type Props = {
 const { class: className, ...attrs } = Astro.props as Props;
 ---
 
-<section class:list={["scene-shell", className]} {...attrs}>
+<section
+  class:list={["scene-shell", className]}
+  {...{ [VIRTUAL_SCROLL_SECTION_ATTRIBUTE]: true }}
+  {...attrs}
+>
   <slot />
 </section>
 
