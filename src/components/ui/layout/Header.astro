@@ -81,7 +81,7 @@ const { homeHref = "#top" } = Astro.props as Props;
   }
 
   .brand img {
-    width: 14rem;
+    width: 10.5rem;
     height: auto;
   }
 
@@ -89,6 +89,8 @@ const { homeHref = "#top" } = Astro.props as Props;
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    transform: scale(0.75);
+    transform-origin: top right;
   }
 
   .portfolio-link {
@@ -129,7 +131,7 @@ const { homeHref = "#top" } = Astro.props as Props;
     }
 
     .brand img {
-      width: 8.5rem;
+      width: 6.375rem;
     }
 
     .portfolio-link img {
@@ -149,7 +151,7 @@ const { homeHref = "#top" } = Astro.props as Props;
     }
 
     .brand img {
-      width: 6.5rem;
+      width: 4.875rem;
     }
 
     .portfolio-link img {
@@ -171,6 +173,14 @@ const { homeHref = "#top" } = Astro.props as Props;
   @media (--necoz-phone) {
     .header-overlay {
       margin: 1.5rem 1.5rem;
+    }
+
+    .brand img {
+      width: 6.5rem;
+    }
+
+    .links {
+      transform: none;
     }
 
     :global(.icon-link .social-link--x) {

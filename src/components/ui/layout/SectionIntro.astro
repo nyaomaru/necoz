@@ -243,7 +243,10 @@ const sceneIntroStyle = [
 
   .section-title__image {
     display: block;
-    width: min(100%, var(--section-title-image-responsive-width));
+    width: min(
+      75%,
+      calc(var(--section-title-image-responsive-width) * 0.75)
+    );
     height: auto;
   }
 
@@ -256,9 +259,9 @@ const sceneIntroStyle = [
     position: relative;
     z-index: var(--section-intro-layer-asset);
     width: min(
-      100%,
-      var(--section-title-image-max-width),
-      var(--section-title-image-responsive-width)
+      75%,
+      calc(var(--section-title-image-max-width) * 0.75),
+      calc(var(--section-title-image-responsive-width) * 0.75)
     );
     height: auto;
   }
