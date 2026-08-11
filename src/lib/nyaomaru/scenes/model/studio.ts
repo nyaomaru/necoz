@@ -55,7 +55,7 @@ export type StudioRouteSegment = {
   /** End Y coordinate of the route segment. */
   endY: number;
   /** Walker phase used while traversing this segment. */
-  phase: 'landed' | 'second-run' | 'second-fall';
+  phase: "landed" | "second-run" | "second-fall";
   /** Start X coordinate of the route segment. */
   startX: number;
   /** Start Y coordinate of the route segment. */
@@ -94,7 +94,7 @@ export const STUDIO_DESK_LANDING_Y_OFFSET = -24;
 export const MOBILE_STUDIO_DESK_LANDING_X_OFFSET_ADJUSTMENT_REM = -0.25;
 export const MOBILE_STUDIO_DESK_LANDING_Y_OFFSET_ADJUSTMENT_REM = 0.5;
 export const STUDIO_BLOCK_SURFACE_OFFSET_Y = -6;
-export const STUDIO_BLOCK_SIX_JUMP_HEIGHT_RATIO = 1.4;
+export const STUDIO_BLOCK_SIX_JUMP_HEIGHT_RATIO = 0.5;
 export const STUDIO_DESK_EXIT_JUMP_HEIGHT_RATIO = 1.15;
 export const STUDIO_DESK_EXIT_JUMP_X_RATIO = 1 / 3;
 export const STUDIO_EFFECT_Y_OFFSET = 8;
@@ -108,7 +108,8 @@ export const STUDIO_CONTACT_REACTION_PROGRESS_SPEED_RATIO = 0.68;
 export const STUDIO_MANYA_JUMP_END_PROGRESS = 0.24;
 export const STUDIO_HEART_THROW_START_PROGRESS = STUDIO_MANYA_JUMP_END_PROGRESS;
 export const STUDIO_HEART_THROW_END_PROGRESS = 0.58;
-export const STUDIO_WALKER_REACTION_START_PROGRESS = STUDIO_HEART_THROW_END_PROGRESS;
+export const STUDIO_WALKER_REACTION_START_PROGRESS =
+  STUDIO_HEART_THROW_END_PROGRESS;
 export const STUDIO_WALKER_REACTION_FIRST_JUMP_END_PROGRESS = 0.55;
 export const STUDIO_MANYA_JUMP_HEIGHT_RATIO = 0.18;
 export const STUDIO_HEART_THROW_ARC_HEIGHT_RATIO = 0.3;
