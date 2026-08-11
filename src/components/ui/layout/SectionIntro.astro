@@ -158,7 +158,7 @@ const sceneIntroStyle = [
         (sectionTitleOffset || sectionTitleOffsetX) && "section-title--offset",
       ]}
     >
-      <BlockShape class="section-title__spacer" columns={7} emptyCount={7} />
+      <BlockShape class="section-title__spacer" columns={11} emptyCount={11} />
       <img
         class:list={[
           "section-title__image",
@@ -174,7 +174,7 @@ const sceneIntroStyle = [
         descriptionMarginTop && "description--offset",
       ]}
     >
-      <BlockShape as="span" class="lead__spacer" columns={7} emptyCount={7} />
+      <BlockShape as="span" class="lead__spacer" columns={11} emptyCount={11} />
       <LeadTag class="lead">
         <slot />
       </LeadTag>
@@ -185,7 +185,7 @@ const sceneIntroStyle = [
 <style>
   .scene-intro {
     --description-margin-top-responsive: var(--description-margin-top);
-    --lead-content-margin-top-responsive: var(--lead-content-margin-top, 2.5rem);
+    --lead-content-margin-top-responsive: var(--lead-content-margin-top, 1.5rem);
     --section-container-margin-top: 4rem;
     --section-intro-layer-accent: var(--layer-scene-accent);
     --section-intro-layer-asset: var(--layer-scene-background-raised);
@@ -196,7 +196,7 @@ const sceneIntroStyle = [
     );
     --section-title-offset-responsive: var(--section-title-offset, 0rem);
     --section-title-offset-x-responsive: var(--section-title-offset-x, 0rem);
-    --section-intro-text-size: 2rem;
+    --section-intro-text-size: 1.75rem;
     --section-intro-lead-available-width: calc(
       100vw - (var(--block-grid-cell) * 8) - 1rem
     );
@@ -245,7 +245,7 @@ const sceneIntroStyle = [
     display: block;
     width: min(
       75%,
-      calc(var(--section-title-image-responsive-width) * 0.75)
+      calc(var(--section-title-image-responsive-width) * 0.5)
     );
     height: auto;
   }
@@ -260,7 +260,7 @@ const sceneIntroStyle = [
     z-index: var(--section-intro-layer-asset);
     width: min(
       75%,
-      calc(var(--section-title-image-max-width) * 0.75),
+      calc(var(--section-title-image-max-width) * 0.5),
       calc(var(--section-title-image-responsive-width) * 0.75)
     );
     height: auto;
@@ -312,7 +312,7 @@ const sceneIntroStyle = [
       );
       --lead-content-margin-top-responsive: var(
         --lead-content-margin-top-stageCompact,
-        var(--lead-content-margin-top, 2.5rem)
+        var(--lead-content-margin-top, 1.5rem)
       );
       --section-container-margin-top: 3.75rem;
       --section-title-image-responsive-width: var(
@@ -327,7 +327,7 @@ const sceneIntroStyle = [
         --section-title-offset-x-stageCompact,
         var(--section-title-offset-x, 0rem)
       );
-      --section-intro-text-size: 1.875rem;
+      --section-intro-text-size: 1.5rem;
     }
 
     .scene-intro--fixed-height {
@@ -346,7 +346,7 @@ const sceneIntroStyle = [
       );
       --lead-content-margin-top-responsive: var(
         --lead-content-margin-top-desktopCompact,
-        var(--lead-content-margin-top, 2.5rem)
+        var(--lead-content-margin-top, 1.5rem)
       );
       --section-container-margin-top: 3.25rem;
       --section-title-image-responsive-width: var(
@@ -361,7 +361,7 @@ const sceneIntroStyle = [
         --section-title-offset-x-desktopCompact,
         var(--section-title-offset-x, 0rem)
       );
-      --section-intro-text-size: 1.625rem;
+      --section-intro-text-size: 1.5rem;
     }
 
     .scene-intro--fixed-height {
@@ -384,7 +384,7 @@ const sceneIntroStyle = [
       );
       --lead-content-margin-top-responsive: var(
         --lead-content-margin-top-contentCompact,
-        var(--lead-content-margin-top, 2.5rem)
+        var(--lead-content-margin-top, 1.5rem)
       );
       --section-container-margin-top: 2.75rem;
       --section-title-image-responsive-width: var(
@@ -399,7 +399,7 @@ const sceneIntroStyle = [
         --section-title-offset-x-contentCompact,
         var(--section-title-offset-x, 0rem)
       );
-      --section-intro-text-size: 1.375rem;
+      --section-intro-text-size: 1.25rem;
     }
 
     .scene-intro--fixed-height {
@@ -422,7 +422,7 @@ const sceneIntroStyle = [
       );
       --lead-content-margin-top-responsive: var(
         --lead-content-margin-top-contentNarrow,
-        var(--lead-content-margin-top, 2.5rem)
+        var(--lead-content-margin-top, 1.5rem)
       );
       --section-container-margin-top: 2.25rem;
       --section-title-image-responsive-width: var(
