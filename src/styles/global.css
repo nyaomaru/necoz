@@ -70,7 +70,6 @@
 @media (--necoz-phone) {
   :root {
     --necoz-basic-text-scale: 1;
-    --necoz-basic-text-transform-x: 1.5;
   }
 }
 
@@ -137,9 +136,8 @@ a {
 }
 
 @media (--necoz-phone) {
-  .necoz-section-copy-mobile {
-    --necoz-basic-text-size: var(--section-copy-mobile-size);
-    --necoz-basic-text-line-height: var(--section-copy-mobile-line-height);
-    --necoz-basic-text-transform-x: var(--section-copy-mobile-transform-x);
+  .necoz-basic-text {
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
   }
 }
