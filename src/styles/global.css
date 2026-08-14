@@ -21,6 +21,7 @@
   --necoz-basic-text-size: 2rem;
   --necoz-basic-text-weight: 600;
   --necoz-basic-text-line-height: 1.6;
+  --necoz-basic-text-line-height-mobile: 1.7;
   --necoz-basic-text-transform-x: 1.4;
   --scene-shell-padding-block-end: 5rem;
   --scene-shell-padding-block-start: 6rem;
@@ -70,7 +71,6 @@
 @media (--necoz-phone) {
   :root {
     --necoz-basic-text-scale: 1;
-    --necoz-basic-text-transform-x: 1.5;
   }
 }
 
@@ -137,9 +137,9 @@ a {
 }
 
 @media (--necoz-phone) {
-  .necoz-section-copy-mobile {
-    --necoz-basic-text-size: var(--section-copy-mobile-size);
-    --necoz-basic-text-line-height: var(--section-copy-mobile-line-height);
-    --necoz-basic-text-transform-x: var(--section-copy-mobile-transform-x);
+  .necoz-basic-text {
+    font-size: 0.875rem;
+    letter-spacing: 0.0375rem;
+    line-height: var(--necoz-basic-text-line-height-mobile);
   }
 }

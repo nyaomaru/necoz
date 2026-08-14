@@ -465,14 +465,14 @@ const sceneIntroStyle = [
     .scene-intro {
       --section-intro-mobile-block: var(--necoz-14-grid-cell);
       --section-intro-mobile-inline-start: calc(
-        var(--section-intro-mobile-block) * 2
+        var(--section-intro-mobile-block) * 2.35
       );
       --block-grid-cell: var(--necoz-14-grid-cell);
       --scene-intro-min-height-mobile: calc(var(--block-grid-cell) * 13);
     }
 
     .section-container {
-      margin-top: var(--mobile-section-container-margin-top, 3rem);
+      margin-top: var(--mobile-section-container-margin-top, 4rem);
     }
 
     .section-title {
@@ -489,31 +489,25 @@ const sceneIntroStyle = [
     }
 
     .section-title__image {
-      width: var(--mobile-section-title-image-width, 9rem);
+      width: var(--mobile-section-title-image-width, 5rem);
       height: auto;
     }
 
     .lead {
       gap: 0;
+      width: calc(100vw - var(--section-intro-mobile-inline-start));
       margin-left: var(--section-intro-mobile-inline-start);
     }
 
     .lead > :global(*) {
-      --section-intro-lead-available-width: calc(
-        100vw - var(--section-intro-mobile-inline-start) - 1rem
-      );
-      --section-intro-lead-max-width: calc(
-        var(--section-intro-lead-available-width) / 1.5
-      );
+      --section-intro-lead-available-width: 100%;
+      --section-intro-lead-max-width: 100%;
     }
 
     .lead > :global(.section-intro__lead-content) {
-      width: var(
-        --mobile-lead-content-width,
-        calc(100vw - var(--section-intro-mobile-inline-start) - 10rem)
-      );
-      max-width: var(--section-intro-lead-max-width);
-      margin-top: var(--mobile-lead-content-margin-top, 2rem);
+      width: 100%;
+      margin-top: var(--mobile-lead-content-margin-top, 1rem);
+      margin-right: 5.25rem
     }
 
     .description--offset {
