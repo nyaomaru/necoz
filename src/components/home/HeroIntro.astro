@@ -146,7 +146,9 @@ const mobileBlockTwoSegmentWidths = [6.5, 8.5, 8.5, 3.5];
       className="section-intro__lead-content hero-copy necoz-section-copy-mobile"
     >
       We&apos;re a small software development studio called Necoz. <br />
-      We focus on well-designed systems, clean architecture, <br />
+      We focus on well-designed systems, clean architecture, <br
+        class="hero-copy__desktop-break"
+      />
       and software that scales without losing clarity.
     </Text>
   </SectionIntro>
@@ -230,6 +232,10 @@ const mobileBlockTwoSegmentWidths = [6.5, 8.5, 8.5, 3.5];
 
     .sprite {
       --nyaomaru-size: var(--necoz-14-grid-cell);
+    }
+
+    .hero-copy__desktop-break {
+      display: none;
     }
 
     .block-one--desktop {

@@ -21,6 +21,7 @@
   --necoz-basic-text-size: 2rem;
   --necoz-basic-text-weight: 600;
   --necoz-basic-text-line-height: 1.6;
+  --necoz-basic-text-line-height-mobile: 1.7;
   --necoz-basic-text-transform-x: 1.4;
   --scene-shell-padding-block-end: 5rem;
   --scene-shell-padding-block-start: 6rem;
@@ -137,7 +138,8 @@ a {
 
 @media (--necoz-phone) {
   .necoz-basic-text {
-    font-size: 1rem;
-    letter-spacing: 0.1rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.0375rem;
+    line-height: var(--necoz-basic-text-line-height-mobile);
   }
 }
