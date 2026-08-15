@@ -1,6 +1,6 @@
 pre-commit:
   jobs:
     - name: format staged files
-      glob: '*.{css,html,js,jsx,json,jsonc,md,mdx,scss,ts,tsx,yaml,yml}'
+      glob: '*.{css,html,js,jsx,json,jsonc,md,mdx,mjs,scss,ts,tsx,yaml,yml}'
       run: pnpm exec oxfmt --write --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
