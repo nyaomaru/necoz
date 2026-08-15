@@ -8,7 +8,7 @@ const outputDirectory = resolve(process.env.SCREENSHOT_OUTPUT_DIRECTORY ?? 'arti
 const screenshotProfiles = [
   {
     name: 'pc',
-    viewport: { width: 1440, height: 900 },
+    viewport: { width: 1920, height: 1080 },
     isMobile: false,
     hasTouch: false,
   },
