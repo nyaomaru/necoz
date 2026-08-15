@@ -1,0 +1,73 @@
+name: Screenshot email
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: screenshot-email-main
+  cancel-in-progress: true
+
+jobs:
+  capture-and-send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build site
+        run: pnpm build
+
+      - name: Start production preview
+        run: |
+          pnpm preview --host 127.0.0.1 --port 4321 > "$RUNNER_TEMP/necoz-preview.log" 2>&1 &
+
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4321/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+
+          cat "$RUNNER_TEMP/necoz-preview.log"
+          exit 1
+
+      - name: Capture PC and mobile screenshots
+        run: pnpm screenshots:capture
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v7
+        with:
+          name: necoz-screenshots-${{ github.sha }}
+          path: artifacts/screenshots/
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Send screenshots by email
+        run: pnpm screenshots:email
+        env:
+          SCREENSHOT_MAIL_USERNAME: ${{ secrets.SCREENSHOT_MAIL_USERNAME }}
+          SCREENSHOT_MAIL_APP_PASSWORD: ${{ secrets.SCREENSHOT_MAIL_APP_PASSWORD }}
+          SCREENSHOT_MAIL_TO: ${{ secrets.SCREENSHOT_MAIL_TO }}

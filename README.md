@@ -52,3 +52,19 @@ pnpm dev
 ```
 
 Open `http://localhost:4321` and have fun scrolling.
+
+## Screenshot Email Workflow
+
+`.github/workflows/screenshot-email.yml` builds the site after `main` is
+updated, captures full-page PC and mobile screenshots, uploads them as a
+seven-day Actions artifact, and sends both PNG files through Gmail SMTP.
+
+Configure these repository Actions secrets before running the workflow:
+
+- `SCREENSHOT_MAIL_USERNAME`: Gmail address used as the sender.
+- `SCREENSHOT_MAIL_APP_PASSWORD`: Google app password for the sender account.
+- `SCREENSHOT_MAIL_TO`: Recipient address. When omitted, screenshots are sent
+  to `SCREENSHOT_MAIL_USERNAME`.
+
+The sender Google account must have 2-Step Verification enabled before an app
+password can be created.
