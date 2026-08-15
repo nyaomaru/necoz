@@ -56,7 +56,7 @@ await transporter.sendMail({
   text: [
     'The main branch has been updated.',
     '',
-    'PC: 1440 x 900 (full page)',
+    'PC: 1920 x 1080 (full page)',
     'Mobile: 390 x 844 (full page)',
     commitUrl && `Commit: ${commitUrl}`,
     workflowUrl && `Workflow: ${workflowUrl}`,
