@@ -24,8 +24,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: '24'
+          check-latest: true
           cache: pnpm
+
+      - name: Verify resolved Node.js runtime
+        run: node scripts/check-node-version.mjs
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
