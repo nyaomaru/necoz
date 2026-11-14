@@ -10,6 +10,7 @@ import {
   getVirtualScrollYForVisualScrollY,
   type VirtualScrollProfile,
 } from './virtual-scroll-profile';
+import { isVirtualScrollSettledAtEnd } from './virtual-scroll-end';
 import { clamp } from '~/lib/math';
 import { setScrollState } from '~/lib/nyaomaru/runtime-state';
 import {
@@ -44,7 +45,28 @@ export const setupVirtualScroll = () => {
   let dragOffsetY = 0;
   let lastTouchY: number | null = null;
   let nativeTouchTargetActive = false;
+  let scrollEndActive = false;
 
+  const isPageScrollLocked = () => document.documentElement.hasAttribute('data-scroll-locked');
+  const publishScrollEnd = () => {
+    const atEnd = isVirtualScrollSettledAtEnd(
+      renderedVirtualScrollY,
+      targetVirtualScrollY,
+      virtualScrollRange,
+    );
+
+    if (!atEnd) {
+      scrollEndActive = false;
+      return;
+    }
+
+    if (scrollEndActive) {
+      return;
+    }
+
+    scrollEndActive = true;
+    window.dispatchEvent(new CustomEvent('necoz:virtual-scroll-end'));
+  };
   const getCurrentScrollState = () =>
     scrollProfile
       ? getScrollStateForVirtualScrollY(scrollProfile, renderedVirtualScrollY)
@@ -78,6 +100,7 @@ export const setupVirtualScroll = () => {
     setScrollState({ sceneScrollY, visualScrollY });
     window.dispatchEvent(new CustomEvent('necoz:virtual-scroll'));
     updateThumb();
+    publishScrollEnd();
   };
   const setImmediateVirtualScrollY = (nextVirtualScrollY: number) => {
     targetVirtualScrollY = clamp(nextVirtualScrollY, 0, virtualScrollRange);
@@ -140,6 +163,11 @@ export const setupVirtualScroll = () => {
     rafId = window.requestAnimationFrame(syncMetrics);
   };
   const handleWheel = (event: WheelEvent) => {
+    if (isPageScrollLocked()) {
+      event.preventDefault();
+      return;
+    }
+
     if (isEditableTarget(event.target) || virtualScrollRange <= 0) {
       return;
     }
@@ -148,6 +176,20 @@ export const setupVirtualScroll = () => {
     setTargetVirtualScrollY(targetVirtualScrollY + event.deltaY);
   };
   const handleKeyDown = (event: KeyboardEvent) => {
+    if (isPageScrollLocked()) {
+      const blockedTarget = getKeyboardScrollTarget({
+        event,
+        targetVirtualScrollY,
+        virtualScrollRange,
+      });
+
+      if (blockedTarget !== null) {
+        event.preventDefault();
+      }
+
+      return;
+    }
+
     if (isEditableTarget(event.target) || virtualScrollRange <= 0) {
       return;
     }
@@ -192,7 +234,7 @@ export const setupVirtualScroll = () => {
     setTargetVirtualScrollY(targetVirtualScrollY);
   };
   const handleTrackPointerDown = (event: PointerEvent) => {
-    if (event.target === thumb) {
+    if (isPageScrollLocked() || event.target === thumb) {
       return;
     }
 
@@ -205,6 +247,10 @@ export const setupVirtualScroll = () => {
     setTargetVirtualScrollY(nextProgress * virtualScrollRange);
   };
   const handleThumbPointerDown = (event: PointerEvent) => {
+    if (isPageScrollLocked()) {
+      return;
+    }
+
     const thumbRect = thumb.getBoundingClientRect();
 
     activePointerId = event.pointerId;
@@ -233,6 +279,12 @@ export const setupVirtualScroll = () => {
     thumb.releasePointerCapture(event.pointerId);
   };
   const handleTouchStart = (event: TouchEvent) => {
+    if (isPageScrollLocked()) {
+      nativeTouchTargetActive = false;
+      lastTouchY = null;
+      return;
+    }
+
     nativeTouchTargetActive = isInteractiveTarget(event.target);
 
     if (nativeTouchTargetActive || isEditableTarget(event.target)) {
@@ -243,6 +295,11 @@ export const setupVirtualScroll = () => {
     lastTouchY = event.touches[0]?.clientY ?? null;
   };
   const handleTouchMove = (event: TouchEvent) => {
+    if (isPageScrollLocked()) {
+      event.preventDefault();
+      return;
+    }
+
     if (nativeTouchTargetActive || isEditableTarget(event.target) || lastTouchY === null) {
       return;
     }
