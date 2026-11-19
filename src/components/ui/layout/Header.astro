@@ -27,6 +27,10 @@ const { homeHref = "#top" } = Astro.props as Props;
       </a>
     </div>
     <div class="links">
+      <div class="social-menu">
+        <MailDialogTrigger client:load />
+        <SocialLinks />
+      </div>
       <a
         class="portfolio-link"
         href={PORTFOLIO_URL}
@@ -34,10 +38,8 @@ const { homeHref = "#top" } = Astro.props as Props;
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src="/assets/texts/portfolio.svg" alt="Portfolio" />
+        <img src="/assets/icons/portfolio_gray.png" alt="Portfolio" />
       </a>
-      <MailDialogTrigger client:load />
-      <SocialLinks />
     </div>
   </div>
 </header>
@@ -80,24 +82,131 @@ const { homeHref = "#top" } = Astro.props as Props;
     line-height: 0;
   }
 
+  .brand a {
+    position: relative;
+    display: inline-block;
+  }
+
   .brand img {
     width: 10.5rem;
     height: auto;
   }
 
+  .brand a::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: #9cd354;
+    mask: url("/assets/necoz_logo.svg") center / contain no-repeat;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .brand a:focus-visible::after {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .brand a:hover::after {
+      opacity: 1;
+    }
+  }
+
   .links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    transform: scale(0.75);
-    transform-origin: top right;
+    gap: 1rem;
+    margin-top: -1.5rem;
+  }
+
+  .social-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 13.5rem;
+    aspect-ratio: 1890 / 480;
+    padding: 0 0.75rem;
+    background: url("/assets/icons/menu_gray.png") center / 100% 100% no-repeat;
+  }
+
+  .social-menu :global(.mail-dialog-trigger__icon),
+  .social-menu :global(.icon-link img) {
+    width: 2.25rem;
+    height: 2.25rem;
+    object-fit: contain;
+    opacity: 0;
+  }
+
+  .social-menu :global(.mail-dialog-trigger),
+  .social-menu :global(.icon-link) {
+    position: relative;
+  }
+
+  .social-menu :global(.mail-dialog-trigger)::after,
+  .social-menu :global(.icon-link)::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: #535356;
+    mask: var(--header-icon-mask) center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  .social-menu :global(.mail-dialog-trigger) {
+    --header-icon-mask: url("/assets/icons/smartphone_menu_icon_mail.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--github)) {
+    --header-icon-mask: url("/assets/icons/icon_github_green.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--linkedin)) {
+    --header-icon-mask: url("/assets/icons/icon_linkedin_green.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--x)) {
+    --header-icon-mask: url("/assets/icons/icon_x_green.png");
+  }
+
+  .social-menu :global(.mail-dialog-trigger__icon) {
+    content: url("/assets/icons/smartphone_menu_icon_mail.png");
+  }
+
+  .social-menu :global(.social-link--github) {
+    content: url("/assets/icons/icon_github_green.png");
+  }
+
+  .social-menu :global(.social-link--linkedin) {
+    content: url("/assets/icons/icon_linkedin_green.png");
+  }
+
+  .social-menu :global(.social-link--x) {
+    content: url("/assets/icons/icon_x_green.png");
+  }
+
+  .social-menu :global(.mail-dialog-trigger:hover .mail-dialog-trigger__icon),
+  .social-menu :global(.mail-dialog-trigger:focus-visible .mail-dialog-trigger__icon),
+  .social-menu :global(.icon-link:hover img),
+  .social-menu :global(.icon-link:focus-visible img) {
+    opacity: 1;
+  }
+
+  .social-menu :global(.mail-dialog-trigger:hover)::after,
+  .social-menu :global(.mail-dialog-trigger:focus-visible)::after,
+  .social-menu :global(.icon-link:hover)::after,
+  .social-menu :global(.icon-link:focus-visible)::after {
+    opacity: 0;
   }
 
   .portfolio-link {
     display: inline-flex;
     align-items: center;
-    min-height: 1.5rem;
-    margin-right: 1rem;
+    width: 6rem;
+  }
+
+  .portfolio-link img {
+    width: 100%;
+    height: auto;
   }
 
   :global(.icon-link) {
@@ -105,8 +214,9 @@ const { homeHref = "#top" } = Astro.props as Props;
     align-items: center;
   }
 
-  .portfolio-link:hover {
-    opacity: 1;
+  .portfolio-link:hover img,
+  .portfolio-link:focus-visible img {
+    content: url("/assets/icons/portfolio_green.png");
   }
 
   :global(.icon-link:hover) {
@@ -134,12 +244,16 @@ const { homeHref = "#top" } = Astro.props as Props;
       width: 6.375rem;
     }
 
-    .portfolio-link img {
-      width: 6rem;
+    .social-menu {
+      width: 9rem;
     }
 
-    .header-overlay :global(.mail-dialog-trigger__icon),
-    :global(.icon-link img) {
+    .portfolio-link {
+      width: 4rem;
+    }
+
+    .social-menu :global(.mail-dialog-trigger__icon),
+    .social-menu :global(.icon-link img) {
       width: 1.5rem;
       height: 1.5rem;
     }
@@ -154,20 +268,23 @@ const { homeHref = "#top" } = Astro.props as Props;
       width: 4.875rem;
     }
 
-    .portfolio-link img {
-      width: 3.25rem;
+    .portfolio-link {
+      width: 2.75rem;
+    }
+
+    .social-menu {
+      width: 6.4rem;
+      padding-inline: 0.35rem;
     }
 
     .links {
       gap: 0.525rem;
-      margin-bottom: 0.75rem;
-      margin-right: 0.125rem;
     }
 
-    .header-overlay :global(.mail-dialog-trigger__icon),
-    :global(.icon-link img) {
-      width: 0.875rem;
-      height: 0.875rem;
+    .social-menu :global(.mail-dialog-trigger__icon),
+    .social-menu :global(.icon-link img) {
+      width: 1.125rem;
+      height: 1.125rem;
     }
   }
 
@@ -176,22 +293,27 @@ const { homeHref = "#top" } = Astro.props as Props;
       margin: 1.75rem 1.25rem;
     }
 
+    .social-menu :global(.mail-dialog-trigger__icon),
+    .social-menu :global(.icon-link img) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .portfolio-link {
+      width: 3rem;
+    }
+
+    .social-menu {
+      width: 8.9rem;
+    }
+
+    .links {
+      margin-top: -1rem;
+    }
+
     .brand img {
       width: 5rem;
     }
 
-    .links {
-      transform: none;
-    }
-
-    :global(.icon-link .social-link--x) {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
-
-    .portfolio-link {
-      margin-right: 0.25rem;
-      min-height: 0;
-    }
   }
 </style>

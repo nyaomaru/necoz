@@ -238,10 +238,12 @@ const mobileBlockSevenRows = [
   }
 
   .contact-links {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 1.5rem;
+    padding: 1rem 2rem;
     margin-top: 2rem;
+    background: url("/assets/icons/menu_gray.png") center / 100% 100% no-repeat;
     transform: scale(0.75);
     transform-origin: top left;
   }
@@ -249,7 +251,32 @@ const mobileBlockSevenRows = [
   :global(.icon-link) {
     display: inline-flex;
     align-items: center;
-    opacity: 0.8;
+  }
+
+  .contact-links :global(.mail-dialog-trigger:hover .mail-dialog-trigger__icon),
+  .contact-links :global(.mail-dialog-trigger:focus-visible .mail-dialog-trigger__icon),
+  .contact-links :global(.icon-link:hover img),
+  .contact-links :global(.icon-link:focus-visible img) {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(42%) saturate(686%)
+      hue-rotate(38deg) brightness(98%);
+  }
+
+  @media (min-width: 51.251rem) {
+    .contact-links :global(.mail-dialog-trigger__icon) {
+      width: calc(42.97px - 0.5rem);
+    }
+
+    .contact-links :global(.social-link--github) {
+      width: calc(45.45px - 0.5rem);
+    }
+
+    .contact-links :global(.social-link--linkedin) {
+      width: calc(43px - 0.5rem);
+    }
+
+    .contact-links :global(.social-link--x) {
+      width: calc(32.88px - 0.5rem);
+    }
   }
 
   @media (max-width: 51.25rem) {
@@ -342,6 +369,7 @@ const mobileBlockSevenRows = [
 
     .contact-links {
       gap: 0.75rem;
+      padding: 0.375rem 0.75rem;
       margin-top: 1rem;
       transform: none;
     }

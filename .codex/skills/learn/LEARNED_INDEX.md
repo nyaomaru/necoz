@@ -7,3 +7,4 @@
 - `seo-metadata.md`: where SEO, canonical, OGP, robots, and sitemap behavior are implemented.
 - **[section-weighted-virtual-scroll](learned/section-weighted-virtual-scroll.md)** - Compress physical scroll by measured section height while preserving visual and scene destinations.
 - **[playwright-virtual-scroll-full-page](learned/playwright-virtual-scroll-full-page.md)** - Restore native flow only inside Playwright so full-page captures include every virtual-scroll section.
+- **[virtual-scroll-end-controls](learned/virtual-scroll-end-controls.md)** - Navigate fixed controls to the actual endpoints of the virtual timeline.
