@@ -37,6 +37,7 @@
   --layer-modal: 50;
   --layer-toast: 60;
   --layer-walker-in-front-of-content: 70;
+  --layer-secret-focus: 80;
   font-family: 'Source Sans 3', system-ui, sans-serif;
 }
 

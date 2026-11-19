@@ -29,6 +29,10 @@ import {
 } from "~/lib/is";
 import "~/styles/global.css";
 import VirtualScroll from "~/components/ui/scroll/VirtualScroll.astro";
+import {
+  SECRET_ENTRY_CLOSED_VALUE,
+  SECRET_ENTRY_STORAGE_KEY,
+} from "~/lib/secret-focus/focus-transition";
 
 type Props = {
   /** Page description used for the document meta description. */
@@ -47,6 +51,8 @@ type Props = {
   title?: string;
   /** Whether to use the animated virtual scroll controller. */
   virtualScroll?: boolean;
+  /** Paint the secret-page iris closed before the page module loads. */
+  secretFocusEntry?: boolean;
 };
 
 const {
@@ -56,6 +62,7 @@ const {
   noindex = false,
   ogType = "website",
   structuredData,
+  secretFocusEntry = false,
   title = DEFAULT_TITLE,
   virtualScroll = true,
 } = Astro.props as Props;
@@ -115,6 +122,27 @@ const structuredDataBlocks = [
 <html lang="en" class:list={[virtualScroll && "virtual-scroll-root"]}>
   <head>
     <meta charset="UTF-8" />
+    {
+      secretFocusEntry && (
+        <script
+          is:inline
+          define:vars={{
+            closedValue: SECRET_ENTRY_CLOSED_VALUE,
+            storageKey: SECRET_ENTRY_STORAGE_KEY,
+          }}
+        >
+          try {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              sessionStorage.removeItem(storageKey);
+            } else if (sessionStorage.getItem(storageKey) === closedValue) {
+              document.documentElement.dataset.secretFocus = "loading";
+            }
+          } catch {
+            /* Private mode can block sessionStorage. */
+          }
+        </script>
+      )
+    }
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
