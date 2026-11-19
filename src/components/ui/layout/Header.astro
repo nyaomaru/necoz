@@ -92,13 +92,24 @@ const { homeHref = "#top" } = Astro.props as Props;
     height: auto;
   }
 
-  .brand a:hover::after,
-  .brand a:focus-visible::after {
+  .brand a::after {
     position: absolute;
     inset: 0;
     content: "";
     background: #9cd354;
     mask: url("/assets/necoz_logo.svg") center / contain no-repeat;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .brand a:focus-visible::after {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .brand a:hover::after {
+      opacity: 1;
+    }
   }
 
   .links {
