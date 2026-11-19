@@ -123,8 +123,38 @@ const { homeHref = "#top" } = Astro.props as Props;
     width: 2.25rem;
     height: 2.25rem;
     object-fit: contain;
-    filter: brightness(0) saturate(100%) invert(32%) sepia(3%) saturate(347%)
-      hue-rotate(202deg) brightness(97%);
+    opacity: 0;
+  }
+
+  .social-menu :global(.mail-dialog-trigger),
+  .social-menu :global(.icon-link) {
+    position: relative;
+  }
+
+  .social-menu :global(.mail-dialog-trigger)::after,
+  .social-menu :global(.icon-link)::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: #535356;
+    mask: var(--header-icon-mask) center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  .social-menu :global(.mail-dialog-trigger) {
+    --header-icon-mask: url("/assets/icons/smartphone_menu_icon_mail.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--github)) {
+    --header-icon-mask: url("/assets/icons/icon_github_green.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--linkedin)) {
+    --header-icon-mask: url("/assets/icons/icon_linkedin_green.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--x)) {
+    --header-icon-mask: url("/assets/icons/icon_x_green.png");
   }
 
   .social-menu :global(.mail-dialog-trigger__icon) {
@@ -147,7 +177,14 @@ const { homeHref = "#top" } = Astro.props as Props;
   .social-menu :global(.mail-dialog-trigger:focus-visible .mail-dialog-trigger__icon),
   .social-menu :global(.icon-link:hover img),
   .social-menu :global(.icon-link:focus-visible img) {
-    filter: none;
+    opacity: 1;
+  }
+
+  .social-menu :global(.mail-dialog-trigger:hover)::after,
+  .social-menu :global(.mail-dialog-trigger:focus-visible)::after,
+  .social-menu :global(.icon-link:hover)::after,
+  .social-menu :global(.icon-link:focus-visible)::after {
+    opacity: 0;
   }
 
   .portfolio-link {
