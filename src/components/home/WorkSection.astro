@@ -1,7 +1,6 @@
 ---
 import BackgroundBlockStack from "~/components/ui/block/BackgroundBlockStack.astro";
 import BlockShape from "~/components/ui/block/BlockShape.astro";
-import NecozButton from "~/components/ui/button/NecozButton";
 import SceneSection from "~/components/ui/layout/SceneSection.astro";
 import SectionIntro from "~/components/ui/layout/SectionIntro.astro";
 import SceneBackground from "~/components/ui/scene/SceneBackground.astro";
@@ -201,14 +200,14 @@ const mobileServiceItems = [
         {mobileServiceItems.map((item) => <li>{item}</li>)}
       </ul>
       <div class="pixel-actions">
-        <NecozButton
-          as="a"
+        <a
+          class="work-portfolio-link"
           href={PORTFOLIO_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Text as="span">View Portfolio</Text>
-        </NecozButton>
+          <img src="/assets/icons/portfolio_gray.png" alt="View Portfolio" />
+        </a>
       </div>
     </div>
   </SectionIntro>
@@ -256,6 +255,34 @@ const mobileServiceItems = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.625rem;
+  }
+
+  .work-portfolio-link {
+    display: inline-block;
+    width: 6rem;
+    line-height: 0;
+  }
+
+  .work-portfolio-link img {
+    width: 100%;
+    height: auto;
+  }
+
+  .work-portfolio-link:hover img,
+  .work-portfolio-link:focus-visible img {
+    content: url("/assets/icons/portfolio_green.png");
+  }
+
+  @media (max-width: 51.25rem) {
+    .work-portfolio-link {
+      width: 4rem;
+    }
+  }
+
+  @media (max-width: 32.5rem) {
+    .work-portfolio-link {
+      width: 2.75rem;
+    }
   }
 
   .section-text {

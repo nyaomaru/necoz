@@ -252,6 +252,14 @@ const mobileBlockSevenRows = [
     opacity: 0.8;
   }
 
+  .contact-links :global(.mail-dialog-trigger:hover .mail-dialog-trigger__icon),
+  .contact-links :global(.mail-dialog-trigger:focus-visible .mail-dialog-trigger__icon),
+  .contact-links :global(.icon-link:hover img),
+  .contact-links :global(.icon-link:focus-visible img) {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(42%) saturate(686%)
+      hue-rotate(38deg) brightness(98%);
+  }
+
   @media (max-width: 51.25rem) {
     .contact-links :global(.mail-dialog-trigger__icon),
     .contact-links :global(.icon-link img) {
