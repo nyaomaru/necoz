@@ -142,6 +142,15 @@ export const setupVirtualScroll = () => {
     const scrollRangeMultiplier = getScrollRangeMultiplier();
 
     content.style.top = '0px';
+    const helloHeading = content.querySelector<HTMLElement>(
+      '.hero-section img[src="/assets/texts/hello.svg"]',
+    );
+    if (endButton && helloHeading) {
+      endButton.style.setProperty(
+        '--scroll-end-button-top',
+        `calc(${helloHeading.getBoundingClientRect().top}px - 0.5rem)`,
+      );
+    }
     baseScrollRange = Math.max(content.scrollHeight - window.innerHeight, 0);
     const sections = Array.from(
       content.querySelectorAll<HTMLElement>(VIRTUAL_SCROLL_SECTION_SELECTOR),

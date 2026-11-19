@@ -120,8 +120,8 @@ const { homeHref = "#top" } = Astro.props as Props;
 
   .social-menu :global(.mail-dialog-trigger__icon),
   .social-menu :global(.icon-link img) {
-    width: 2rem;
-    height: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
     object-fit: contain;
     filter: brightness(0) saturate(100%) invert(32%) sepia(3%) saturate(347%)
       hue-rotate(202deg) brightness(97%);
@@ -206,8 +206,8 @@ const { homeHref = "#top" } = Astro.props as Props;
 
     .social-menu :global(.mail-dialog-trigger__icon),
     .social-menu :global(.icon-link img) {
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -235,14 +235,28 @@ const { homeHref = "#top" } = Astro.props as Props;
 
     .social-menu :global(.mail-dialog-trigger__icon),
     .social-menu :global(.icon-link img) {
-      width: 0.875rem;
-      height: 0.875rem;
+      width: 1.125rem;
+      height: 1.125rem;
     }
   }
 
   @media (--necoz-phone) {
     .header-overlay {
       margin: 1.75rem 1.25rem;
+    }
+
+    .social-menu :global(.mail-dialog-trigger__icon),
+    .social-menu :global(.icon-link img) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .portfolio-link {
+      width: 2.75rem;
+    }
+
+    .social-menu {
+      width: 8.9rem;
     }
 
     .links {
