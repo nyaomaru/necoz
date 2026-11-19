@@ -19,15 +19,22 @@ import {
   isInteractiveTarget,
 } from './virtual-scroll-navigation';
 import { isElement } from '~/lib/is';
+import { MEDIA_QUERIES } from '~/styles/breakpoints.mjs';
 
 const MIN_THUMB_HEIGHT = 48;
 const SMOOTH_SCROLL_EASING = 0.15;
 const SMOOTH_SCROLL_STOP_DISTANCE = 0.5;
+const END_SCROLL_SPEED = 3250;
+const END_SCROLL_MIN_DURATION = 600;
+const END_SCROLL_MAX_DURATION = 3000;
+const PHONE_END_SCROLL_SPEED_FACTOR = 2 / 5;
 
 export const setupVirtualScroll = () => {
   const content = document.querySelector<HTMLElement>('[data-virtual-scroll-content]');
   const track = document.querySelector<HTMLElement>('[data-virtual-scrollbar-track]');
   const thumb = document.querySelector<HTMLElement>('[data-virtual-scrollbar-thumb]');
+  const endButton = document.querySelector<HTMLButtonElement>('[data-scroll-end-button]');
+  const endButtonImage = endButton?.querySelector<HTMLImageElement>('img');
 
   if (!content || !track || !thumb) {
     return;
@@ -35,6 +42,7 @@ export const setupVirtualScroll = () => {
 
   let rafId = 0;
   let animationFrameId = 0;
+  let endScrollFrameId = 0;
   let baseScrollRange = 0;
   let virtualScrollRange = 0;
   let scrollProfile: VirtualScrollProfile | null = null;
@@ -74,12 +82,28 @@ export const setupVirtualScroll = () => {
   const applyScroll = () => {
     const { sceneScrollY, visualScrollY } = getCurrentScrollState();
 
+    if (endButton && endButtonImage) {
+      const atBottom = virtualScrollRange > 0 && renderedVirtualScrollY >= virtualScrollRange;
+      endButton.setAttribute('aria-label', atBottom ? 'Scroll to top' : 'Scroll to bottom');
+      const imageSrc = `/assets/icons/necoz_${atBottom ? 'up' : 'down'}-arrow.png`;
+      if (endButtonImage.getAttribute('src') !== imageSrc) {
+        endButtonImage.setAttribute('src', imageSrc);
+      }
+    }
+
     content.style.top = `${-visualScrollY}px`;
     setScrollState({ sceneScrollY, visualScrollY });
     window.dispatchEvent(new CustomEvent('necoz:virtual-scroll'));
     updateThumb();
   };
+  const cancelEndScroll = () => {
+    if (endScrollFrameId !== 0) {
+      cancelAnimationFrame(endScrollFrameId);
+      endScrollFrameId = 0;
+    }
+  };
   const setImmediateVirtualScrollY = (nextVirtualScrollY: number) => {
+    cancelEndScroll();
     targetVirtualScrollY = clamp(nextVirtualScrollY, 0, virtualScrollRange);
     renderedVirtualScrollY = targetVirtualScrollY;
     applyScroll();
@@ -107,10 +131,12 @@ export const setupVirtualScroll = () => {
     animationFrameId = window.requestAnimationFrame(step);
   };
   const setTargetVirtualScrollY = (nextVirtualScrollY: number) => {
+    cancelEndScroll();
     targetVirtualScrollY = clamp(nextVirtualScrollY, 0, virtualScrollRange);
     startSmoothScroll();
   };
   const syncMetrics = () => {
+    cancelEndScroll();
     const currentProgress = virtualScrollRange <= 0 ? 0 : targetVirtualScrollY / virtualScrollRange;
     const baseScrollRangeMultiplier = getBaseScrollRangeMultiplier();
     const scrollRangeMultiplier = getScrollRangeMultiplier();
@@ -146,6 +172,36 @@ export const setupVirtualScroll = () => {
 
     event.preventDefault();
     setTargetVirtualScrollY(targetVirtualScrollY + event.deltaY);
+  };
+  const handleEndButtonClick = () => {
+    const destination = renderedVirtualScrollY >= virtualScrollRange ? 0 : virtualScrollRange;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setImmediateVirtualScrollY(destination);
+      return;
+    }
+
+    cancelEndScroll();
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = 0;
+    const start = renderedVirtualScrollY;
+    const distance = destination - start;
+    const duration =
+      clamp(
+        (Math.abs(distance) / END_SCROLL_SPEED) * 1000,
+        END_SCROLL_MIN_DURATION,
+        END_SCROLL_MAX_DURATION,
+      ) / (window.matchMedia(MEDIA_QUERIES.phone).matches ? PHONE_END_SCROLL_SPEED_FACTOR : 1);
+    let startTime: number | null = null;
+    const step = (time: number) => {
+      startTime ??= time;
+      const progress = clamp((time - startTime) / duration, 0, 1);
+      const easedProgress = progress * progress * (3 - 2 * progress);
+      renderedVirtualScrollY = start + distance * easedProgress;
+      targetVirtualScrollY = renderedVirtualScrollY;
+      applyScroll();
+      endScrollFrameId = progress < 1 ? window.requestAnimationFrame(step) : 0;
+    };
+    endScrollFrameId = window.requestAnimationFrame(step);
   };
   const handleKeyDown = (event: KeyboardEvent) => {
     if (isEditableTarget(event.target) || virtualScrollRange <= 0) {
@@ -272,6 +328,7 @@ export const setupVirtualScroll = () => {
   window.addEventListener('touchend', handleTouchEnd, { passive: true });
   window.addEventListener('touchcancel', handleTouchEnd, { passive: true });
   document.addEventListener('click', handleDocumentClick);
+  endButton?.addEventListener('click', handleEndButtonClick);
   track.addEventListener('pointerdown', handleTrackPointerDown);
   thumb.addEventListener('pointerdown', handleThumbPointerDown);
   thumb.addEventListener('pointermove', handleThumbPointerMove);
