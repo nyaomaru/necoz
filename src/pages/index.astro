@@ -52,6 +52,12 @@ import Layout from "~/layouts/Layout.astro";
     object-fit: contain;
   }
 
+  @media (--necoz-phone) {
+    .loading-screen img {
+      object-fit: cover;
+    }
+  }
+
   @keyframes finish-loading {
     99% {
       visibility: visible;
