@@ -50,11 +50,13 @@ import Layout from "~/layouts/Layout.astro";
     width: 100%;
     height: 100%;
     object-fit: contain;
+    transform: translateY(-2vh);
   }
 
   @media (--necoz-phone) {
     .loading-screen img {
       object-fit: cover;
+      transform: none;
     }
   }
 
