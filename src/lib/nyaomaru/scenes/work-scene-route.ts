@@ -21,7 +21,6 @@ import { isMobileViewport, MOBILE_WALKER_SURFACE_LIFT_Y } from './helpers/viewpo
 import {
   WALKER_LAYER_BEHIND_CONTENT,
   WALKER_LAYER_IN_FRONT_OF_CONTENT,
-  WALKER_LAYER_IN_STRUCTURE,
   getDefaultWalkerLayer,
 } from './helpers/layers';
 import { SCENE_DOM_ATTRIBUTES } from './dom-contracts';
@@ -162,7 +161,7 @@ const pushDeskLandingSegments = (
     phase: 'landed',
     startX: deskLanding.x,
     startY: deskLanding.y,
-    zIndex: WALKER_LAYER_IN_STRUCTURE,
+    zIndex: WALKER_LAYER_BEHIND_CONTENT,
   });
 };
 
