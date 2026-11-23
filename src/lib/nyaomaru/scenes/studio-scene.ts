@@ -81,7 +81,11 @@ import {
   getWalkerSurfaceY,
 } from './helpers/walker-geometry';
 import { isMobileViewport } from './helpers/viewport';
-import { WALKER_LAYER_BEHIND_CONTENT, getDefaultWalkerLayer } from './helpers/layers';
+import {
+  WALKER_LAYER_BEHIND_CONTENT,
+  WALKER_LAYER_IN_STRUCTURE,
+  getDefaultWalkerLayer,
+} from './helpers/layers';
 import { SCENE_DOM_ATTRIBUTES, SCENE_DOM_SELECTORS } from './dom-contracts';
 
 const resolveStudioSceneElements = (): StudioSceneElements | null => {
@@ -191,7 +195,7 @@ const getDeskLandingPose = (studioDesk: HTMLImageElement, frame: StudioFrameMetr
       STUDIO_EFFECT_Y_OFFSET +
       STUDIO_DESK_LANDING_Y_OFFSET +
       mobileLandingYAdjustment,
-    zIndex: WALKER_LAYER_BEHIND_CONTENT,
+    zIndex: WALKER_LAYER_IN_STRUCTURE,
   } satisfies WalkerOverridePose;
 };
 
@@ -275,7 +279,7 @@ const getStudioRouteSegments = (
         phase: 'second-fall',
         startX: currentX,
         startY: currentY,
-        zIndex: WALKER_LAYER_BEHIND_CONTENT,
+        zIndex: WALKER_LAYER_IN_STRUCTURE,
       });
       currentX = deskExitJumpX;
       currentY = stepRunY;
