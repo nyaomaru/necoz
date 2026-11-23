@@ -15,10 +15,10 @@ const { homeHref = "#top" } = Astro.props as Props;
 <header class="stage-header">
   <picture class="header-clouds" aria-hidden="true">
     <source
-      srcset="/assets/backgrounds/smartphone_header.svg"
+      srcset="/assets/backgrounds/smartphone_header-and-footer.png"
       media={MEDIA_QUERIES.phone}
     />
-    <img src="/assets/backgrounds/header.svg" alt="Necoz header background" />
+    <img src="/assets/backgrounds/header-and-footer.png" alt="Necoz header background" />
   </picture>
   <div class="header-overlay">
     <div class="brand">
@@ -82,9 +82,34 @@ const { homeHref = "#top" } = Astro.props as Props;
     line-height: 0;
   }
 
+  .brand a {
+    position: relative;
+    display: inline-block;
+  }
+
   .brand img {
     width: 10.5rem;
     height: auto;
+  }
+
+  .brand a::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: #9cd354;
+    mask: url("/assets/necoz_logo.svg") center / contain no-repeat;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .brand a:focus-visible::after {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .brand a:hover::after {
+      opacity: 1;
+    }
   }
 
   .links {
@@ -106,11 +131,41 @@ const { homeHref = "#top" } = Astro.props as Props;
 
   .social-menu :global(.mail-dialog-trigger__icon),
   .social-menu :global(.icon-link img) {
-    width: 2rem;
-    height: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
     object-fit: contain;
-    filter: brightness(0) saturate(100%) invert(32%) sepia(3%) saturate(347%)
-      hue-rotate(202deg) brightness(97%);
+    opacity: 0;
+  }
+
+  .social-menu :global(.mail-dialog-trigger),
+  .social-menu :global(.icon-link) {
+    position: relative;
+  }
+
+  .social-menu :global(.mail-dialog-trigger)::after,
+  .social-menu :global(.icon-link)::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: #535356;
+    mask: var(--header-icon-mask) center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  .social-menu :global(.mail-dialog-trigger) {
+    --header-icon-mask: url("/assets/icons/smartphone_menu_icon_mail.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--github)) {
+    --header-icon-mask: url("/assets/icons/icon_github_green.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--linkedin)) {
+    --header-icon-mask: url("/assets/icons/icon_linkedin_green.png");
+  }
+
+  .social-menu :global(.icon-link:has(.social-link--x)) {
+    --header-icon-mask: url("/assets/icons/icon_x_green.png");
   }
 
   .social-menu :global(.mail-dialog-trigger__icon) {
@@ -133,7 +188,14 @@ const { homeHref = "#top" } = Astro.props as Props;
   .social-menu :global(.mail-dialog-trigger:focus-visible .mail-dialog-trigger__icon),
   .social-menu :global(.icon-link:hover img),
   .social-menu :global(.icon-link:focus-visible img) {
-    filter: none;
+    opacity: 1;
+  }
+
+  .social-menu :global(.mail-dialog-trigger:hover)::after,
+  .social-menu :global(.mail-dialog-trigger:focus-visible)::after,
+  .social-menu :global(.icon-link:hover)::after,
+  .social-menu :global(.icon-link:focus-visible)::after {
+    opacity: 0;
   }
 
   .portfolio-link {
@@ -192,8 +254,8 @@ const { homeHref = "#top" } = Astro.props as Props;
 
     .social-menu :global(.mail-dialog-trigger__icon),
     .social-menu :global(.icon-link img) {
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -221,14 +283,32 @@ const { homeHref = "#top" } = Astro.props as Props;
 
     .social-menu :global(.mail-dialog-trigger__icon),
     .social-menu :global(.icon-link img) {
-      width: 0.875rem;
-      height: 0.875rem;
+      width: 1.125rem;
+      height: 1.125rem;
     }
   }
 
   @media (--necoz-phone) {
     .header-overlay {
       margin: 1.75rem 1.25rem;
+    }
+
+    .social-menu :global(.mail-dialog-trigger__icon),
+    .social-menu :global(.icon-link img) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .portfolio-link {
+      width: 3rem;
+    }
+
+    .social-menu {
+      width: 8.9rem;
+    }
+
+    .links {
+      margin-top: -1rem;
     }
 
     .brand img {

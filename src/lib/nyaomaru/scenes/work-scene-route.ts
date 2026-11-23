@@ -27,6 +27,7 @@ import {
 import { SCENE_DOM_ATTRIBUTES } from './dom-contracts';
 
 type WorkWalkerRunElements = Pick<WorkSceneElements, 'blockThreeTarget' | 'mobileBlockTarget'>;
+const DESK_FOREGROUND_JUMP_PROGRESS = 0.75;
 type WorkBlockFourRouteElements = Pick<
   WorkSceneElements,
   | 'blockThreeFirstRow'
@@ -205,10 +206,16 @@ export const getWalkerRoutePose = (segments: WalkerRouteSegment[], progress: num
     getCompletedZIndex: () => WALKER_LAYER_BEHIND_CONTENT,
     getDefaultZIndex: (segment) => getDefaultWalkerLayer(segment.phase),
     resolveZIndex: ({ segment, segmentProgress }) => {
+      const isDeskLandingJump =
+        segment === segments.at(-2) && segments.at(-1)?.zIndex === WALKER_LAYER_IN_STRUCTURE;
       const isDescendingDesktopFall =
         !isMobileViewport() && segment.phase === 'second-fall' && segment.endY > segment.startY;
       const isMobileEmergenceSegment =
         isMobileViewport() && segment.phase === 'landed' && segment.endY < segment.startY;
+
+      if (isDeskLandingJump && segmentProgress >= DESK_FOREGROUND_JUMP_PROGRESS) {
+        return WALKER_LAYER_IN_STRUCTURE;
+      }
 
       if (isMobileEmergenceSegment && segmentProgress >= FULL_PROGRESS) {
         return WALKER_LAYER_BEHIND_CONTENT;

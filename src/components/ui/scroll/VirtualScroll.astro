@@ -1,6 +1,14 @@
 <div data-virtual-scroll-content>
   <slot />
 </div>
+<button
+  class="scroll-end-button"
+  type="button"
+  data-scroll-end-button
+  aria-label="Scroll to bottom"
+>
+  <img src="/assets/icons/necoz_down-arrow.png" alt="" />
+</button>
 <div class="virtual-scrollbar" data-virtual-scrollbar aria-hidden="true">
   <div class="virtual-scrollbar__track" data-virtual-scrollbar-track>
     <div class="virtual-scrollbar__thumb" data-virtual-scrollbar-thumb></div>
@@ -37,13 +45,51 @@
     will-change: top;
   }
 
+  .scroll-end-button {
+    position: fixed;
+    top: calc(var(--scroll-end-button-top, 50%) - 3rem);
+    right: 5rem;
+    z-index: var(--layer-site-chrome);
+    width: 3rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .scroll-end-button img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (--necoz-stage-compact) {
+    .scroll-end-button { right: 4rem; }
+  }
+
+  @media (--necoz-desktop-compact) {
+    .scroll-end-button { right: 2.5rem; }
+  }
+
+  @media (max-width: 51.25rem) {
+    .scroll-end-button { right: 1.5rem; }
+  }
+
+  @media (--necoz-phone) {
+    .scroll-end-button {
+      top: calc(var(--scroll-end-button-top, 50%) - 2rem);
+      right: 1.25rem;
+      width: 2rem;
+    }
+  }
+
   .virtual-scrollbar {
     position: fixed;
     top: 0.75rem;
-    right: 0.625rem;
+    right: 0;
     bottom: 0.75rem;
     z-index: var(--layer-virtual-scrollbar);
-    width: 0.625rem;
+    width: 0.3125rem;
   }
 
   .virtual-scrollbar__track {

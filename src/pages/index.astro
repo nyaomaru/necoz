@@ -17,6 +17,9 @@ import Layout from "~/layouts/Layout.astro";
   description={DEFAULT_DESCRIPTION}
   canonicalPath="/"
 >
+  <div class="loading-screen" aria-hidden="true">
+    <img src="/assets/animation/necoz_loading.gif" alt="" />
+  </div>
   <div class="pixel-page">
     <main id="top">
       <h1 class="sr-only">
@@ -37,6 +40,45 @@ import Layout from "~/layouts/Layout.astro";
 </Layout>
 
 <style>
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    animation: finish-loading 2s forwards;
+  }
+
+  .loading-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translateY(-2vh);
+  }
+
+  @media (--necoz-phone) {
+    .loading-screen img {
+      object-fit: cover;
+      transform: none;
+    }
+  }
+
+  @keyframes finish-loading {
+    99% {
+      visibility: visible;
+    }
+    100% {
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-screen {
+      display: none;
+    }
+  }
+
   .pixel-page {
     position: relative;
     overflow-x: clip;
